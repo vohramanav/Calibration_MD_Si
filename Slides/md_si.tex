@@ -154,8 +154,37 @@ color(3cm)=(LightSlateGrey!15)
 \def\Qd{\dot{Q}}
 %\DeclareMathSymbol{\ast}{\mathbin}{symbols}{"03}
  \newcommand{\argmax}{\operatornamewithlimits{arg\,max}}
- 
 
+%-----------Parameter screening tikz styles -----------------------
+   \tikzstyle{A} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+     fill=blue!30]
+      \tikzstyle{B} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+     fill=red!30]
+      \tikzstyle{p} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+     fill=yellow!30]
+      \tikzstyle{q} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+     fill=green!30]
+      \tikzstyle{alpha} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+     fill=magenta!30]
+      \tikzstyle{lambda} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+     fill=cyan!30]
+      \tikzstyle{gamma} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+     fill=orange!30]
+ \tikzstyle{outer} = [rectangle, minimum width=2.cm, minimum height=0.5cm,text centered, draw=black,dashed]    
+ \tikzstyle{pool} = [rectangle, minimum width=2.5cm, minimum height=2.4cm,line width=1pt,
+text centered, draw=black,dashed]    
+
+%% Algorithm %%%%%
+\usepackage[linesnumbered]{algorithm2e}
+\newcommand{\nosemic}{\renewcommand{\@endalgocfline}{\relax}}% Drop semi-colon ;
+\newcommand{\dosemic}{\renewcommand{\@endalgocfline}{\algocf@endline}}% Reinstate semi-colon ;
+\newcommand{\pushline}{\Indp}% Indent
+\newcommand{\popline}{\Indm\dosemic}% Undent
+\let\oldnl\nl% Store \nl in \oldnl
+\newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}% Remove line number for one
+\SetKwRepeat{Do}{do}{while}
+%%%%%%%%%%%%%%%%%
+ 
 %---------------------QUOTATION--------------------------
 \usepackage{etoolbox}
 %\usepackage[svgnames]{xcolor}
@@ -234,11 +263,13 @@ color(3cm)=(LightSlateGrey!15)
 
 
 %\subtitle{SUBTITLE}
-\author[M. Vohra and S. Mahadevan]{Manav Vohra$^{\dag}$, Sankaran Mahadevan$^{\dag}$ \\ \vspace{1mm}
-Collaborators: Seungha Shin$^{\S}$, Ali Yousefzadi Nobakht$^{\S}$}
+\author[M. Vohra and S. Mahadevan]{Manav Vohra$^{\dag}$, Sankaran Mahadevan$^{\dag}$ \\ \vspace{2mm}
+\scriptsize{Collaborators: Seungha Shin$^{\S}$, Ali Yousefzadi Nobakht$^{\S}$, Alen 
+Alexanderian$^{\ddag}$}}
 \vspace{-1mm}
 \institute{$^{\dag}$Vanderbilt University\\ \vspace{1mm}
-$^{\S}$University of Tennessee, Knoxville}
+$^{\S}$University of Tennessee, Knoxville\\ \vspace{1mm}
+$^{\ddag}$North Carolina State University, Raleigh}
 
 \date{\today}
 
@@ -323,8 +354,9 @@ Part I: \textsc{Forward Problem}:
 \myitem Characterize the impact of uncertainty in inter-atomic potential on predictions. 
 
 \begin{itemize}
-\item Efficient construction of surrogates using NISP: aPSP, Sparse Basis, Active Subspaces
-\item Examine sensitivity of estimates on parameters.
+\item Dimension reduction using derivative-based sensitivity measures. 
+\item Construction of PCE in the reduced space.
+\item Forward Propagation of uncertainty. 
 \end{itemize}
 
 \end{itemize}
@@ -334,11 +366,11 @@ Part II: \textsc{Inverse Problem}:
 \begin{itemize}
 
 \myitem Calibrate critical parameters associated with the potential function in
-a Bayesian setting.
+a Bayesian setting using experimental data.
 
-\begin{itemize} 
-\item Exploit the error response surface from Part I.  
-\end{itemize}
+%\begin{itemize} 
+%\item Exploit the error response surface from Part I.  
+%\end{itemize}
 
 \end{itemize}
 
@@ -377,10 +409,14 @@ a Bayesian setting.
 
 \begin{column}{0.5\textwidth}
 
-%\begin{center}
+\begin{center}
 %        \animategraphics[autopause,poster=first,loop,height=0.60\textwidth]{5}
 %        {./animation/snap}{0}{64}
-%\end{center}
+\begin{figure}[htbp]
+        \includegraphics[width=0.9\textwidth]{./Figures/snap0}
+\end{figure}
+
+\end{center}
 
 \vspace{-5mm}
 
@@ -435,24 +471,38 @@ $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
 	\begin{columns}
 	\begin{column}{0.5\textwidth}
 		\begin{figure}[htbp]
-			\includegraphics[width=0.85\textwidth]{./Figures/nvt_L50_wh_effect}
-			\\
-			\includegraphics[width=0.85\textwidth]{./Figures/nve_L50_wh_effect}
+			\includegraphics[width=0.95\textwidth]{./Figures/nvt_L50_wh_effect}
+	%		\\
+	%		\includegraphics[width=0.85\textwidth]{./Figures/nve_L50_wh_effect}
 			
 		\end{figure}
 
 	\end{column}
 	\begin{column}{0.5\textwidth}
 		\begin{figure}[htbp]
-			\includegraphics[width=0.85\textwidth]{./Figures/nvt_L100_wh_effect}
-			\\
-			\includegraphics[width=0.85\textwidth]{./Figures/nve_L100_wh_effect}
+			\includegraphics[width=0.95\textwidth]{./Figures/nve_L50_wh_effect}
+	%		\\
+	%		\includegraphics[width=0.85\textwidth]{./Figures/nve_L100_wh_effect}
 
 		\end{figure}
 
 	\end{column}
 	
 	\end{columns}
+
+\vspace{2mm}
+\begin{itemize}
+\myitem Norm of the fluctuations ($NF$) is computed using:
+
+\begin{center}
+\vspace{-5mm}
+
+	\be 
+            NF = \frac{1}{N}\left[\sum_k \left(T_k - T_{\{nvt,nve\}}\right)^{2}\right]^{\frac{1}{2}} \nonumber
+        \ee
+
+\end{center}
+\end{itemize}
 
 \end{frame}
 
@@ -480,25 +530,14 @@ $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
 %\vspace{2mm}
 \begin{itemize}
 
-\myitem Norm of the fluctuations ($NF$) is computed using:
-
-\begin{center}
-\vspace{-5mm}
-
-	\be 
-            NF = \frac{1}{N}\left[\sum_k \left(T_k - T_{\{nvt,nve\}}\right)^{2}\right]^{\frac{1}{2}} \nonumber
-        \ee
-
-\end{center}
-
-\myitem At $W$ = 21.72$L_c$, the effect of length on fluctuations seems to be minuscule. 
+\myitem At $W$ = 22$L_c$, the effect of length on fluctuations seems negligible. 
 \end{itemize}
 
 \end{frame}
 
 %___________________________NEW SLIDE______________________________________
 
-\section{\scshape Response Surface}
+\section{\scshape Error Response Surface}
 \subsection{err}
 \begin{frame}{Need a Surrogate$?$}
 
@@ -671,31 +710,230 @@ $\mathcal{G}_M$: Model Output\hspace{5mm}$\mathcal{G}_{PCE}$: PCE Estimate}
 
 %___________________________NEW SLIDE______________________________________
 
-\subsection{err}
+\section{Sensitivity Analysis}
+\subsection{sense}
 %
-\begin{frame}{Next Steps}
+\begin{frame}{Uncertainty in Inter-Atomic Potential}
+
+\textsc{Objectives}
 
 \begin{itemize}
-\myitem Dimension reduction through Local Sensivity Analysis.
-\vspace{2mm}
-\myitem Estimate posterior distributions for significant potential function parameters.
-\vspace{2mm}
-\myitem Discover a potential active subspace.
+\myitem Relative importance of potential field parameters using sensitivity analysis.
+\vspace{1mm}
+\myitem Assess variability in thermal conductivity estimates due to
+perturbations in the potential field (Forward Problem). 
+
+\be
+\Phi(A,B,p,q,a,\lambda,\gamma) \mapsto k \nonumber
+\ee
+
+\vspace{1mm}
+\myitem Robust calibration of the potential field parameters in a Bayesian setting.
+
+\end{itemize}
+
+\textsc{Challenges}
+
+\begin{itemize}
+\myitem Global sensitivity analysis and the forward problem are computationally intractable.
+\vspace{1mm}
+\myitem Explore the applicability of a derivative-based sensitivity measure to reduce the
+dimensionality of the problem. 
 \end{itemize}
 
 \end{frame}
 
 
+%___________________________NEW SLIDE______________________________________
+
+\subsection{sense}
+%
+\begin{frame}{Derivative-based Global Sensitivity Measures}
+
+\textsc{Motivation}
+
+\begin{itemize}
+\myitem Sensitivity analysis based on Sobol indices is commonly used to determine
+relative importance of the parameters. 
+\vspace{2mm}
+\myitem Sobol sensitivity indices are compute intensive:
+\begin{equation}
+ \mathcal{T}(\theta_i) = \frac{\mathbb{E}_{\bm{\theta}\sim i}[\mathbb{V}_{\theta_i}(\mathcal{G}|\bm{\theta}_{\sim i})]}{\mathbb{V}(\mathcal{G})} \nonumber
+\end{equation}
+\vspace{2mm}
+\myitem Bounds on Sobol indices can be computed easily using DGSM and are shown to converge at a 
+much faster rate. 
+
+\end{itemize}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{sense}
+%
+\begin{frame}{Derivative-based Global Sensitivity Measures}
+
+\textsc{Background}
+
+\begin{itemize}
+
+\myitem DGSM for Randomly distributed parameters 
+\footnotesize{[Sobol and Kucherenko, 2009]}:\vspace{2mm}
+
+\normalsize
+\be
+\mu_i = \mathbb{E}\left[\left(\frac{\partial G(\bm{x})}{\partial x_i}\right)^{2}\right]
+\nonumber
+\ee
+
+where,
+
+\be
+\frac{\partial G(\bm{x}^{\ast})}{\partial x_i} = \lim_{\delta\to 0}
+\frac{[G(x_1^{*},\ldots,x_{i-1}^{*},x_i^{*}+\delta,x_{i+1}^{*},\ldots,x_d^{*}) - G(\bm{x}^{*})]}{\delta} \nonumber
+\ee
+
+\myitem Total number of model realizations required to compute $\mu_i$ using $N$ samples
+is $N(d+1)$.
 
 
+\end{itemize}
+
+\end{frame}
 
 
+%___________________________NEW SLIDE______________________________________
+
+\subsection{sense}
+%
+\begin{frame}{Derivative-based Global Sensitivity Measures}
+
+\textsc{Background}
+
+\begin{itemize}
+
+\myitem Upper bound on Sobol Total Effect index 
+($ST_i$)~\footnotesize{[Sobol and Kucherenko, 2009]}:
+
+\normalsize
+\be
+ST_i \leq \frac{\mathcal{C}_i\mu_i}{V}~(\propto \hat{\mathcal{C}_i\mu_i}) \nonumber
+\ee
+
+\be
+\hat{\mathcal{C}_i\mu_i} = \frac{\mathcal{C}_i\mu_i}{\sum_i \mathcal{C}_i\mu_i} \nonumber
+\ee
+\begin{center}
+\tiny {$\mathcal{C}$: Poincar\'e Constant\hspace{3mm}  $V$: Variance}
+\end{center}
+
+\normalsize
+\vspace{2mm}
+\myitem The Poincar\'e Constant is specific to a given probability distribution:
+
+\vspace{1mm}
+\begin{center}
+{\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{1.5cm}|p{1.5cm}|}
+ \hline
+\footnotesize $\mathcal{U}[a,b]$ & \footnotesize $(b-a)^{2}/\pi^2$ \\ \hline
+\footnotesize $\mathcal{N}(\mu,\sigma^2)$ & \footnotesize $\sigma^2$ \\ \hline
+\end{tabular}
+}
+\end{center}
+
+\end{itemize}
+
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{sense}
+\begin{frame}{Algorithm: Parameter Screening}
+%\textsc{Algorithm}
+%\vspace{10mm}
+\begin{algorithm}[H]
+\SetAlgoLined
+%\nonl \scriptsize{\textsc{Part I: Parameter Screening}}
+\scriptsize
+%\nonl \textbf{\texttt{Part I: Parameter Screening}}\;
+\texttt{Generate $n_1$ points in $\mathbb{R}^{d}$}\;
+\texttt{Compute $UB_i$ for parameters $\theta_i$ 
+using $n_1$ points}\;
+\nonl\scriptsize\texttt{\color{blue}$\%~NF$ = $n_1(d+1)$,~$NF$:~Number of
+model realizations}\;
+%\normalsize
+\texttt{Rank Parameters $(\theta_i)$ based on $UB_i$ estimates 
+($\mathcal{R}^{\tiny {old}}$)}\;
+\texttt{set $k$ = 1}
+\scriptsize\texttt{\color{blue}$\%$~$k$:~Iteration counter}\;
+%\normalsize
+\Repeat{\texttt{$\mathcal{R}^{\tiny{new}}$ $\neq$ $\mathcal{R}^{\tiny{old}}$}}{
+\texttt{Generate $\beta n_1$ new points in $\mathbb{R}^{d}$ ($\beta n_1\in\mathbb{Z}$)}\;
+\texttt{Compute $UB_i^{\tiny{new}}$ using (1+$\beta k)n_1$ points}\;
+\nonl\scriptsize\texttt{\color{blue}$\%~NF$ = $(1+\beta k)n_1(d+1)$}\;
+%\normalsize
+\texttt{Rank Parameters based on $UB_i^{\tiny{new}}$ estimates
+($\mathcal{R}^{\tiny{new}}$)}\;
+\If {(\texttt{$\mathcal{R}^{\tiny{new}}$ = $\mathcal{R}^{\tiny{old}}$})}{
+\texttt{Compute: $r_i$ = $\frac{UB_i^{\tiny{new}}}{max(UB_i^{\tiny{new}})}$}\;
+\texttt{Construct a set $s$ = $\{\theta_i~\ni~r_i<\alpha\}$}\;
+\texttt{Exit the loop}\;
+}
+\texttt{set $k$ = $k$ + 1}\;
+}
+\texttt{Construct a validation set: ($\bm{\theta}_j$,$\mathcal{M}(\bm{\theta}_j)$),
+$j$=1,2,$\ldots$,$NF$}\;
+\end{algorithm}
+\end{frame}
+
+%
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{sense}
+\begin{frame}{Parameter Screening}
+
+\begin{center}
+\begin{tikzpicture}
+%\hspace{-5mm}
+\tiny
+\node (case_5) [outer]{$\hat{\mathcal{C}_i\mu_i}$: 5 Samples};
+\node (gamma5) [gamma,below of=case_5,yshift=0.2cm] {$\gamma$: 0.3023};
+\node (A5) [A, below of=gamma5,yshift=0.2cm] {$A$: 0.2066};
+\node (alpha5) [alpha, below of=A5,yshift=0.2cm] {$\alpha$: 0.1795};
+\node (q5) [q, below of=alpha5,yshift=0.2cm] {$q$: 0.1172};
+\node (p5) [p, below of=q5,yshift=0.2cm] {$p$: 0.1137};
+\node (lambda5) [lambda, below of=p5,yshift=0.2cm] {$\lambda$: 0.0438};
+\node (B5) [B, below of=lambda5,yshift=0.2cm] {$B$: 0.0369};
+\node (pool5) [pool, below of=q5,yshift=-0.6cm]{};
+
+\node (case_10) [outer,right of=case_5,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
+10 Samples};
+\node (gamma10) [gamma, right of=gamma5,xshift=2.5cm] {$\gamma$: 0.2537};
+\node (alpha10) [alpha, right of=A5,xshift=2.5cm] {$\alpha$: 0.2176};
+\node (A10) [A, right of=alpha5,xshift=2.5cm] {$A$: 0.2008};
+\node (B10) [B, right of=q5,xshift=2.5cm] {$B$: 0.0958};
+\node (p10) [p, right of=p5,xshift=2.5cm] {$p$: 0.0896};
+\node (q10) [q, right of=lambda5,xshift=2.5cm] {$q$: 0.0759};
+\node (lambda10) [lambda, right of=B5,xshift=2.5cm] {$\lambda$: 0.0666};
+\node (pool) [pool, below of=B10,yshift=-0.6cm]{};
 
 
+\node (case_15) [outer,right of=case_10,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
+15 Samples};
+\node (gamma15) [gamma, right of=gamma10,xshift=2.5cm] {$\gamma$: 0.6436};
+\node (B15) [B, right of=alpha10,xshift=2.5cm] {$B$: 0.1088};
+\node (alpha15) [alpha, right of=A10,xshift=2.5cm] {$\alpha$: 0.1085};
+\node (A15) [A, right of=B10,xshift=2.5cm] {$A$: 0.0699};
+\node (q15) [q, right of=p10,xshift=2.5cm] {$q$: 0.0691};
+\node (p15) [p, right of=q10,xshift=2.5cm] {$p$: 0.0000};
+\node (lambda15) [lambda, right of=lambda10,xshift=2.5cm] {$\lambda$: 0.0000};
+\node (pool) [pool, below of=A15,yshift=-0.6cm]{};
 
+\end{tikzpicture}
+\end{center}
 
-
-
-
+\end{frame}
 
 \end{document}
