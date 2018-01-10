@@ -391,8 +391,8 @@ a Bayesian setting using experimental data.
 {\rowcolors{1}{DeepSkyBlue!20}{DeepSkyBlue!5}
 	\resizebox{\columnwidth}{!}{
   \begin{tabular}{|l|c|}\hline
-	  Lattice Constant ($\angstrom$) & 5.43 \\
-	  $W$, $H$ ($\angstrom$) & 117.94, 117.94 \\
+	  Lattice Constant, $a$ ($\angstrom$) & 5.43 \\
+	  $W$, $H$ ($\angstrom$) & 22$a$, 22$a$ \\
 	  Temperature (K) & 300 \\
 	  $\Delta t$ (ps) & 0.0005 \\
 	  BC & Periodic \\
@@ -414,6 +414,8 @@ a Bayesian setting using experimental data.
 %        {./animation/snap}{0}{64}
 \begin{figure}[htbp]
         \includegraphics[width=0.9\textwidth]{./Figures/snap0}
+\\
+\tiny {$L$ = 50$a$, $N$ $\approx$ 200000 atoms}
 \end{figure}
 
 \end{center}
@@ -443,6 +445,9 @@ $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
 \\ \vspace{1mm}
 \tiny \hspace{-5mm}[Eqilibrate system to 300 K] \hspace{1mm} [Equilibrate thermostats] \hspace{4mm}
  [Generate Data]
+\\ \vspace{1mm}
+
+\tiny{N: Number of Atoms~~~V: Volume~~~T: Temperature~~~E: Energy}
 
 \end{center}
 
@@ -886,6 +891,15 @@ model realizations}\;
 \texttt{Construct a validation set: ($\bm{\theta}_j$,$\mathcal{M}(\bm{\theta}_j)$),
 $j$=1,2,$\ldots$,$NF$}\;
 \end{algorithm}
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{sense}
+\begin{frame}{MD Simulation}
+
+
+
 \end{frame}
 
 %
