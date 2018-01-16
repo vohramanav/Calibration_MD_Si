@@ -156,22 +156,22 @@ color(3cm)=(LightSlateGrey!15)
  \newcommand{\argmax}{\operatornamewithlimits{arg\,max}}
 
 %-----------Parameter screening tikz styles -----------------------
-   \tikzstyle{A} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+   \tikzstyle{A} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
      fill=blue!30]
-      \tikzstyle{B} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+      \tikzstyle{B} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
      fill=red!30]
-      \tikzstyle{p} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+      \tikzstyle{p} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
      fill=yellow!30]
-      \tikzstyle{q} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+      \tikzstyle{q} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
      fill=green!30]
-      \tikzstyle{alpha} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+      \tikzstyle{alpha} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
      fill=magenta!30]
-      \tikzstyle{lambda} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+      \tikzstyle{lambda} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
      fill=cyan!30]
-      \tikzstyle{gamma} = [rectangle, rounded corners, minimum width=2cm, minimum height=0.5cm,text centered, draw=black,
+      \tikzstyle{gamma} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
      fill=orange!30]
- \tikzstyle{outer} = [rectangle, minimum width=2.cm, minimum height=0.5cm,text centered, draw=black,dashed]    
- \tikzstyle{pool} = [rectangle, minimum width=2.5cm, minimum height=2.4cm,line width=1pt,
+ \tikzstyle{outer} = [rectangle, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,dashed]    
+ \tikzstyle{pool} = [rectangle, minimum width=2.0cm, minimum height=4.0cm,line width=1pt,
 text centered, draw=black,dashed]    
 
 %% Algorithm %%%%%
@@ -913,37 +913,52 @@ $j$=1,2,$\ldots$,$NF$}\;
 %\hspace{-5mm}
 \tiny
 \node (case_5) [outer]{$\hat{\mathcal{C}_i\mu_i}$: 5 Samples};
-\node (gamma5) [gamma,below of=case_5,yshift=0.2cm] {$\gamma$: 0.3023};
-\node (A5) [A, below of=gamma5,yshift=0.2cm] {$A$: 0.2066};
-\node (alpha5) [alpha, below of=A5,yshift=0.2cm] {$\alpha$: 0.1795};
-\node (q5) [q, below of=alpha5,yshift=0.2cm] {$q$: 0.1172};
-\node (p5) [p, below of=q5,yshift=0.2cm] {$p$: 0.1137};
-\node (lambda5) [lambda, below of=p5,yshift=0.2cm] {$\lambda$: 0.0438};
-\node (B5) [B, below of=lambda5,yshift=0.2cm] {$B$: 0.0369};
-\node (pool5) [pool, below of=q5,yshift=-0.6cm]{};
+\node (gamma5) [gamma,below of=case_5,yshift=0.2cm] {$\gamma$: 0.3018};
+\node (A5) [A, below of=gamma5,yshift=0.2cm] {$A$: 0.2089};
+\node (alpha5) [alpha, below of=A5,yshift=0.2cm] {$\alpha$: 0.1765};
+\node (p5) [p, below of=alpha5,yshift=0.2cm] {$p$: 0.1175};
+\node (q5) [q, below of=p5,yshift=0.2cm] {$q$: 0.1137};
+\node (lambda5) [lambda, below of=q5,yshift=0.2cm] {$\lambda$: 0.0443};
+\node (B5) [B, below of=lambda5,yshift=0.2cm] {$B$: 0.0373};
+%\node (pool5) [pool, below of=q5,yshift=-0.6cm]{};
+\hspace{-5mm}
 
 \node (case_10) [outer,right of=case_5,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
 10 Samples};
-\node (gamma10) [gamma, right of=gamma5,xshift=2.5cm] {$\gamma$: 0.2537};
-\node (alpha10) [alpha, right of=A5,xshift=2.5cm] {$\alpha$: 0.2176};
-\node (A10) [A, right of=alpha5,xshift=2.5cm] {$A$: 0.2008};
-\node (B10) [B, right of=q5,xshift=2.5cm] {$B$: 0.0958};
-\node (p10) [p, right of=p5,xshift=2.5cm] {$p$: 0.0896};
-\node (q10) [q, right of=lambda5,xshift=2.5cm] {$q$: 0.0759};
-\node (lambda10) [lambda, right of=B5,xshift=2.5cm] {$\lambda$: 0.0666};
-\node (pool) [pool, below of=B10,yshift=-0.6cm]{};
+\node (gamma10) [gamma, right of=gamma5,xshift=2.5cm] {$\gamma$: 0.2531};
+\node (alpha10) [alpha, right of=A5,xshift=2.5cm] {$\alpha$: 0.2170};
+\node (A10) [A, right of=alpha5,xshift=2.5cm] {$A$: 0.2014};
+\node (B10) [B, right of=q5,xshift=2.5cm] {$B$: 0.0964};
+\node (p10) [p, right of=p5,xshift=2.5cm] {$p$: 0.0916};
+\node (q10) [q, right of=lambda5,xshift=2.5cm] {$q$: 0.0741};
+\node (lambda10) [lambda, right of=B5,xshift=2.5cm] {$\lambda$: 0.0664};
+%\node (pool) [pool, below of=B10,yshift=-0.6cm]{};
 
+\hspace{-5mm}
 
 \node (case_15) [outer,right of=case_10,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
 15 Samples};
-\node (gamma15) [gamma, right of=gamma10,xshift=2.5cm] {$\gamma$: 0.6436};
-\node (B15) [B, right of=alpha10,xshift=2.5cm] {$B$: 0.1088};
-\node (alpha15) [alpha, right of=A10,xshift=2.5cm] {$\alpha$: 0.1085};
-\node (A15) [A, right of=B10,xshift=2.5cm] {$A$: 0.0699};
-\node (q15) [q, right of=p10,xshift=2.5cm] {$q$: 0.0691};
+\node (q15) [q, right of=gamma10,xshift=2.5cm] {$q$: 0.4999};
+\node (gamma15) [gamma, right of=alpha10,xshift=2.5cm] {$\gamma$: 0.4968};
+\node (alpha15) [alpha, right of=A10,xshift=2.5cm] {$\alpha$: 0.0031};
+\node (A15) [A, right of=B10,xshift=2.5cm] {$A$: 0.0001};
+\node (B15) [B, right of=p10,xshift=2.5cm] {$B$: 0.0001};
 \node (p15) [p, right of=q10,xshift=2.5cm] {$p$: 0.0000};
 \node (lambda15) [lambda, right of=lambda10,xshift=2.5cm] {$\lambda$: 0.0000};
-\node (pool) [pool, below of=A15,yshift=-0.6cm]{};
+\node (pool) [pool, below of=gamma15,yshift=-1.4cm]{};
+
+\hspace{-5mm}
+
+\node (case_20) [outer,right of=case_15,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
+20 Samples};
+\node (q20) [q, right of=q15,xshift=2.5cm] {$q$: 0.4999};
+\node (gamma20) [gamma, right of=gamma15,xshift=2.5cm] {$\gamma$: 0.4967};
+\node (alpha20) [alpha, right of=alpha15,xshift=2.5cm] {$\alpha$: 0.0031};
+\node (A20) [A, right of=A15,xshift=2.5cm] {$A$: 0.0001};
+\node (B20) [B, right of=B15,xshift=2.5cm] {$B$: 0.0001};
+\node (p20) [p, right of=p15,xshift=2.5cm] {$p$: 0.0000};
+\node (lambda20) [lambda, right of=lambda15,xshift=2.5cm] {$\lambda$: 0.0000};
+\node (pool) [pool, below of=gamma20,yshift=-1.4cm]{};
 
 \end{tikzpicture}
 \end{center}
