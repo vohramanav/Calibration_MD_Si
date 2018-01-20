@@ -171,7 +171,7 @@ color(3cm)=(LightSlateGrey!15)
       \tikzstyle{gamma} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
      fill=orange!30]
  \tikzstyle{outer} = [rectangle, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,dashed]    
- \tikzstyle{pool} = [rectangle, minimum width=2.0cm, minimum height=4.0cm,line width=1pt,
+ \tikzstyle{pool} = [rectangle, minimum width=2.0cm, minimum height=2.4cm,line width=1pt,
 text centered, draw=black,dashed]    
 
 %% Algorithm %%%%%
@@ -435,9 +435,9 @@ a Bayesian setting using experimental data.
 %___________________________NEW SLIDE______________________________________
 
 \subsection{setup}
-\begin{frame}{Optimize for Equilibration}
+\begin{frame}{Direct Method}
 
-\vspace{-4mm}
+%\vspace{-4mm}
 \begin{center}
 
 {\color{green}NVT} \hspace{5mm} $\rightarrow$ \hspace{5mm} {\color{cyan}NVE} \hspace{5mm}
@@ -448,19 +448,27 @@ $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
 \\ \vspace{1mm}
 
 \tiny{N: Number of Atoms~~~V: Volume~~~T: Temperature~~~E: Energy}
-
 \end{center}
+
+\normalsize
+\textsc{Observable}: Average energy exchange b/w thermostats ($q$)
+\\ \vspace{2mm}
+\textsc{QoI}: Bulk thermal conductivity ($\kappa$)
+
+\begin{empheq}[box=\tcbhighmath]{align}
+  \kappa = \frac{q}{\left|\frac{dT}{dx}\right|} \nonumber
+\end{empheq}
+
 
 \vspace{3mm}
 \textsc{Initial Runs}:
 
 \begin{itemize}
-\myitem Determine the time steps needed for equilibration at all stages. 
-\vspace{2mm}
-
+\myitem Determine the time steps needed for equilibration. 
+\vspace{1mm}
 \myitem Select a {\color{blue}reasonable} width and height for the Si bar.
 \begin{itemize}
-\item Need to be in a regime where changes in width and height do not impact estimates significantly.   
+\item Small fluctuations due to changes in height and width.    
 \end{itemize}
 
 \end{itemize}
@@ -617,10 +625,11 @@ construct the PC surrogate.
 
 \begin{center}
 \begin{empheq}[box=\tcbhighmath]{align}
-  \kappa = \sum_j c_j\Psi_j(\xi_1,\xi_2) \nonumber
+  \epsilon (= |\kappa_m - \kappa_{\mbox{\tiny{MD}}}|) = \sum_j c_j\Psi_j(\xi_1,\xi_2) \nonumber
 \end{empheq}
 
-\tiny {$\kappa$: Thermal Conductivity, $j$: Multi-index}
+\small {$\kappa_m$: \tiny{Measured}\small, $\kappa_{\mbox{\tiny{MD}}}$: 
+\tiny{MD Prediction}\small, $j$: \tiny{Multi-index}}
 \end{center}
 
 \end{column}
@@ -654,18 +663,7 @@ $\frac{dT}{dx}$:~$\mathcal{U}[1.5/L_c,2.5/L_c]~(\frac{K}{\angstrom})~~\rightarro
 %
 \begin{columns}
 \begin{column}{0.5\textwidth}
-\vspace{-8mm}
-\begin{center}
-\tiny{
-\begin{empheq}[box=\tcbhighmath]{align}
-  \epsilon = |\kappa_m - \kappa_{\tiny NEMD}| \nonumber
-\end{empheq}
-}
-\tiny{$\kappa_m$: Measured Thermal Conductivity\\ $\kappa_{\tiny NEMD}$: MD Prediction}
-\end{center}
-
-\normalsize
-\vspace{-2mm}
+%\vspace{-8mm}
 \textsc{Accuracy}:
 \vspace{-2mm}
 
@@ -675,7 +673,7 @@ $\frac{dT}{dx}$:~$\mathcal{U}[1.5/L_c,2.5/L_c]~(\frac{K}{\angstrom})~~\rightarro
   \includegraphics[width=0.65\textwidth]{./Figures/err2D_s}
 \end{figure}
 
-\vspace{-6mm}
+\vspace{-2mm}
 %\tiny{
 %\begin{empheq}[box=1.2\tcbhighmath]{align}
 %  \alpha = \frac{\left[ \sum_j \left(\mathcal{G}\left(L(\xi_{1_j}),\frac{dT}{dx}(\xi_{2_j})\right) - \sum_k c_k\Psi_k(\xi_{1_j},\xi_{2_j})\right)^2\right]^{\frac{1}{2}}}{\left[\sum_j\left(\mathcal{G}\left(L(\xi_{1_j}),\frac{dT}{dx}(\xi_{2_j})\right)\right)^2\right]^{\frac{1}{2}}} \nonumber
@@ -898,7 +896,21 @@ $j$=1,2,$\ldots$,$NF$}\;
 \subsection{sense}
 \begin{frame}{MD Simulation}
 
+\begin{center}
 
+{\color{blue}NPT} \hspace{5mm} $\rightarrow$ \hspace{5mm} {\color{green}NVT} \hspace{5mm} $\rightarrow$ \hspace{5mm} {\color{cyan}NVE} \hspace{5mm} $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
+\\ \vspace{1mm}
+\tiny [Relax System Length] \hspace{2mm}[Equilibrate system to 300 K] \hspace{1mm} [Equilibrate thermostats] \hspace{4mm}
+ [Generate Data]
+\\ \vspace{1mm}
+
+\tiny{N: Number of Atoms~~~P: Pressure~~~V: Volume~~~T: Temperature~~~E: Energy}
+\end{center}
+
+
+\begin{figure}[htbp]
+   \includegraphics[width=0.65\textwidth]{./Figures/lx_npt}
+\end{figure}
 
 \end{frame}
 
@@ -910,55 +922,82 @@ $j$=1,2,$\ldots$,$NF$}\;
 
 \begin{center}
 \begin{tikzpicture}
-%\hspace{-5mm}
-\tiny
-\node (case_5) [outer]{$\hat{\mathcal{C}_i\mu_i}$: 5 Samples};
-\node (gamma5) [gamma,below of=case_5,yshift=0.2cm] {$\gamma$: 0.3018};
-\node (A5) [A, below of=gamma5,yshift=0.2cm] {$A$: 0.2089};
-\node (alpha5) [alpha, below of=A5,yshift=0.2cm] {$\alpha$: 0.1765};
-\node (p5) [p, below of=alpha5,yshift=0.2cm] {$p$: 0.1175};
-\node (q5) [q, below of=p5,yshift=0.2cm] {$q$: 0.1137};
-\node (lambda5) [lambda, below of=q5,yshift=0.2cm] {$\lambda$: 0.0443};
-\node (B5) [B, below of=lambda5,yshift=0.2cm] {$B$: 0.0373};
-%\node (pool5) [pool, below of=q5,yshift=-0.6cm]{};
 \hspace{-5mm}
+\tiny
+%\node (case_5) [outer]{$\hat{\mathcal{C}_i\mu_i}$: 5 Samples};
+%\node (gamma5) [gamma,below of=case_5,yshift=0.2cm] {$\gamma$: 0.3018};
+%\node (A5) [A, below of=gamma5,yshift=0.2cm] {$A$: 0.2089};
+%\node (alpha5) [alpha, below of=A5,yshift=0.2cm] {$\alpha$: 0.1765};
+%\node (p5) [p, below of=alpha5,yshift=0.2cm] {$p$: 0.1175};
+%\node (q5) [q, below of=p5,yshift=0.2cm] {$q$: 0.1137};
+%\node (lambda5) [lambda, below of=q5,yshift=0.2cm] {$\lambda$: 0.0443};
+%\node (B5) [B, below of=lambda5,yshift=0.2cm] {$B$: 0.0373};
+%%\node (pool5) [pool, below of=q5,yshift=-0.6cm]{};
+%\hspace{-10mm}
 
-\node (case_10) [outer,right of=case_5,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
-10 Samples};
-\node (gamma10) [gamma, right of=gamma5,xshift=2.5cm] {$\gamma$: 0.2531};
-\node (alpha10) [alpha, right of=A5,xshift=2.5cm] {$\alpha$: 0.2170};
-\node (A10) [A, right of=alpha5,xshift=2.5cm] {$A$: 0.2014};
-\node (B10) [B, right of=q5,xshift=2.5cm] {$B$: 0.0964};
-\node (p10) [p, right of=p5,xshift=2.5cm] {$p$: 0.0916};
-\node (q10) [q, right of=lambda5,xshift=2.5cm] {$q$: 0.0741};
-\node (lambda10) [lambda, right of=B5,xshift=2.5cm] {$\lambda$: 0.0664};
+%\node (case_10) [outer,right of=case_5,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
+%10 Samples};
+\node (case_10) [outer]{$\hat{\mathcal{C}_i\mu_i}$: 10 Samples};
+\node (gamma10) [gamma, below of=case_10,yshift=0.2cm] {$\gamma$: 0.2531};
+\node (alpha10) [alpha, below of=gamma10,yshift=0.2cm] {$\alpha$: 0.2170};
+\node (A10) [A, below of=alpha10,yshift=0.2cm] {$A$: 0.2014};
+\node (B10) [B, below of=A10,yshift=0.2cm] {$B$: 0.0964};
+\node (p10) [p, below of=B10,yshift=0.2cm] {$p$: 0.0916};
+\node (q10) [q, below of=p10,yshift=0.2cm] {$q$: 0.0741};
+\node (lambda10) [lambda, below of=q10,yshift=0.2cm] {$\lambda$: 0.0664};
 %\node (pool) [pool, below of=B10,yshift=-0.6cm]{};
 
-\hspace{-5mm}
+\hspace{-10mm}
 
 \node (case_15) [outer,right of=case_10,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
 15 Samples};
-\node (q15) [q, right of=gamma10,xshift=2.5cm] {$q$: 0.4999};
-\node (gamma15) [gamma, right of=alpha10,xshift=2.5cm] {$\gamma$: 0.4968};
-\node (alpha15) [alpha, right of=A10,xshift=2.5cm] {$\alpha$: 0.0031};
-\node (A15) [A, right of=B10,xshift=2.5cm] {$A$: 0.0001};
-\node (B15) [B, right of=p10,xshift=2.5cm] {$B$: 0.0001};
-\node (p15) [p, right of=q10,xshift=2.5cm] {$p$: 0.0000};
-\node (lambda15) [lambda, right of=lambda10,xshift=2.5cm] {$\lambda$: 0.0000};
-\node (pool) [pool, below of=gamma15,yshift=-1.4cm]{};
+\node (gamma15) [gamma, right of=gamma10,xshift=2.5cm] {$\gamma$: 0.2031};
+\node (alpha15) [alpha, right of=alpha10,xshift=2.5cm] {$\alpha$: 0.1748};
+\node (A15) [A, right of=A10,xshift=2.5cm] {$A$: 0.1513};
+\node (B15) [B, right of=B10,xshift=2.5cm] {$B$: 0.1344};
+\node (p15) [p, right of=p10,xshift=2.5cm] {$p$: 0.1272};
+\node (q15) [q, right of=q10,xshift=2.5cm] {$q$: 0.1241};
+\node (lambda15) [lambda, right of=lambda10,xshift=2.5cm] {$\lambda$: 0.0851};
+%\node (pool) [pool, below of=gamma15,yshift=-1.4cm]{};
 
-\hspace{-5mm}
+\hspace{-10mm}
 
 \node (case_20) [outer,right of=case_15,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
 20 Samples};
-\node (q20) [q, right of=q15,xshift=2.5cm] {$q$: 0.4999};
-\node (gamma20) [gamma, right of=gamma15,xshift=2.5cm] {$\gamma$: 0.4967};
-\node (alpha20) [alpha, right of=alpha15,xshift=2.5cm] {$\alpha$: 0.0031};
-\node (A20) [A, right of=A15,xshift=2.5cm] {$A$: 0.0001};
-\node (B20) [B, right of=B15,xshift=2.5cm] {$B$: 0.0001};
-\node (p20) [p, right of=p15,xshift=2.5cm] {$p$: 0.0000};
-\node (lambda20) [lambda, right of=lambda15,xshift=2.5cm] {$\lambda$: 0.0000};
-\node (pool) [pool, below of=gamma20,yshift=-1.4cm]{};
+\node (gamma20) [gamma, right of=gamma15,xshift=2.5cm] {$\gamma$: 0.1952};
+\node (alpha20) [alpha, right of=alpha15,xshift=2.5cm] {$\alpha$: 0.1608};
+\node (q20) [q, right of=A15,xshift=2.5cm] {$q$: 0.1477};
+\node (lambda20) [lambda, right of=B15,xshift=2.5cm] {$\lambda$: 0.1299};
+\node (A20) [A, right of=p15,xshift=2.5cm] {$A$: 0.1260};
+\node (B20) [B, right of=q15,xshift=2.5cm] {$B$: 0.1215};
+\node (p20) [p, right of=lambda15,xshift=2.5cm] {$p$: 0.1189};
+\node (pool) [pool, below of=lambda20,yshift=-0.6cm]{};
+
+\hspace{-10mm}
+
+\node (case_25) [outer,right of=case_20,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
+25 Samples};
+\node (gamma25) [gamma, right of=gamma20,xshift=2.5cm] {$\gamma$: 0.2075};
+\node (alpha25) [alpha, right of=alpha20,xshift=2.5cm] {$\alpha$: 0.1495};
+\node (q25) [q, right of=q20,xshift=2.5cm] {$q$: 0.1493};
+\node (lambda25) [lambda, right of=lambda20,xshift=2.5cm] {$\lambda$: 0.1392};
+\node (A25) [A, right of=A20,xshift=2.5cm] {$A$: 0.1217};
+\node (B25) [B, right of=B20,xshift=2.5cm] {$B$: 0.1175};
+\node (p25) [p, right of=p20,xshift=2.5cm] {$p$: 0.1153};
+\node (pool) [pool, below of=lambda25,yshift=-0.6cm]{};
+
+\hspace{-10mm}
+
+\node (case_30) [outer,right of=case_25,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
+30 Samples};
+\node (gamma30) [gamma, right of=gamma25,xshift=2.5cm] {$\gamma$: 0.2024};
+\node (alpha30) [alpha, right of=alpha25,xshift=2.5cm] {$\alpha$: 0.1487};
+\node (lambda30) [lambda, right of=q25,xshift=2.5cm] {$\lambda$: 0.1424};
+\node (q30) [q, right of=lambda25,xshift=2.5cm] {$q$: 0.1404};
+\node (A30) [A, right of=A25,xshift=2.5cm] {$A$: 0.1395};
+\node (B30) [B, right of=B25,xshift=2.5cm] {$B$: 0.1142};
+\node (p30) [p, right of=p25,xshift=2.5cm] {$p$: 0.1125};
+\node (pool) [pool, below of=q30,yshift=-0.6cm]{};
 
 \end{tikzpicture}
 \end{center}
