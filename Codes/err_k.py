@@ -40,7 +40,7 @@ if __name__ == "__main__":
   data = f1.readlines()
   nr = np.array(data).shape[0]
   e1,e2,l,dTdx = [],[],[],[]
-  samples_qoi,x_data,y_data = np.zeros((nr,3)),np.zeros((nr,2)),np.zeros((nr,1))
+  samples_qoi,x_data,y_data = np.zeros((nr,4)),np.zeros((nr,2)),np.zeros((nr,1))
   for line in data:
     p = line.split()
     e1.append(float(p[0]))
@@ -74,6 +74,7 @@ if __name__ == "__main__":
   #print (k)
   err_k = abs(k-km)
   samples_qoi[:,2] = err_k[:,0]
+  samples_qoi[:,3] = k[:,0]
   #samples_qoi[:,2] = k[:,0]
   y_data[:,0] = samples_qoi[:,2]
   np.savetxt('samples_qoi.txt',samples_qoi,fmt='%5.4f')
@@ -111,5 +112,5 @@ if __name__ == "__main__":
   #ax.grid(color='k', linestyle='--', alpha=0.5,linewidth=1)
   ax.tick_params(labelsize=18)
   plt.gca().set_aspect('equal', adjustable='box')
-  plt.title (r'$\mathrm{\epsilon_k~=~k_{m} - k_{MD}~ at~300~K}$',fontsize=18)
+  plt.title (r'$\mathrm{\epsilon_k~=~k_{m} - k_{MD}~ at~1000~K}$',fontsize=18)
   fig.savefig('k_plot.pdf')
