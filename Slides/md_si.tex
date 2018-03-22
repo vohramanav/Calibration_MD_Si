@@ -378,7 +378,7 @@ a Bayesian setting using experimental data.
 
 %___________________________NEW SLIDE______________________________________
 
-\section{\scshape Problem Set-up}
+\section{\scshape Set-up}
 \subsection{setup}
 \begin{frame}{NEMD on a Silicon Bar}
 
@@ -550,7 +550,7 @@ $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
 
 %___________________________NEW SLIDE______________________________________
 
-\section{\scshape Error Response Surface}
+\section{\scshape Error Response}
 \subsection{err}
 \begin{frame}{Need a Surrogate$?$}
 
@@ -743,7 +743,7 @@ $\mathcal{G}_M$: Model Output\hspace{5mm}$\mathcal{G}_{PCE}$: PCE Estimate}
 
 %___________________________NEW SLIDE______________________________________
 
-\section{\scshape Sensitivity Analysis}
+\section{\scshape Sensitivity}
 \subsection{sense}
 %
 \begin{frame}{Uncertainty in Inter-Atomic Potential}
@@ -1189,6 +1189,44 @@ $\mathcal{A}$: Sparse basis
 
 %%___________________________NEW SLIDE______________________________________
 %
+\section{\scshape Likelihood}
+\subsection{like}
+\begin{frame}{Likelihood}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\scriptsize{Bayes' rule:}
+
+\be
+\mathcal{P}(\alpha,\gamma\vert \kappa) \propto \mathcal{P}(\kappa\vert
+ \alpha,\gamma)\mathcal{P}(\alpha)\mathcal{P}(\gamma) \nonumber
+\ee
+
+\be
+\mathcal{P}(\alpha) \sim \mathcal{U}[1.62,1.98] \nonumber
+\ee
+
+\be
+\mathcal{P}(\gamma) \sim \mathcal{U}[1.08,1.32] \nonumber
+\ee
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{center}
+
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/gl}
+\end{figure}
+\end{center}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
 \section{\scshape Subspace}
 \subsection{subspace}
 \begin{frame}{Active Subspace}
@@ -1196,9 +1234,31 @@ $\mathcal{A}$: Sparse basis
 \begin{columns}
 \begin{column}{0.5\textwidth}
 
+\scriptsize{Positive Semi-definite Matrix}:
 \be
-\mathcal{C} = \frac{1}{N}\sum_{i=1}^{N} \nabla_{\bm{x}}f_i\nabla_{\bm{x}}f_i^T = 
-\bm{W}\Lambda\bm{W}^{T} \nonumber
+\mathcal{C} = \int \nabla f(\bm{x})\nabla f(\bm{x})^{T}\rho(\bm{x})d\bm{x} = \bm{W}\Lambda\bm{W}^T
+\nonumber
+\ee
+
+%\vspace{1mm}
+\scriptsize{Partition of Eigenpairs}:
+\begin{gather}
+\Lambda = 
+\begin{bmatrix}
+\Lambda_1 & \\ & \Lambda_2 \nonumber
+\end{bmatrix},~~\bm{W} = \left[\bm{W}_1~\bm{W}_2\right]
+\end{gather}
+%\vspace{1mm}
+
+\scriptsize{MC Integration}:
+\be
+\mathcal{C} \approx \hat{\mathcal{C}} = \frac{1}{N}\sum_{i=1}^{N} \nabla_{\bm{x}}f_i\nabla_{\bm{x}}f_i^T = 
+\hat{\bm{W}}\hat{\Lambda}\hat{\bm{W}}^{T} \nonumber
+\ee
+
+\vspace{-1mm}
+\be
+f(\bm{x}) \approx g(\bm{W}_1^T\bm{x}) \nonumber
 \ee
 
 \end{column}
@@ -1208,6 +1268,102 @@ $\mathcal{A}$: Sparse basis
 \begin{center}
 \begin{figure}[htbp]
         \includegraphics[width=1.0\textwidth]{./Figures/eig}
+\end{figure}
+\end{center}
+
+
+\end{column}
+\end{columns}
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{subspace}
+\begin{frame}{1D Active Subspace}
+
+\vspace{-2mm}
+$f(\bm{x})~=~g(\eta_1^T\xi)~~(\bm{x}\rightarrow \xi\in[-1,1])$
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/ssp1D}
+\end{figure}
+\end{center}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/pdf_comp_SSP1D}
+\end{figure}
+\end{center}
+
+
+\end{column}
+\end{columns}
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{subspace}
+\begin{frame}{2D Active Subspace}
+
+\vspace{-2mm}
+$f(\bm{x})~=~g(\eta_1^T\xi,\eta_2^T\xi)$
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/ssp2D}
+\end{figure}
+\end{center}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/ssp2D_2}
+\end{figure}
+\end{center}
+
+
+\end{column}
+\end{columns}
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{subspace}
+\begin{frame}{3D Active Subspace}
+
+\vspace{-2mm}
+$f(\bm{x})~=~g(\eta_1^T\xi,\eta_2^T\xi,\eta_3^T\xi)$
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/pdf_comp_SSP3D}
+\end{figure}
+\end{center}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/rn}
 \end{figure}
 \end{center}
 
