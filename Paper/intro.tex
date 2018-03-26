@@ -21,5 +21,52 @@ those efforts.
 4. Section-wise overview of the paper.  
 \end{comment}
 
-Classical Molecular Dynamics (MD) is commonly used to study thermal transport by means of phonons in material 
-systems comprising non-metallic elements such as carbon, silicon, germanium.  
+Classical Molecular Dynamics (MD) is commonly used to study thermal transport by means of
+interactions between phonons in material systems comprising non-metallic elements such
+as carbon, silicon, and germanium~\cite{Dumitrica:2010}. 
+A major objective for many such studies is the
+estimation of bulk thermal conductivity of the system. One of the most commonly used approach,
+regarded as the direct method~\cite{Schelling:2002,Turney:2009,Zhou:2009,Landry:2009,
+McGaughey:2006,Ni:2009,Shi:2009,Wang:2009,Papanikolaou:2008}, is a non-equilibrium
+technique that involves the application
+of a heat flux or a temperature gradient by means of thermostatting across the system. 
+Corresponding steady-state temperature gradient in the former or the heat exchange between
+the two thermostats in the latter, is used to estimate thermal conductivity (at a given
+length or size) using 
+Fourier's law. Computations are performed for a range of system lengths and the inverse
+of thermal conductivity is plotted against the inverse of length. The y-intercept of a
+straight line fit to the observed trend is considered as the bulk thermal conductivity 
+estimate. 
+
+Although widely used, the direct method is khown to severly under-predict
+the bulk thermal conductivity as compared to experimental 
+measurements~\cite{Haynes:2014,Shanks:1963}. This is primarily
+due to length scales used in simulation that are several orders of magnitude smaller
+than those used in an experiment. As a result, the sample length is much smaller than the
+bulk phonon mean free path leading to a so-called ballistic transport of the phonons.
+The mean free path of such phonon modes is limited to the system size that reduces their
+contribution to thermal transport. Moreover, the
+introduction of thermostats typically reduces the correlation between vibrations of 
+different atoms (regarded as Kapitza effect~\cite{Stevens:2007}) potentially reducing
+the thermal conductivity
+further~\cite{Evans:2008}. Estimate of thermal conductivity using the
+direct method is therefore impacted by the choice of system size and potentially due to
+variability in the thermal gradient experienced by the system owing to
+Kapitza effect.  
+
+Predictions of non-equilibrium molecular dynamics simulations (NEMD) are dependent on the
+choice of the inter-atomic potential as well as values associated with individual parameters
+of a given potential. For instance, in the case of crystalline Si, the Stillinger-Weber (SW)
+is a widely used inter-atomic potential. However, as discussed by Stillinger and Weber
+in~\cite{Stillinger:1985}, the proposed nominal values of individual parameters were based
+on a limited search in the 7D parameter space while ensuring structural stability and
+reasonable agreement with experiments. It is therefore likely that these nominal estimates
+for individual parameter values in the SW potential may not yield accurate results for a
+wide variety of Si-based systems and warrants further investigation to study the impact of
+underlying uncertainties on MD predicitions. 
+
+
+%In a recent effort, Rizzi et al. study the effect of
+%uncertainties associated with the force-field parameters on bulk water properties using MD
+%simulations~\cite{Rizzi:2012}. 
+
