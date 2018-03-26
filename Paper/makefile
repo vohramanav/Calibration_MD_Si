@@ -1,0 +1,9 @@
+all:
+	pdflatex paper 
+	pdflatex paper
+	pdflatex paper
+
+clean:
+
+	rm -f *.toc *.aux *.log *.bbl *.blg *.pdf *.out
+
