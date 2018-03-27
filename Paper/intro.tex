@@ -76,13 +76,25 @@ systematic manner. There is a definite need for additional efforts aimed at effi
 to enable uncertainty analysis in MD simulations for a wide range of applications.
 
 In the present work, we focus our efforts on uncertainty analysis in predictions of NEMD simulations
-for phonon transport.  As discussed earlier, predictions from NEMD
+for phonon transport using a silicon bar. An overview of the set-up for the simulations is
+provided in Section~\ref{sec:setup}. As discussed earlier, predictions from NEMD
 exhibit large discrepancies with experimental observations depending upon system size and potentially
 due to variability in the applied thermal gradient. Additionally, the thermal conductivity estimates are
 tightly coupled with parameter values associated with the inter-atomic potential. Hence, we set out to
 accomplish multiple objectives through this research effort: First, we construct response surfaces
-in order to characterize the dependence of discrepancy in thermal conductivity estimates from NEMD
-with the experimental data on system size and applied thermal gradient. Second, we perform
-sensitivity analysis to study the impact of SW potential parameter values on variability in predictions.
-Third, we exploit our findings from sensitivity analysis to discern parameters for calibration in a Bayesian
-setting in order to enhance the predictability of NEMD simulations. 
+in order to characterize the dependence of discrepancy in thermal conductivity estimates (between
+MD simulations and experiments) on system size, and applied thermal gradient~(Section~\ref{sec:response}).
+Second, we perform sensitivity analysis to study the impact of SW potential parameter values on 
+variability in predictions~(Section~\ref{sec:sense}).
+Third, we exploit our findings from sensitivity analysis to discern important parameters and hence
+reduce the dimensionality of the problem~(Section~\ref{sec:ros}). Fourth, we illustrate calibration
+of the important parameters in a Bayesian setting to evaluate their posterior
+distributions~(Section~\ref{sec:bayes}). Construction of the
+response surfaces, parametric sensitivity analysis, and Bayesian calibration can all be computationally
+challenging endeavors especially in situations involving compute-intensive simulations as in the
+case of NEMD. We therefore employ polynomial choas (PC) surrogates~\cite{Xiu:2002,Ghanem:1990}
+using non-intrusive spectral approaches~\cite{Olivier:2010} to reduce computational effort pertaining
+to the aforementioned objectives. Moreover, since the construction of a PC surrogate itself can be
+expensive, we demonstrate in Section~\ref{sec:sense}, a novel approach that implements derivative-based
+sensitivity measures~\cite{Sobol:2010} to a priori reduce the dimensionality of the surrogate while
+ensuring reasonable predictive accuracy. 
