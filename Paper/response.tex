@@ -2,7 +2,17 @@
 \label{sec:response}
 
 As discussed earlier in Section~\ref{sec:intro}, bulk thermal conductivity estimates using NEMD simulations
-severely under-predicted due to reduction in mean free path associated with phonon transport. Additionally, the
-introduction of thermostats causes a significant amount of variability in the applied thermal gradient, especially
-in their vicinity due to a so-called Kapitza effect. We illustrate this phenomenon by plotting temperature along
-the length of the bar in Figure~\ref{fig:kapitza}. 
+are severely under-predicted primarily due to reduction in mean free path associated with phonon transport. 
+Additionally, the introduction of thermostats causes a significant amount of variability in the applied thermal gradient,
+especially in their vicinity due to a so-called Kapitza effect. We illustrate this phenomenon by plotting temperature 
+distribution along the length of the bar in Figure~\ref{fig:kapitza}. In this section, we focus on the impact of
+system size, specifically the length of the Si bar as well as the variability in applied thermal gradient on discrepancy
+in bulk thermal conductivity between NEMD predictions and experimental data. For this purpose, we consider
+a range of values for the bar length and the thermal gradient. In order to determine the discrepancy trends, one
+might consider evaluating the thermal conductivity using NEMD simulations for a large set of values of length and
+thermal gradient. However, considering the computational expense associated with each set, this approach quickly
+becomes computationally prohibitive. Instead, we construct a response surface using a 2D
+Polynomial Chaos (PC) representation of the discrepancy requires NEMD predictions for a small number of
+combinations of length and thermal gradient values as discussed in the following section. 
+
+\subsection{Polynomial Chaos}
