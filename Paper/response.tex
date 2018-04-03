@@ -1,4 +1,4 @@
-\section{Discrepancy with Experiments}
+\section{Response Surface of the Discrepancy}
 \label{sec:response}
 
 As discussed earlier in Section~\ref{sec:intro}, bulk thermal conductivity estimates using NEMD simulations
@@ -54,15 +54,51 @@ such as those involving basis pursuit de-noising~\cite{Peng:2014}, compressive
 sampling~\cite{Hampton:2015}, and least angle regression~\cite{Blatman:2011} suited for large-dimensional
 applications. However, in our case, since the response surface is 2D, we use Gauss-Legendre quadrature to
 obtain accurate estimates of the PC coefficients. 
+\bigskip
 
-In order to construct the response surface for discrepancy, we consider respective intervals for the Si bar length,
+In order to construct the response surface of the discrepancy, we consider respective intervals for the Si bar length,
 $L$ and the applied thermal gradient, $\frac{dT}{dz}$ as $[50a,100a]$~($\angstrom$) and
  $[\frac{1.5}{a},\frac{2.5}{a}]$~($\frac{\mbox{\tiny{K}}}{\tiny{\angstrom}}$); $a$ being the lattice constant. The 
  discrepancy between $\kappa_{\mbox{\tiny{MD}}}$ and $\kappa_{\mbox{\tiny{E}}}$ is computed at the
- Gauss-Legendre quadrature nodes as illustrated in Figure~\ref{fig:rs}(a) for the case of $T$ = 300 K
-  along with the spectrum of PC coefficients in Figure~\ref{fig:rs}(b). Note that the value of 
-  $\kappa_{\mbox{\tiny{E}}}$ was considered to be 149 W/m/K as provided in~\cite{Shanks:1963}.
-
+ Gauss-Legendre quadrature nodes as illustrated in Figure~\ref{fig:rs1}(a) 
+  along with the spectrum of PC coefficients in Figure~\ref{fig:rs1}(b). Note that the value of $\kappa_{\mbox{\tiny{E}}}$ was considered to be 149~W/m/K as provided 
+ in~\cite{Shanks:1963}. Response surfaces constructed at the bulk temperature, $T$ = 300~K and 500~K are 
+ illustrated
+ in~\ref{fig:rs2}(a) and~\ref{fig:rs2}(b) respectively. As expected, the discrepancy is observed to decrease
+ with the bar length ($L$) as a result of increase in the mean free path. It is however interesting to note that the 
+ variation in discrepancy due to changes in the applied thermal gradient in the considered range is found to be
+ negligible. The accuracy of the response surfaces is verified by computing a relative L-2 norm of the error
+ ($\varepsilon_{\tiny{\mbox{L-2}}}$) on Sobol samples~\cite{Saltelli:2010} (see Figure~\ref{fig:rs2}(c)) in the 2D 
+ parameter domain as follows:
+ 
+ \be
+ \varepsilon_{\tiny{\mbox{L-2}}} = \frac{\left[\sum_{j}(\epsilon_{\tiny{\mbox{d},j}}^{\mbox{\tiny{MD}}} - 
+ \epsilon_{\tiny{\mbox{d},j}}^{\mbox{\tiny{PCE}}})^2\right]^{\frac{1}{2}}}{\left[\sum_j(\epsilon_{\tiny{\mbox{d},j}}
+ ^{\mbox{\tiny{MD}}})^2\right]^{\frac{1}{2}}} 
+ \label{eq:err_l2}
+ \ee
+ 
+ A response surface was also constructed at $T$ = 1000~K (plot not included for brevity) and the impact of
+ varying thermal gradient on the discrepancy was still observed to be negligible. In all cases,
+ $\varepsilon_{\tiny{\mbox{L-2}}}$ in Eq.~\ref{eq:err_l2} was estimated to be of $\mathcal{O}(10^{-3})$ thereby
+ indicating that the response surfaces could be used to predict the discrepancy for a given
+ point ($L$,$\frac{dT}{dz}$) in the considered domain with reasonable accuracy. As an additional verification
+ step, we plot the inverse of thermal conductivity against the inverse of bar length using data from NEMD
+ simulations as well as predictions from the response surface as estimated using Eq.~\ref{eq:rs_line}, 
+ in Figure~\ref{fig:rs3}:
+ 
+ \be
+\kappa_{\mbox{\tiny{MD}}} =  \kappa_{\mbox{\tiny{E}}} - \epsilon_{\mbox{\tiny{d}}} 
+ \label{eq:rs_line}
+ \ee
+ 
+ \noindent where $\epsilon_{\mbox{\tiny{d}}}$ is estimated from the response surface. 
+ It is observed that the response surface estimates exhibit an expected linear trend, consistent with NEMD
+  predictions. Constructing response surfaces using a relatively small number of NEMD predictions thus offers
+  potential for huge computational savings for studies aimed at predicting thermal conductivity trends and 
+  quantifying the discrepancy with measurements for a wide range of systems sizes, applied thermal gradients as 
+  well as bulk temperatures. 
+ 
 
 
 
