@@ -12,15 +12,11 @@ to ensure structural stability and agreement with the available experimental dat
 
 \begin{table}[htbp]
 \begin{center}
-\begin{tabular}{|c||c|}
-\hline
-$A$ & 7.049556277 \\
-$B$ & 0.6022245584 \\
-$p$ & 4.0 \\
-$q$ & 0.0 \\
-$\alpha$ & 1.80 \\
-$\lambda$ & 21.0 \\
-$\gamma$ & 1.20 \\
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline 
+$A$ & $B$ & $p$ & $q$ & $\alpha$ & $\lambda$ & $\gamma$ \\
+\hline \hline
+7.049556277 & 0.6022245584 & 4.0 & 0.0 & 1.80 & 21.0 & 1.20 \\
 \hline
 \end{tabular}
 \end{center}
@@ -28,19 +24,84 @@ $\gamma$ & 1.20 \\
 potential~\cite{Stillinger:1985}.}
 \end{table}
 
-It is noteworthy that the underlying analysis which lead to these estimates did not account for the
-presence of uncertainty due to
+It is noteworthy that the underlying analysis which lead to these estimates of the nominal values did not
+account for the presence of uncertainty due to
 measurement error, noise inherent in MD predictions, inadequacies pertaining to the potential function,
 and parametric uncertainties. It is therefore likely that the proposed nominal estimates could be 
 improved depending upon the application. Hence, it is critical to understand the effects of variability in
-SW potential parameters on buk thermal conductivity predictions using NEMD. For this purpose, a possible
+SW potential parameters on bulk thermal conductivity predictions using NEMD. For this purpose, a possible
 approach could involve a global sensitivity analysis of NEMD predictions on the SW potential parameters 
 by estimating the so-called Sobol indices~\cite{Sobol:2001}. However, obtaining converged estimates of
 Sobol indices typically requires tens of thousands of model evaluations. Since NEMD is compute-intensive,
 estimating the Sobol indices directly would be impractical. Instead, we adopt a novel strategy that
 aims to determine relative importance of the SW potential parameters based on derivative-based global 
-sensitivity measures (DGSM)~\cite{Sobol:2010}. In fact, it can be shown that the upper bound on a 
-Sobol index can be expressed in terms of DGSM~($\mu_i$), the Poincare constant~($\mathcal{C}_i$), and the
-total variance of the observed quantity~($V$)~\cite{Lamboni:2013,Roustant:2014}:    
+sensitivity measures (DGSM)~\cite{Sobol:2010}. It is observed that for a given application, it might be possible to 
+converge to the upper bound on
+Sobol index with only a few iterations~($\mathcal{O}(10^{1})$) thereby leading to enormous computational savings. 
+In that case, estimates of the upper bound could be used in lieu of the
+Sobol indices to determine relative importance of the parameters. The upper bound on 
+Sobol total effect index\footnote{Sobol total effect index is a measure of the contribution of a 
+parameter to the variance of the observable while contribution from other parameters may or may not be 0.}
+($\mathcal{T}_i$) can be expressed in terms of DGSM~($\mu_i$), the Poincar\' e 
+constant~($\mathcal{C}_i$), and the total variance of the observed
+quantity~($V$)~\cite{Lamboni:2013,Roustant:2014}:   
+
+\be
+\mathcal{T}_i \leq \frac{\mathcal{C}_i\mu_i}{V}~(\propto \hat{\mathcal{C}_i\mu_i}) 
+\ee 
+
+\noindent The derivative-based sensitivity measure, $\mu_i$ for a given parameter, $\theta_i$ is defined as an expectation
+of the derivative of the observable ($G(\bm{\theta})$) with respect to that parameter:
+
+\be
+\mu_i = \mathbb{E}\left[\left(\frac{\partial G(\bm{\theta})}{\partial \theta_i}\right)^{2}\right]
+\label{eq:mu}
+\ee
+
+\noindent Latin hypercube sampling in the 7D parameter space is used to estimate $\mu_i$. Note that $G$ must 
+exhibit a smooth variation with each parameter so that the derivative in Eq.~\ref{eq:mu} can be estimated
+with reasonable accuracy either analytically or numerically. 
+ In this work, we examine the suitability of this
+approach based on DGSM for the present application involving thermal transport in bulk Si. We define a 
+normalized quantity, $\hat{\mathcal{C}_i\mu_i}$ to ensure that its summation over all parameters is 1:
+
+\be
+\hat{\mathcal{C}_i\mu_i} = \frac{\mathcal{C}_i\mu_i}{\sum_i \mathcal{C}_i\mu_i} 
+\ee
+
+\noindent The choice of $\mathcal{C}_i$ is specific to the marginal probability distribution of the uncertain model
+parameter, $\theta_i$. In this work, we consider all uncertain parameters to be uniformly
+distributed in the interval~$[a,b]$ in which case $\mathcal{C}_i$  is given as $(b-a)^{2}/\pi^2$~\cite{Roustant:2014}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
