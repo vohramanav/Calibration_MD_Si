@@ -50,7 +50,8 @@ quantity~($V$)~\cite{Lamboni:2013,Roustant:2014}:
 \mathcal{T}_i \leq \frac{\mathcal{C}_i\mu_i}{V}~(\propto \hat{\mathcal{C}_i\mu_i}) 
 \ee 
 
-\noindent The derivative-based sensitivity measure, $\mu_i$ for a given parameter, $\theta_i$ is defined as an expectation
+\noindent The derivative-based sensitivity measure, $\mu_i$ for a given parameter, $\theta_i$ is
+defined as an expectation
 of the derivative of the observable ($G(\bm{\theta})$) with respect to that parameter:
 
 \be
@@ -61,20 +62,52 @@ of the derivative of the observable ($G(\bm{\theta})$) with respect to that para
 \noindent Latin hypercube sampling in the 7D parameter space is used to estimate $\mu_i$. Note that $G$ must 
 exhibit a smooth variation with each parameter so that the derivative in Eq.~\ref{eq:mu} can be estimated
 with reasonable accuracy either analytically or numerically. 
- In this work, we examine the suitability of this
-approach based on DGSM for the present application involving thermal transport in bulk Si. We define a 
-normalized quantity, $\hat{\mathcal{C}_i\mu_i}$ to ensure that its summation over all parameters is 1:
+We define a normalized quantity, $\hat{\mathcal{C}_i\mu_i}$ to ensure that its summation over all parameters is 1:
 
 \be
 \hat{\mathcal{C}_i\mu_i} = \frac{\mathcal{C}_i\mu_i}{\sum_i \mathcal{C}_i\mu_i} 
 \ee
 
 \noindent The choice of $\mathcal{C}_i$ is specific to the marginal probability distribution of the uncertain model
-parameter, $\theta_i$. In this work, we consider all uncertain parameters to be uniformly
-distributed in the interval~$[a,b]$ in which case $\mathcal{C}_i$  is given as $(b-a)^{2}/\pi^2$~\cite{Roustant:2014}.
+parameter, $\theta_i$. 
+%We consider all uncertain parameters to be uniformly
+%distributed in the interval~$[a,b]$ in which case $\mathcal{C}_i$  is given as $(b-a)^{2}/\pi^2$~\cite{Roustant:2014}.
+The underlying methodology for implementing DGSM to the present application involving thermal transport in bulk Si,
+and our key findings are presented in the following section. 
 
+\subsection{DGSM for SW potential parameters}
+\label{sub:dgsm} 
 
+We aim to compute the derivate-based sensitivity measure (DGSM) and hence the corresponding upper bound on the
+Sobol total effect index~($\mathcal{T}_i$) for each parameter in the SW potential. For this purpose, we 
+introduce small perturbations~($\mathcal{O}(10^{-5})n_i$; $n_i$ being the nominal value) to the nominal values
+associated with each parameter and estimate the partial derivatives in Eq.~\ref{eq:mu} using finite difference. 
+Hence, in order to compute $\mu_i$ using $N$ points in the d-dimensional parameter space, we require $N(d+1)$
+model realizations. The SW potential parameters are considered to be uniformly distributed in a small interval
+around the nominal value in which case $\mathcal{C}_i$ is given as $(u-l)^{2}/\pi^2$~\cite{Roustant:2014}; $u$
+and $l$ being the upper and lower bounds of the interval respectively.   
 
+Performing NEMD simulations using perturbed values of the SW potential parameters could however be challenging.
+For certain combinations of the SW potential parameter values, the steady-state thermal
+energy exchange between the thermostats is found to be non-physical at the end of the simulation. We believe that
+this happened in situations where the structure had deviated too far from the equilibrium state and hence the
+structural integrity of the bar is lost as illustrated in Figure~\ref{fig:dgsm1}(a). To avoid this
+issue, we added an NPT ensemble prior to NVT in the NEMD simulation as shown in the following diagram:
+
+\begin{center}
+
+NPT \hspace{5mm} $\rightarrow$ \hspace{5mm} NVT \hspace{5mm} $\rightarrow$ \hspace{5mm} NVE \hspace{5mm}
+$\rightarrow$ \hspace{5mm} NVE
+\\ \vspace{1mm}
+\tiny [Relax the system]~[Equilibrate system to 300 K] \hspace{1mm} [Equilibrate thermostats] \hspace{4mm}
+ [Generate Data]
+\\ \vspace{1mm}
+
+\tiny{N: Number of Atoms~~~P: Pressure~~~V: Volume~~~T: Temperature~~~E: Energy}
+\end{center}
+
+\noindent The NPT stage of the simulation was allowed to continue for a sufficiently long duration to ensure
+that the system is relaxed to a steady value of the bar length as shown in Figure~\ref{fig:dgsm1}(b).
 
 
 
