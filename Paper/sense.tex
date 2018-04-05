@@ -1,15 +1,46 @@
 \section{Sensitivity Analysis of the Inter-atomic Potential}
 \label{sec:sense}
 
-As discussed earlier in Section~\ref{sec:intro}, bulk thermal conductivity estimates in NEMD are dependent
-on the choice of the inter-atomic potential as well as values associated with the individual potential parameters.
-In the case of silicon, Stillinger-Weber is a commonly used potential and the proposed set of nominal values
-have been used for a wide variety of systems. According Stillinger and Weber, the set of nominal values as provided
-below in Table~\ref{tab:nom} is based on a constrained search in the 7D parameter space
-to ensure structural stability and agreement with the available experimental data~\cite{Stillinger:1985}. However, it is
-noteworthy that these estimates did not account for the presence of uncertainty due to experimental data, 
-inadequacies pertaining to the potential function, and parametric uncertainties. Hence, it is critical
-to understand the impact of such uncertainties on NEMD predictions for bulk thermal conductivity using
-SW potential. 
+As discussed earlier in Section~\ref{sec:intro}, bulk thermal conductivity estimates in NEMD
+are dependent on the choice of the inter-atomic potential as well as values associated with
+the individual potential parameters. In the case of silicon, the Stillinger-Weber inter-atomic potential
+has been used for a wide variety of 
+systems~(see~\cite{Laradji:1995,Zhang:2014,Jiang:2015,Watanabe:1999,Zhou:2013} and references therein).
+However, according to Stillinger and Weber, the set of nominal
+values as provided below in Table~2 is based on a constrained search in the 7D parameter space
+to ensure structural stability and agreement with the available experimental data~\cite{Stillinger:1985}.
+
+\begin{table}[htbp]
+\begin{center}
+\begin{tabular}{|c||c|}
+\hline
+$A$ & 7.049556277 \\
+$B$ & 0.6022245584 \\
+$p$ & 4.0 \\
+$q$ & 0.0 \\
+$\alpha$ & 1.80 \\
+$\lambda$ & 21.0 \\
+$\gamma$ & 1.20 \\
+\hline
+\end{tabular}
+\end{center}
+\caption{Nominal values of the parameters of the Stillinger-Weber inter-atomic
+potential~\cite{Stillinger:1985}.}
+\end{table}
+
+It is noteworthy that the underlying analysis which lead to these estimates did not account for the
+presence of uncertainty due to
+measurement error, noise inherent in MD predictions, inadequacies pertaining to the potential function,
+and parametric uncertainties. It is therefore likely that the proposed nominal estimates could be 
+improved depending upon the application. Hence, it is critical to understand the effects of variability in
+SW potential parameters on buk thermal conductivity predictions using NEMD. For this purpose, a possible
+approach could involve a global sensitivity analysis of NEMD predictions on the SW potential parameters 
+by estimating the so-called Sobol indices~\cite{Sobol:2001}. However, obtaining converged estimates of
+Sobol indices typically requires tens of thousands of model evaluations. Since NEMD is compute-intensive,
+estimating the Sobol indices directly would be impractical. Instead, we adopt a novel strategy that
+aims to determine relative importance of the SW potential parameters based on derivative-based global 
+sensitivity measures (DGSM)~\cite{Sobol:2010}. In fact, it can be shown that the upper bound on a 
+Sobol index can be expressed in terms of DGSM~($\mu_i$), the Poincare constant~($\mathcal{C}_i$), and the
+total variance of the observed quantity~($V$)~\cite{Lamboni:2013,Roustant:2014}:    
 
 
