@@ -108,10 +108,46 @@ $\rightarrow$ \hspace{5mm} NVE
 
 \noindent The NPT stage of the simulation was allowed to continue for a sufficiently long duration to ensure
 that the system is relaxed to a steady value of the bar length as shown in Figure~\ref{fig:dgsm1}(b).
+The following algorithm provides the sequence of steps that were used to obtain approximate estimates of the
+sensitivity measures for the SW potential parameters:
+\bigskip
 
+\texttt{Algorithm}
 
+\begin{algorithm}[H]
+\SetAlgoLined
+%\nonl \scriptsize{\textsc{Part I: Parameter Screening}}
+%\nonl \textbf{\texttt{Algorithm}}\;
+\texttt{Generate $n_1$ points in $\mathbb{R}^{d}$}\;
+\texttt{Perturb each point along the $d$ directions to obtain a set of $n_1(d+1)$ points}
+\texttt{\color{blue} $\%$~$d$: Number of parameters in the SW potential i.e. 7}\;
+\texttt{Compute $\mu_i$ using model evaluations at the $n_1(d+1)$ points in Eq.~\ref{eq:mu}}\;
+\texttt{Determine initial ranks, $\mathcal{R}^{old}$ of the parameters based on $\hat{\mathcal{C}_i\mu_i}$ values}\;
+\texttt{set $k$ = 1}
+\texttt{\color{blue}$\%$~$k$:~Iteration counter}\;
+\Repeat{\texttt{($\mathcal{R}^{\tiny{new}}$ $\neq$ $\mathcal{R}^{\tiny{old}}$ $\&$ 
+$max\_pdev$~$>\tau$)~\color{blue}$\%$~$\tau$:~Tolerance}}{
+\texttt{Generate $n_k$ new points in $\mathbb{R}^{d}$}\;
+\texttt{Perturb each point along the $d$ directions to obtain a set of $n_k(d+1)$ points}\;
+\texttt{Compute and store model evaluations at the $n_k(d+1)$ points}\;
+\texttt{Compute $\mu_i$ using prior model evaluations at $(d+1)(n_1 + \sum_j^k n_j)$ points}\;
+\texttt{Determine new ranks, $\mathcal{R}^{new}$ based on updated $\hat{\mathcal{C}_i\mu_i}$ values}\;
+\texttt{Compute $max\_pdev$ = max($\frac{|\mu_{i,k} - \mu_{i,k-1}|}{ \mu_{i,k-1}}$)}
+\texttt{\color{blue}$\%$~$max\_pdev$: Maximum percentage deviation in $\mu_i$ between successive iterations.}\;
+\texttt{set $k$ = $k$ + 1}\;
+}
+\end{algorithm}
 
-
+For the present application, we begin with $n_1$ = 10 samples in the 7D parameter space and add 5 points
+at each iteration. Using a tolerance, $\tau$ = 0.05, the above algorithm took 4 iterations i.e. 25 points to 
+provide approximate estimates for $\mu_i$. Since finite difference was used to estimate the derivates in
+Eq.~\ref{eq:mu}, it required 25(7+1) i.e. 200 MD runs. It must be noted that although the computational effort
+pertaining to the estimation of DGSM can be substantial it is nevertheless several orders of magnitude smaller
+than directly estimating the Sobol indices as mentioned earlier. 
+In Figure~\ref{fig:screen}, we plot $\hat{\mathcal{C}_i\mu_i}$ as obtained for the SW parameters at the 
+end of 4 iterations. It appears that $\gamma$ is significantly more important that the rest, whereas NEMD
+predictions are not so sensitive to $B$ and $p$. Large sensitivity towards $\gamma$ and $\alpha$ (cut-off radius)
+ is in fact expected since  these two parameters impact the lattice constant directly. 
 
 
 
