@@ -1,2 +1,55 @@
 \section{Reduced Order Surrogate}
 \label{sec:ros}
+
+In this section, we focus our attention on constructing a surrogate that captures the dependence of
+uncertainty in NEMD predictions for the bulk thermal conductivity ($\kappa$) on input variability
+in the SW potential parameters. The surrogate is a powerful tool that greatly minimizes
+the computational
+effort required for forward propagation of the uncertainty from input parameters to the observable,
+Sobol sensitivity analysis, and Bayesian calibration of the uncertain model parameters. Once again,
+we use polynomial chaos (used to construct response surfaces for discrepancy in
+Section~\ref{sec:response}) to construct the surrogate of the following functional form:
+
+\be
+\kappa  = \sum\limits_{\bm{s}\in\mathcal{A}} c_{\bm{s}}(T)\Psi_{\bm{s}}(\bm{\xi})
+\ee
+
+As discussed earlier in Section~\ref{sec:response}, several strategies are available to
+estimate the PC coefficients, $c_{\bm{s}}$. However, since the polynomial basis functions
+($\Psi_{\bm{s}}(\bm{\xi}$)) are
+relatively high dimensional, we use a computationally efficient approach proposed by
+Blatman and Sudret to construct a PCE with sparse basis($\mathcal{A}$) using the LAR
+algorithm~\cite{Blatman:2011}. Furthermore, since the NEMD simulations are compute-intensive,
+estimating the PC coefficients in the 7D parameter space would still require large amount of
+computational resources. Hence, we explore the possibility of reducing the dimensionality of
+the surrogate. For this purpose, we 
+exploit our observations in Figure~\ref{fig:ub} where a signifcant
+jump in $\hat{\mathcal{C}_i\mu_i}$ estimate is seen from $A$ to $B$ and therby construct the 
+PC surrogate in a 5D parameter space by fixing $B$ and $p$ at their nominal values. In the above
+equation, $\bm{\xi}:~\{\xi_1(A),\xi_2(q),\xi_3(\alpha),\xi_4(\lambda),\xi_5(\gamma)\}$ is a set
+of five canonical random variables, $\xi_i$ distributed uniformly in the interval [-1,1]. 
+For the five uniformly distributed SW parameters, the prior intervals are considered to be
+$\pm~10\%$ of their respective nominal estimates except for $q$ in which case it is [0,0.1]. In
+Figure~\ref{fig:loo}, we plot the leave-one-out cross-validation error 
+($\epsilon_{\tiny{\mbox{LOO}}}$)~\cite{Blatman:2010} as defined
+below in Eq.~\ref{eq:loo} against the number of model realizations used to construct the 5D
+PC surrogate. 
+
+\be
+\epsilon_{\tiny{\mbox{LOO}}} = \frac{\sum\limits_{i=1}^{N}\left(\mathcal{M}(\bm{x}^{(i)}) - 
+\mathcal{M}^{PCE\setminus i}(\bm{x}^{(i)})\right)^{2}}{\sum\limits_{i=1}^{N}
+\left(\mathcal{M}(\bm{x}^{(i)}) - \hat{\mu}_Y\right)^2}
+\label{eq:loo}
+\ee 
+
+\noindent where $N$ denotes the number of realizations, $\mathcal{M}(\bm{x}^{(i)})$ is the
+model realization and $\mathcal{M}^{PCE\setminus i}(\bm{x}^{(i)})$ is the corresponding PCE estimate
+at $\bm{x}^{(i)}$. Note that the PCE is constructed using all points except $\bm{x}^{(i)}$.
+The quantity, $\hat{\mu}_Y$ = $\frac{1}{N}\sum\limits_{i=1}^{N}\mathcal{M}(\bm{x}^{(i)})$
+is the sample mean of the realizations. 
+It is found that in order for the PCE to converge to an accuracy of~$\mathcal{O}(10^{-2})$
+with respect to $\epsilon_{\tiny{\mbox{LOO}}}$, we require approximately 160 NEMD runs. In the
+following section, we focus on verifying the accuracy of the 5D PCE against the set of available
+NEMD predictions in the original 7D parameter space. 
+
+
