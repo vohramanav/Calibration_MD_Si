@@ -33,7 +33,8 @@ $\pm~10\%$ of their respective nominal estimates except for $q$ in which case it
 Figure~\ref{fig:loo}, we plot the leave-one-out cross-validation error 
 ($\epsilon_{\tiny{\mbox{LOO}}}$)~\cite{Blatman:2010} as defined
 below in Eq.~\ref{eq:loo} against the number of model realizations used to construct the 5D
-PC surrogate. 
+PC surrogate. UQLab~\cite{Marelli:2014} was used for estimating $\epsilon_{\tiny{\mbox{LOO}}}$ and constructing
+the surrogate. 
 
 \be
 \epsilon_{\tiny{\mbox{LOO}}} = \frac{\sum\limits_{i=1}^{N}\left(\mathcal{M}(\bm{x}^{(i)}) - 
@@ -51,5 +52,74 @@ It is found that in order for the PCE to converge to an accuracy of~$\mathcal{O}
 with respect to $\epsilon_{\tiny{\mbox{LOO}}}$, we require approximately 160 NEMD runs. In the
 following section, we focus on verifying the accuracy of the 5D PCE against the set of available
 NEMD predictions in the original 7D parameter space. 
+
+\subsection{PC Surrogate Verification}
+
+The accuracy of the 5D PC surrogate is verified using two different strategies. The first strategy involves
+computing the relative L-2 norm of the difference between the available NEMD predictions (used earlier
+to estimate DGSM in Section~\ref{sec:sense}) and estimates using the 5D surrogate as follows:
+
+\be
+\epsilon_{\mbox{\tiny{L-2}}} = 
+\frac{\left[\sum\limits_{i=1}^{N=25}\left(\mathcal{M}(\bm{\theta}_{\mbox{\tiny{7D}}}^{(i)}) - 
+\mathcal{M}^{PCE}(\bm{\theta}_{\mbox{\tiny{5D}}}^{(i)})\right)^{2}\right]^{\frac{1}{2}}}{\left[\sum_{i=1}^{N}
+\left(\mathcal{M}(\bm{\theta}_{\mbox{\tiny{7D}}}^{(i)})\right)^2\right]^{\frac{1}{2}}} \approx 6.88\times 10^{-2}
+\ee
+ 
+\noindent Since $\epsilon_{\mbox{\tiny{L-2}}}$ is found to be $\mathcal{O}(10^{-2})$, the 5D surrogate can be considered as
+reasonably accurate from the perspective of relative L-2 error norm. 
+
+In the second strategy, we compare NEMD
+predictions and estimates from the 5D surrogate in a probabilistic sense. As shown in Figure~\ref{fig:verify}, a 
+histogram plot based on the available set of NEMD predictions in the 7D parameter space is compared with
+the bulk thermal conductivity distribution as obtained using the reduced order surrogate and 10$^6$ samples in the
+5D parameter space described by the SW potential parameters:~$\{A,q,\alpha,\lambda,\gamma\}$. It is
+observed that the probability distribution (PDF) based on estimates from the reduced order surrogate compares
+favorably with the histogram plot. Specifically, the corresponding mode values for $\kappa$ from the two plots are
+in close agreement, the PDF reasonably captures the peaks observed in the histogram, as well as the spread in
+the bulk thermal conductivity distribution. 
+Hence, the reduced order surrogate is verified for accuracy in both cases. 
+\bigskip
+
+As mentioned earlier, a PC surrogate can be used to estimate Sobol global sensitivity indices in a 
+straightforward manner~\cite{Sudret:2008}. Sobol first order and total effect sensitivity indices as estimated
+using the reduced order surrogate and $10^{6}$ samples in the 5D parameter space are plotted using bar-graphs in
+Figure~\ref{fig:gsa}. It is found that $\kappa$ is predominantly sensitive towards the choice of $\alpha$ and
+$\gamma$. This observation is consistent with our initial findings based on DGSM using 25 samples in the 7D
+parameter space. However, the DGSM estimate for $\gamma$ was found to be the highest in that case. 
+While sensitivity towards $A$, $q$, and $\lambda$ is observed to be comparatively less in both cases, Sobol
+indices for the three parameters are estimated to be smaller by an order of magnitude compared to those
+for $\alpha$ and $\gamma$. Large quantitative disagreements in parametric sensitivity between DGSM and the 
+Sobol indices is however not unexpected essentially because they differ by construction. The former is based
+on an expectation of partial derivatives while the later is based on variance. Nevertheless, significant qualitative
+agreements pertaining to parameter importance in the two approaches is quite encouraging. 
+Moreover, verification of the reduced order
+surrogate for accuracy increases our confidence in implementing DGSM to ascertain relative importance of the
+SW potential parameters and hence perform uncertainty analysis for the present application with minimal
+computational effort. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

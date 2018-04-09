@@ -147,6 +147,59 @@ realizations or NEMD runs used to estimate the PC coefficients.}
 
 \clearpage
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[p]
+ \begin{center}
+  \includegraphics[width=0.70\textwidth]{./Figures/PCE5D_kde}
+\caption{Comparison of bulk thermal conductivity ($\kappa$) distribution of Si based on a histogram plot
+using NEMD predictions (Model) at 25 points in the 7D parameter space and a probability distribution obtained 
+using kernel density estimation of  reduced order surrogate estimates of $\kappa$ for 10$^6$ samples in the 5D
+parameter space.}
+\label{fig:verify}
+\end{center}
+\end{figure}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[p]
+ \begin{center}
+  \includegraphics[width=0.70\textwidth]{./Figures/PCE5D_gsa}
+\caption{Sobol first-order and total effect sensitivity indices as obtained using the reduced order PC
+surrogate and 10$^{6}$ samples in the 5D parameter space. }
+\label{fig:gsa}
+\end{center}
+\end{figure}
+
+\clearpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{figure}[p]
+ \begin{center}
+  \includegraphics[width=0.70\textwidth]{./Figures/gl}
+  \\ (a)
+  \begin{tabular}{cc}
+  \includegraphics[width=0.50\textwidth]{./Figures/pdf_alpha}
+  &
+  %\hspace{3mm}
+  \includegraphics[width=0.50\textwidth]{./Figures/pdf_gamma}
+  \\ (b) & (c)
+  \end{tabular}
+\caption{(a) A joint likelihood as estimated using Eq.~\ref{eq:like} is plotted on a 2D cartesian grid
+ ($\alpha\times\gamma$). Point corresponding to the maximum likelihood (MLE) is also highlighted.
+ The likelihood is plotted along a line passing through MLE and parallel to the $\alpha$-axis
+ in (b), and $\gamma$-axis in (c).}
+\label{fig:like}
+\end{center}
+\end{figure}
+
+\clearpage
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
