@@ -6,12 +6,23 @@ are severely under-predicted primarily due to reduction in mean free path associ
 Additionally, the introduction of thermostats causes a significant amount of variability in the applied thermal gradient,
 especially in their vicinity owing to the Kapitza effect~\cite{Stevens:2007}. 
 We illustrate this phenomenon by plotting temperature 
-distribution along the length of the bar in Figure~\ref{fig:kapitza}. In this section, we focus on the impact of
+distribution along the length of the bar in Figure~\ref{fig:kapitza}. 
+
+\begin{figure}[htbp]
+ \begin{center}
+  \includegraphics[width=0.70\textwidth]{./Figures/temp_plot}
+\caption{Temperature distribution along a Si bar of length 14.74~nm for
+different scenarios of applied thermal gradient.}
+\label{fig:kapitza}
+\end{center}
+\end{figure}
+
+In this section, we focus on the impact of
 system size, specifically the length of the Si bar as well as the variability in applied thermal gradient on discrepancy
 in bulk thermal conductivity between NEMD predictions and experimental data. For this purpose, we consider
 a range of values for the bar length and the thermal gradient. In order to determine the discrepancy trends, one
 might consider evaluating the thermal conductivity using NEMD simulations for a large set of values of length and
-thermal gradient. However, considering the computational expense associated with each set, this approach quickly
+thermal gradient. However, considering the computational expense associated with each pair of values, this approach quickly
 becomes computationally prohibitive. Instead, we construct a response surface using a 2D
 Polynomial Chaos (PC) representation of the discrepancy which requires NEMD predictions for a small number of
 combinations of length and thermal gradient values as discussed in the following section. 
@@ -41,16 +52,16 @@ given temperature, $T$. PC representation of $\epsilon_{\mbox{\tiny{d}}}$ is giv
 
 \be
 \epsilon_{\mbox{\tiny{d}}} \approx \mathcal{\epsilon}_{\mbox{\tiny{d}}}^{\mbox{\tiny{PCE}}} = 
-\sum_{\alpha\in\mathcal{I}} c_{\alpha}(T)\Psi_{\alpha}(\bm{\xi(\theta)}) 
+\sum_{\bm{k}\in\mathcal{I}} c_{\bm{k}}(T)\Psi_{\bm{k}}(\bm{\xi(\theta)}) 
 \ee
 
 \noindent The set of parameters in $\bm{\theta}$ are parameterized in terms of canonical random 
 variables, $\bm{\xi}$ distributed uniformly in the interval $[-1,1]$. 
- $\Psi_{\alpha}$'s are multivariate polynomial basis functions, orthonormal with respect to the joint probability 
- distribution of $\bm{\xi}$. The degree of truncation in the above expansion is denoted by $\alpha$, a subset of
- the multi-index set $\mathcal{I}$ that comprises of individual degrees of univariate polynomials in $\Psi_{\alpha}$.
-The PC coefficients, $c_{\alpha}$'s can be estimated using either numerical quadrature or advanced techniques
-such as those involving basis pursuit de-noising~\cite{Peng:2014}, compressive
+ $\Psi_{\bm{k}}$'s are multivariate polynomial basis functions, orthonormal with respect to the joint probability 
+ distribution of $\bm{\xi}$. The degree of truncation in the above expansion is denoted by $\bm{k}$, a subset of
+ the multi-index set $\mathcal{I}$ that comprises of individual degrees of univariate polynomials in $\Psi_{\bm{k}}$.
+The PC coefficients, $c_{\bm{k}}$'s can be estimated using either numerical quadrature or advanced techniques
+involving basis pursuit de-noising~\cite{Peng:2014}, compressive
 sampling~\cite{Hampton:2015}, and least angle regression~\cite{Blatman:2011} suited for large-dimensional
 applications. However, in our case, since the response surface is 2D, we use Gauss-Legendre quadrature to
 obtain accurate estimates of the PC coefficients. 
@@ -60,15 +71,57 @@ In order to construct the response surface of the discrepancy, we consider respe
 $L$ and the applied thermal gradient, $\frac{dT}{dz}$ as $[50a,100a]$~($\angstrom$) and
  $[\frac{1.5}{a},\frac{2.5}{a}]$~($\frac{\mbox{\tiny{K}}}{\tiny{\angstrom}}$); $a$ being the lattice constant. The 
  discrepancy between $\kappa_{\mbox{\tiny{MD}}}$ and $\kappa_{\mbox{\tiny{E}}}$ is computed at the
- Gauss-Legendre quadrature nodes as illustrated in Figure~\ref{fig:rs1}(a) 
-  along with the spectrum of PC coefficients in Figure~\ref{fig:rs1}(b). Note that the value of $\kappa_{\mbox{\tiny{E}}}$ was considered to be 149~W/m/K as provided 
+ Gauss-Legendre quadrature nodes as illustrated in Figure~\ref{fig:rs1}(a) to estimate the PC coefficients. The spectrum of 
+ resulting PC coefficients is illustrated in Figure~\ref{fig:rs1}(b). 
+Note that the value of $\kappa_{\mbox{\tiny{E}}}$ is considered to be 149~W/m/K as provided 
  in~\cite{Shanks:1963}. Response surfaces constructed at the bulk temperature, $T$ = 300~K and 500~K are 
  illustrated
- in~\ref{fig:rs2}(a) and~\ref{fig:rs2}(b) respectively. As expected, the discrepancy is observed to decrease
- with the bar length ($L$) as a result of increase in the mean free path. It is however interesting to note that the 
+ in Figure~\ref{fig:rs2}(a) and~\ref{fig:rs2}(b) respectively. 
+
+\begin{figure}[htbp]
+\begin{center}
+\begin{tabular}{cc}
+  \hspace{-12mm}
+  \includegraphics[width=0.60\textwidth]{./Figures/realz_quad300K}
+  &
+  \hspace{-9mm}
+  \includegraphics[width=0.56\textwidth]{./Figures/PCspectrum_300}
+  \\ (a) & (b)
+  \end{tabular}
+\caption{(a) Realizations of discrepancy in bulk thermal conductivity at the Gauss-Legendre quadrature notes are
+depicted using circles. The size of the circle in each case is proportional to the discrepancy estimate, also provided
+ in cases where it is observed to be relatively large. (b) Spectrum of PC coefficients is depicted using circles of
+ varying sizes, proportional to the log value of their magnitude. The above computations were performed at 300 K.}
+\label{fig:rs1}
+\end{center}
+\end{figure}
+
+\begin{figure}[htbp]
+\begin{center}
+\begin{tabular}{cc}
+ \hspace{-10mm}
+  \includegraphics[width=0.55\textwidth]{./Figures/err2D_300}
+  &
+  %\hspace{-9mm}
+  \includegraphics[width=0.55\textwidth]{./Figures/err2D_500}
+  \\ (a) & (b)
+  \end{tabular}
+  \\ \vspace{1mm}
+  \includegraphics[width=0.50\textwidth]{./Figures/err2D_s}
+  \\ (c)
+\caption{Response surface of the discrepancy in bulk thermal conductivity at (a) $T$ = 300~K and
+ (b) $T$ = 500~K. Gauss-Legendre quadrature nodes are highlighted in both cases. (c) Sobol samples
+ in the 2D domain used for verifying the accuracy of the response surfaces.}
+\label{fig:rs2}
+\end{center}
+\end{figure}
+
+As expected, the discrepancy is observed to decrease
+ with the bar length ($L$) due to increase in the mean free path. It is however interesting to note that the 
  variation in discrepancy due to changes in the applied thermal gradient in the considered range is found to be
  negligible. The accuracy of the response surfaces is verified by computing a relative L-2 norm of the error
- ($\varepsilon_{\tiny{\mbox{L-2}}}$) on Sobol samples~\cite{Saltelli:2010} (see Figure~\ref{fig:rs2}(c)) in the 2D 
+ ($\varepsilon_{\tiny{\mbox{L-2}}}$) on an independent set of Sobol samples~\cite{Saltelli:2010}
+(see Figure~\ref{fig:rs2}(c)) in the 2D 
  parameter domain as follows:
  
  \be
@@ -84,26 +137,35 @@ $L$ and the applied thermal gradient, $\frac{dT}{dz}$ as $[50a,100a]$~($\angstro
  indicating that the response surfaces could be used to predict the discrepancy for a given
  point ($L$,$\frac{dT}{dz}$) in the considered domain with reasonable accuracy. As an additional verification
  step, we plot the inverse of thermal conductivity against the inverse of bar length using data from NEMD
- simulations as well as predictions from the response surface as estimated using Eq.~\ref{eq:rs_line}, 
- in Figure~\ref{fig:rs3}:
- 
- \be
-\kappa_{\mbox{\tiny{MD}}} =  \kappa_{\mbox{\tiny{E}}} - \epsilon_{\mbox{\tiny{d}}} 
- \label{eq:rs_line}
- \ee
- 
- \noindent where $\epsilon_{\mbox{\tiny{d}}}$ is estimated from the response surface. 
- It is observed that the response surface estimates exhibit an expected linear trend, consistent with NEMD
+ simulations as well as predictions from the response surface 
+($\kappa_{\mbox{\tiny{MD}}}~=~\kappa_{\mbox{\tiny{E}}}~-~\epsilon_{\mbox{\tiny{d}}}$) in Figure~\ref{fig:kinv}.
+
+\begin{figure}[htbp]
+\begin{center}
+\begin{tabular}{cc}
+ \hspace{-10mm}
+  \includegraphics[width=0.50\textwidth]{./Figures/kinv_300}
+  &
+  %\hspace{-9mm}
+  \includegraphics[width=0.50\textwidth]{./Figures/kinv_500}
+  \\ (a) & (b)
+  \end{tabular}
+ \caption{Inverse of the bulk thermal conductivity estimates are plotted against the inverse of Si bar length
+ using predictions from NEMD as well as estimates from the response surface at (a)  $T$ = 300~K and 
+ (b) $T$ = 500~K.}
+\label{fig:kinv}
+\end{center}
+\end{figure}
+
+It is observed that the response surface estimates exhibit an expected linear trend, consistent with NEMD
   predictions. Constructing response surfaces using a relatively small number of NEMD predictions thus offers
   potential for huge computational savings for studies aimed at predicting thermal conductivity trends and 
   quantifying the discrepancy with measurements for a wide range of systems sizes, applied thermal gradients as 
   well as bulk temperatures.
 
-In the following sections, we focus our attention on investigating the impact of underlying variability
-in the SW potential parameters on the uncertainty associated with NEMD predicitions for estimating the bulk
-thermal conductivity in Si.
-For this purpose, we begin with an efficient approach towards sensitivity analysis of the parameters as
-discussed in the following section.  
+In the following sections, we shift our focus towards understanding the impact of underlying variability
+in the SW potential parameters on the uncertainty associated with NEMD predictions for bulk
+thermal conductivity in Si.  
  
 
 

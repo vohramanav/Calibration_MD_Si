@@ -12,7 +12,8 @@ thermal conductivity. A brief discussion on the direct method and associated pro
 Predictions impacted by the choice of potential, values of
 individual parameters, size, and potentially due to duration and applied thermal gradients
 (cite Amuthan book, Francesco's paper, McGaughey's paper). 
-Errors are introduced by thermostatting (Amuthan book). Nominal value of SW potential parameters based on fitting against experiments and to ensure structural stability etc. (SW paper)
+Errors are introduced by thermostatting (Amuthan book). Nominal value of SW potential parameters
+based on fitting against experiments and to ensure structural stability etc. (SW paper)
 
 3. Motivate uncertainty analysis and briefly discuss and cite recent efforts (Francesco, Kirby,
 Murthy). Highlight focus and key contributions of the present work and how it differs from
@@ -29,9 +30,9 @@ estimation of bulk thermal conductivity of the system. One of the most commonly 
 regarded as the direct method~\cite{Schelling:2002,Turney:2009,Zhou:2009,Landry:2009,
 McGaughey:2006,Ni:2009,Shi:2009,Wang:2009,Papanikolaou:2008}, is a non-equilibrium
 technique that involves the application
-of a heat flux or a temperature gradient by means of thermostatting across the system. 
+of a heat flux or a temperature gradient by means of thermostatting, across the system. 
 Corresponding steady-state temperature gradient in the former or the heat exchange between
-the two thermostats in the latter, is used to estimate thermal conductivity (at a given
+the two thermostats in the latter, is used to estimate the bulk thermal conductivity (at a given
 length or size) using 
 Fourier's law. Computations are performed for a range of system lengths and the inverse
 of thermal conductivity is plotted against the inverse of length. The y-intercept of a
@@ -49,25 +50,25 @@ contribution to thermal transport. Moreover, the
 introduction of thermostats typically reduces the correlation between vibrations of 
 different atoms (regarded as Kapitza effect~\cite{Stevens:2007}) potentially reducing
 the thermal conductivity
-further~\cite{Evans:2008}. Estimate of thermal conductivity using the
+further~\cite{Evans:2008}. Estimation of thermal conductivity using the
 direct method is therefore impacted by the choice of system size and potentially due to
-variability in the thermal gradient experienced by the system owing to
-Kapitza effect.  
+variability in the thermal gradient experienced by the system due to thermostatting.  
 
-Predictions of non-equilibrium molecular dynamics (NEMD) simulations are dependent on the
+Predictions of non-equilibrium molecular dynamics (NEMD) simulations are also dependent on the
 choice of the inter-atomic potential as well as values associated with individual parameters
 of a given potential. For instance, in the case of crystalline Si, the Stillinger-Weber (SW)
 is a widely used inter-atomic potential. However, as discussed by Stillinger and Weber
-in~\cite{Stillinger:1985}, the proposed nominal values of individual parameters were based
+in~\cite{Stillinger:1985}, the proposed nominal values of individual parameters are based
 on a limited search in the 7D parameter space while ensuring structural stability and
 reasonable agreement with experiments. It is therefore likely that these nominal estimates
 for individual parameter values in the SW potential may not yield accurate results for a
 wide variety of Si-based systems and warrant further investigation to study the impact of
-underlying uncertainties on MD predictions. 
-In a recent effort, Rizzi et al. study the effect of
+underlying uncertainties on MD predictions. Along these lines, 
+a recent study by Rizzi et al. focused on the effect of
 uncertainties associated with the force-field parameters on bulk water properties using MD
-simulations~\cite{Rizzi:2012}. Marepalli et al. in~\cite{Marepalli:2014} consider a stochastic model
-for thermal conductivity (due to noise in MD simulations) and study its impact on spatial temperature 
+simulations~\cite{Rizzi:2012}. Marepalli et al. in~\cite{Marepalli:2014} considered a stochastic model
+for thermal conductivity to account for inherent noise in MD simulations, and study its impact on
+spatial temperature 
 distribution during heat conduction. Jacobson et al. in~\cite{Jacobson:2014} implement an uncertainty
 quantification framework to optimize a coarse-grained model for predicting the properties of monoatomic
  water. While these are significant contributions, it is only until recently 
@@ -86,13 +87,14 @@ in order to characterize the dependence of discrepancy in thermal conductivity e
 MD simulations and experiments) on system size, and applied thermal gradient~(Section~\ref{sec:response}).
 Second, we perform sensitivity analysis to study the impact of SW potential parameter values on 
 variability in predictions~(Section~\ref{sec:sense}).
-Third, we exploit our findings from sensitivity analysis to discern important parameters and hence
-reduce the dimensionality of the problem~(Section~\ref{sec:ros}). Fourth, we illustrate calibration
+Third, we exploit our findings from sensitivity analysis to 
+construct a reduced order surrogate for uncertainty analysis~(Section~\ref{sec:ros}). 
+Fourth, we illustrate calibration
 of the important parameters in a Bayesian setting to evaluate their posterior
 distributions~(Section~\ref{sec:bayes}). Construction of the
 response surfaces, parametric sensitivity analysis, and Bayesian calibration can all be computationally
 challenging endeavors especially in situations involving compute-intensive simulations as in the
-case of NEMD. We therefore employ polynomial choas (PC) surrogates~\cite{Xiu:2002,Ghanem:1990}
+case of NEMD. We therefore employ polynomial chaos (PC) surrogates~\cite{Xiu:2002,Ghanem:1990}
 using non-intrusive spectral approaches~\cite{Olivier:2010} to reduce computational effort pertaining
 to the aforementioned objectives. Moreover, since the construction of a PC surrogate itself can be
 expensive, we demonstrate in Section~\ref{sec:sense}, a novel approach that implements derivative-based
