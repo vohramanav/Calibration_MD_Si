@@ -19,7 +19,7 @@ experimental data i.e. bulk thermal conductivity at different temperatures in th
 We exploit our findings based on sensitivity analysis in
 Figure~\ref{fig:gsa} and focus on calibrating $\alpha$ and $\gamma$ i.e. $\bm{X}:\{\alpha,\gamma\}$.
 $\mathcal{P}(\bm{X}\vert \bm{Y})$ is regarded as the posterior, $\mathcal{P}(\bm{Y}\vert\bm{X})$ is the
-`likelihood', and $\mathcal{P}(\bm{X})$ is the prior probability distribution (referred to as the `prior') of $\bm{X}$.
+`likelihood', and $\mathcal{P}(\bm{X})$ is the joint prior probability distribution (referred to as the `prior') of $\bm{X}$.
 The likelihood accounts for measurement error, and the discrepancy between experiments and model
 predictions, whereas, the prior is an initial guess for the distribution of uncertain model parameters in an
 interval. It also accounts for the availability of an expert opinion pertaining to their estimates. 
@@ -33,7 +33,7 @@ computational effort and is not the focus on this work. Instead, we compute and 
 a 2D cartesian grid described by $\alpha$ and $\gamma$ using Eq.~\ref{eq:like} as illustrated in
 Figure~\ref{fig:like}(a). For this purpose, we consider $\alpha$ and $\gamma$ to be
 independent and uniformly distributed in the intervals, [1.62,1.98] and [1.08,1.32] respectively. 
-Consequently, the joint posterior is proportional to the likelihood, considered to be a Gaussian:
+Consequently, the posterior is proportional to the likelihood, considered to be a Gaussian:
 
 \be
 \mathcal{P}(\bm{Y}\vert\bm{X}) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left[-\frac{(\kappa_{\tiny{\mbox{E}}} - 
@@ -69,8 +69,10 @@ and experimental data~($\kappa_{\tiny{\mbox{E}}}$). Experimental data for $\kapp
 Approximate marginal distributions for
 $\alpha$ and $\gamma$ are shown in Figure~\ref{fig:like}(b) and Figure~\ref{fig:like}(c) respectively. 
 It must be noted that the joint likelihood plot is essentially for the purpose of illustration. The actual posterior
-should be evaluated using a substantially large set of experimental data and surrogates for NEMD predictions
-need to be constructed (as discussed in Section~\ref{sec:ros}) for each temperature to reduce computational effort. 
+should be evaluated using a substantially large set of experimental data for bulk thermal conductivity as a function
+of temperature, and surrogates for NEMD predictions
+need to be constructed (as discussed in Section~\ref{sec:ros}) at each temperature for which the data is made
+available in order to reduce computational effort. 
 The dimensionality of the surrogate could potentially be reduced a priori using DGSM and a posteriori using
 Sobol sensitivity analysis as presented in this work. 
 
