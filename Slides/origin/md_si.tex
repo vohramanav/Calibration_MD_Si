@@ -1,0 +1,1375 @@
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  This Beamer template was created by Cameron Bracken.
+%%  Anyone can freely use or modify it for any purpose
+%%  without attribution.
+%%
+%%  Last Modified: January 9, 2009
+%%
+
+\documentclass[xcolor={x11names,table},compress,svgnames,mathserif]{beamer}
+
+%% General document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{decorations.fractals}
+%\usepackage{lmodern}
+\usepackage{animate}
+\usepackage{movie15}
+\usepackage{bm}
+\usepackage{pifont}
+\usepackage{empheq}
+\usepackage[many]{tcolorbox}
+\usepackage{smartdiagram}
+\usepackage[customcolors]{hf-tikz}
+\usepackage{dashrule} % for dotted vertical line
+%\usepackage{flexisym}
+
+\usepackage[absolute,overlay]{textpos}
+
+\pgfdeclarehorizontalshading{section shading}{2cm}{
+color(0cm)=(LightSlateGrey);
+color(2cm)=(gray!7);
+color(3cm)=(LightSlateGrey!15)
+}
+
+% Custom block environment
+% Custom block environment
+\newenvironment<>{varblock}[2][.9\textwidth]{%
+  \setlength{\textwidth}{#1}
+  \begin{actionenv}#3%
+    \def\insertblocktitle{#2}%
+    \par%
+    \usebeamertemplate{block begin}}
+  {\par%
+    \usebeamertemplate{block end}%
+  \end{actionenv}}
+
+% boxed equaton
+\usepackage[many]{tcolorbox}
+%\tcbuselibrary{skins}
+
+\tcbset{highlight math style={enhanced,
+  colframe=red!60!black,colback=yellow!50!white,arc=4pt,boxrule=1pt,
+  }}
+
+\newtcbox{\mybox}[1][]{nobeforeafter,math upper,tcbox raise base,
+  enhanced,frame hidden,boxrule=0pt,interior style={top color=green!10!white,
+  bottom color=green!10!white,middle color=green!50!yellow},
+  fuzzy halo=1pt with green,drop large lifted shadow,#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usetikzlibrary{shapes,arrows}
+\usetikzlibrary{positioning,decorations.pathreplacing}
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=purple!20, 
+    text width=5.0em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw=none, fill=blue!20, anchor=north, 
+    text width=9.0em, text centered]
+    \tikzstyle{blockr} = [rectangle, draw, fill=blue!20, 
+    text width=9.0em, text centered, rounded corners]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw=none, ellipse,fill=purple!20, node distance=3cm,
+    minimum height=2em]
+    
+
+%% Beamer Layout %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\useoutertheme[subsection=false,shadow]{miniframes}
+\useinnertheme{default}
+%\usefonttheme{serif}
+\usepackage{palatino}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\newcommand{\angstrom}{\textup{\AA}}
+
+\setbeamerfont{title like}{shape=\scshape}
+\setbeamerfont{frametitle}{shape=\scshape}
+\setbeamertemplate{itemize items}[triangle] % if you wnat a circle
+\setbeamertemplate{itemize subitem}[triangle]
+\setbeamertemplate{navigation symbols}{}
+%\setbeamertemplate{footline}[frame number]
+
+\setbeamercolor{footlinecolor}{fg=white,bg=DeepSkyBlue4}
+\defbeamertemplate*{footline}{infolines theme}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{footlinecolor}
+ % {author in head/foot}%
+    \usebeamerfont{author in head/foot}\insertshortauthor
+   % \usebeamerfont{author in head/foot}\insertshortauthor~~(\insertshortinstitute)
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{footlinecolor}
+  %{date in head/foot}%
+   % \usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
+    \usebeamerfont{date in head/foot}{manav.vohra@vanderbilt.edu}\hspace*{2em}
+    \insertframenumber{} / \inserttotalframenumber\hspace*{2ex} 
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+%\setbeamercolor{section in head/foot}{fg=white, bg=DeepSkyBlue4}
+
+\setbeamercolor*{lower separation line head}{bg=DeepSkyBlue4} 
+\setbeamercolor*{normal text}{fg=black,bg=white} 
+\setbeamercolor*{alerted text}{fg=red} 
+\setbeamercolor*{example text}{fg=black} 
+\setbeamercolor*{structure}{fg=black} 
+ 
+\setbeamercolor*{palette tertiary}{fg=black,bg=black!10} 
+\setbeamercolor*{palette quaternary}{fg=black,bg=black!10} 
+
+\renewcommand{\(}{\begin{columns}}
+\renewcommand*\footnoterule{}
+\renewcommand{\)}{\end{columns}}
+\newcommand{\<}[1]{\begin{column}{#1}}
+\renewcommand{\>}{\end{column}}
+
+\newcommand*\subitem{%
+  \item[\color{DeepSkyBlue4}\scalebox{0.6}{\ding{228}}]}
+  
+  \newcommand*\subitemtwo{%
+  \item[\color{LightSlateGrey!15}\scalebox{0.6}{\ding{228}}]}
+
+\newcommand*\myitem{%
+  \item[\color{DeepSkyBlue4}\scalebox{0.6}{\ding{110}}]}
+ 
+  \newcommand*\myitemtwo{%
+  \item[\color{LightSlateGrey!15}\scalebox{0.6}{\ding{110}}]}
+  
+\newcommand*\Myitem{%
+  \item[\color{DeepSkyBlue4}\scalebox{0.9}{\ding{42}}]}
+  
+\newcommand{\be}{\begin{equation}}
+\newcommand{\ee}{\end{equation}}
+\newcommand{\bea}{\begin{eqnarray}}
+\newcommand{\eea}{\end{eqnarray}}
+\newcommand{\p}{\partial}
+\def\ol{\overline}
+\def\no{\noindent}
+\def\Vb{{\cal V}}
+\def\Qd{\dot{Q}}
+%\DeclareMathSymbol{\ast}{\mathbin}{symbols}{"03}
+ \newcommand{\argmax}{\operatornamewithlimits{arg\,max}}
+
+%-----------Parameter screening tikz styles -----------------------
+   \tikzstyle{A} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
+     fill=blue!30]
+      \tikzstyle{B} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
+     fill=red!30]
+      \tikzstyle{p} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
+     fill=yellow!30]
+      \tikzstyle{q} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
+     fill=green!30]
+      \tikzstyle{alpha} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
+     fill=magenta!30]
+      \tikzstyle{lambda} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
+     fill=cyan!30]
+      \tikzstyle{gamma} = [rectangle, rounded corners, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,
+     fill=orange!30]
+ \tikzstyle{outer} = [rectangle, minimum width=1.5cm, minimum height=0.5cm,text centered, draw=black,dashed]    
+ \tikzstyle{pool} = [rectangle, minimum width=2.0cm, minimum height=1.6cm,line width=1pt,
+text centered, draw=black,dashed]    
+
+%% Algorithm %%%%%
+\usepackage[linesnumbered]{algorithm2e}
+\newcommand{\nosemic}{\renewcommand{\@endalgocfline}{\relax}}% Drop semi-colon ;
+\newcommand{\dosemic}{\renewcommand{\@endalgocfline}{\algocf@endline}}% Reinstate semi-colon ;
+\newcommand{\pushline}{\Indp}% Indent
+\newcommand{\popline}{\Indm\dosemic}% Undent
+\let\oldnl\nl% Store \nl in \oldnl
+\newcommand{\nonl}{\renewcommand{\nl}{\let\nl\oldnl}}% Remove line number for one
+\SetKwRepeat{Do}{do}{while}
+%%%%%%%%%%%%%%%%%
+ 
+%---------------------QUOTATION--------------------------
+\usepackage{etoolbox}
+%\usepackage[svgnames]{xcolor}
+\usepackage{framed}
+
+% conditional for xetex or luatex
+\newif\ifxetexorluatex
+\ifxetex
+  \xetexorluatextrue
+\else
+  \ifluatex
+    \xetexorluatextrue
+  \else
+    \xetexorluatexfalse
+  \fi
+\fi
+%
+\ifxetexorluatex%
+  \usepackage{fontspec}
+  \usepackage{libertine} % or use \setmainfont to choose any font on your system
+  \newfontfamily\quotefont[Ligatures=TeX]{Linux Libertine O} % selects Libertine as the quote font
+\else
+  \usepackage[utf8]{inputenc}
+  \usepackage[T1]{fontenc}
+  %\usepackage{libertine} % or any other font package
+  \newcommand*\quotefont{\fontfamily{LinuxLibertineT-LF}} % selects Libertine as the quote font
+\fi
+
+\newcommand*\quotesize{30} % if quote size changes, need a way to make shifts relative
+% Make commands for the quotes
+\newcommand*{\openquote}
+   {\tikz[remember picture,overlay,xshift=-3ex,yshift=-0.5ex]
+   \node (OQ) {\quotefont\fontsize{\quotesize}{\quotesize}\selectfont``};\kern0pt}
+
+\newcommand*{\closequote}[1]
+  {\tikz[remember picture,overlay,xshift=-15ex,yshift={#1}]
+   \node (CQ) {\quotefont\fontsize{\quotesize}{\quotesize}\selectfont''};}
+
+% select a colour for the shading
+\colorlet{shadecolor}{Azure}
+
+\newcommand*\shadedauthorformat{\emph} % define format for the author argument
+
+% Now a command to allow left, right and centre alignment of the author
+\newcommand*\authoralign[1]{%
+  \if#1l
+    \def\authorfill{}\def\quotefill{\hfill}
+  \else
+    \if#1r
+      \def\authorfill{\hfill}\def\quotefill{}
+    \else
+      \if#1c
+        \gdef\authorfill{\hfill}\def\quotefill{\hfill}
+      \else\typeout{Invalid option}
+      \fi
+    \fi
+  \fi}
+% wrap everything in its own environment which takes one argument (author) and one optional argument
+% specifying the alignment [l, r or c]
+%
+\newenvironment{shadequote}[2][l]%
+{\authoralign{#1}
+\ifblank{#2}
+   {\def\shadequoteauthor{}\def\yshift{-2ex}\def\quotefill{\hfill}}
+   {\def\shadequoteauthor{\par\authorfill\shadedauthorformat{#2}}\def\yshift{2ex}}
+\begin{snugshade}\begin{quote}\openquote}
+{\shadequoteauthor\quotefill\closequote{\yshift}\end{quote}\end{snugshade}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title[UQ: Nano-scale Phonon Heat Transfer]{\textbf{Characterizing the Uncertainties in Non-Equilibrium MD for Thermal Transport}}
+\thispagestyle{empty}
+\pgfsetfillopacity{0.9}
+\setbeamercolor{title}{bg=DeepSkyBlue4,fg=white}
+
+
+%\subtitle{SUBTITLE}
+\author[M. Vohra and S. Mahadevan]{Manav Vohra$^{\dag}$, Sankaran Mahadevan$^{\dag}$ \\ \vspace{2mm}
+\scriptsize{Collaborators: Seungha Shin$^{\S}$, Ali Yousefzadi Nobakht$^{\S}$, Alen 
+Alexanderian$^{\ddag}$}}
+\vspace{-1mm}
+\institute{$^{\dag}$Vanderbilt University\\ \vspace{1mm}
+$^{\S}$University of Tennessee, Knoxville\\ \vspace{1mm}
+$^{\ddag}$North Carolina State University, Raleigh}
+
+\date{\today}
+
+
+\begin{document}
+
+
+%___________________________NEW SLIDE______________________________________
+{
+\setbeamertemplate{headline}{}
+
+\begin{frame}[noframenumbering]
+
+\titlepage
+\vspace{-21mm}
+\centering
+%\scriptsize Institute for Computational Engineering and Sciences\\ \vspace{1mm}
+%The University of Texas at Austin \\ \vspace{6mm}
+
+%\footnotesize Seminar at SCI, University of Utah \\ \vspace{2mm}
+
+
+\end{frame}
+}
+
+%___________________________NEW SLIDE______________________________________
+
+\section{\scshape Background}
+\subsection{md}
+\begin{frame}{Background}
+
+\begin{itemize}
+
+\myitem Classical MD is used to investigate heat transfer dominated by phonon-phonon interactions
+in material systems.  
+\begin{itemize}
+	\item Commonly applied to study non-metallic systems like C, Si, and Ge. 
+\end{itemize}
+		\vspace{1mm}
+\myitem Typically conducted under equilibrium conditions characterized by thermodynamic ensembles like 
+	NVT, NVE, NPT, and $\mu$VT.
+		\vspace{1mm}
+
+\myitem Non-Equilibrium MD involves setting up thermostats in different regions to establish temperature
+gradients.
+		\begin{itemize} 
+			\item Thermostatting introduces errors. 
+		\end{itemize}
+		\vspace{1mm}
+\end{itemize}
+
+	{\scshape Why MD$?$} 
+	\begin{itemize}
+			\Myitem Enables simulation of much larger systems compared to DFT 
+			in a reasonable amount of time. \vspace{1mm}
+			\Myitem Trends from MD are useful despite possible errors in estimates.  
+	\end{itemize}
+
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\section{\scshape Plan}
+\subsection{plan}
+\begin{frame}{Plan}
+
+
+Part I: \textsc{Forward Problem}:
+
+\begin{itemize}
+
+\myitem Investigate error in predictions due to {\color{blue}size} of the material system and
+{\color{blue}fluctuations} in thermal gradient.
+
+\begin{itemize} 
+\item Construct a {\color{blue}response surface} for the error. 
+\end{itemize}
+
+%\vspace{2mm}
+
+\myitem Characterize the impact of uncertainty in inter-atomic potential on predictions. 
+
+\begin{itemize}
+\item Dimension reduction using derivative-based sensitivity measures. 
+\item Construction of PCE in the reduced space.
+\item Forward Propagation of uncertainty. 
+\end{itemize}
+
+\end{itemize}
+
+Part II: \textsc{Inverse Problem}:
+
+\begin{itemize}
+
+\myitem Calibrate critical parameters associated with the potential function in
+a Bayesian setting using experimental data.
+
+%\begin{itemize} 
+%\item Exploit the error response surface from Part I.  
+%\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\section{\scshape Set-up}
+\subsection{setup}
+\begin{frame}{NEMD on a Silicon Bar}
+
+\begin{columns}
+	\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=white,inner sep=0pt] 
+{\rowcolors{1}{DeepSkyBlue!20}{DeepSkyBlue!5}
+	\resizebox{\columnwidth}{!}{
+  \begin{tabular}{|l|c|}\hline
+	  Lattice Constant, $a$ ($\angstrom$) & 5.43 \\
+	  $W$, $H$ ($\angstrom$) & 22$a$, 22$a$ \\
+	  Temperature (K) & 300 \\
+	  $\Delta t$ (ps) & 0.0005 \\
+	  BC & Periodic \\
+	  Structure & Diamond \\
+	  Potential & Stillinger-Weber \\
+  \hline
+  \end{tabular}%
+	}
+};
+\end{tikzpicture}
+\end{center}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+%        \animategraphics[autopause,poster=first,loop,height=0.60\textwidth]{5}
+%        {./animation/snap}{0}{64}
+\begin{figure}[htbp]
+        \includegraphics[width=0.9\textwidth]{./Figures/snap0}
+\\
+\tiny {$L$ = 50$a$, $N$ $\approx$ 200000 atoms}
+\end{figure}
+
+\end{center}
+
+\vspace{-5mm}
+
+
+\begin{figure}[htbp]
+	\includegraphics[width=0.9\textwidth]{./Figures/temp_plot}
+\end{figure}
+
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{setup}
+\begin{frame}{Direct Method}
+
+%\vspace{-4mm}
+\begin{center}
+
+{\color{green}NVT} \hspace{5mm} $\rightarrow$ \hspace{5mm} {\color{cyan}NVE} \hspace{5mm}
+$\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
+\\ \vspace{1mm}
+\tiny \hspace{-5mm}[Eqilibrate system to 300 K] \hspace{1mm} [Equilibrate thermostats] \hspace{4mm}
+ [Generate Data]
+\\ \vspace{1mm}
+
+\tiny{N: Number of Atoms~~~V: Volume~~~T: Temperature~~~E: Energy}
+\end{center}
+
+\normalsize
+\textsc{Observable}: Average energy exchange b/w thermostats ($q$)
+\\ \vspace{2mm}
+\textsc{QoI}: Bulk thermal conductivity ($\kappa$)
+
+\begin{empheq}[box=\tcbhighmath]{align}
+  \kappa = \frac{q}{\left|\frac{dT}{dx}\right|} \nonumber
+\end{empheq}
+
+
+\vspace{3mm}
+\textsc{Initial Runs}:
+
+\begin{itemize}
+\myitem Determine the time steps needed for equilibration. 
+\vspace{1mm}
+\myitem Select a {\color{blue}reasonable} width and height for the Si bar.
+\begin{itemize}
+\item Small fluctuations due to changes in height and width.    
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{setup}
+\begin{frame}{Selection of Width}
+
+	\begin{columns}
+	\begin{column}{0.5\textwidth}
+		\begin{figure}[htbp]
+			\includegraphics[width=0.95\textwidth]{./Figures/nvt_L50_wh_effect}
+	%		\\
+	%		\includegraphics[width=0.85\textwidth]{./Figures/nve_L50_wh_effect}
+			
+		\end{figure}
+
+	\end{column}
+	\begin{column}{0.5\textwidth}
+		\begin{figure}[htbp]
+			\includegraphics[width=0.95\textwidth]{./Figures/nve_L50_wh_effect}
+	%		\\
+	%		\includegraphics[width=0.85\textwidth]{./Figures/nve_L100_wh_effect}
+
+		\end{figure}
+
+	\end{column}
+	
+	\end{columns}
+
+\vspace{2mm}
+\begin{itemize}
+\myitem Norm of the fluctuations ($NF$) is computed using:
+
+\begin{center}
+\vspace{-5mm}
+
+	\be 
+            NF = \frac{1}{N}\left[\sum_k \left(T_k - T_{\{nvt,nve\}}\right)^{2}\right]^{\frac{1}{2}} \nonumber
+        \ee
+
+\end{center}
+\end{itemize}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{setup}
+\begin{frame}{Selection of Width}
+
+	\begin{columns}
+	\begin{column}{0.5\textwidth}
+		\begin{figure}[htbp]
+			\includegraphics[width=1.0\textwidth]{./Figures/nvt_l_effect}
+		\end{figure}
+
+	\end{column}
+	\begin{column}{0.5\textwidth}
+		\begin{figure}[htbp]
+			\includegraphics[width=1.0\textwidth]{./Figures/nve_l_effect}
+		\end{figure}
+
+	\end{column}
+	
+	\end{columns}
+
+%\vspace{2mm}
+\begin{itemize}
+
+\myitem At $W$ = 22$L_c$, the effect of length on fluctuations seems negligible. 
+\end{itemize}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\section{\scshape Error Response}
+\subsection{err}
+\begin{frame}{Need a Surrogate$?$}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\begin{itemize}
+\myitem \textsc{Objective}: Forward UQ, Sensitivity Analysis, calibration, Design
+\vspace{2mm}
+\myitem \textsc{Computational Effort}: Simulations are computationally intensive.
+\vspace{2mm}
+\myitem \textsc{Accuracy}: Can a surrogate represent the observable
+with reasonable accuracy in the domain of interest$?$ 
+\end{itemize}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+\begin{figure}[htbp]
+	\includegraphics[width=1.0\textwidth]{./Figures/cond_size}
+\end{figure}
+
+
+\end{column}
+\end{columns}
+
+\end{frame}
+
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{err}
+\begin{frame}{Model Realizations}
+
+\begin{columns}
+
+\begin{column}{0.5\textwidth}
+\begin{center}
+\begin{figure}[htbp]
+  \includegraphics[width=1.2\textwidth]{./Figures/realz_quad300K}
+\end{figure}
+\end{center}
+\end{column}
+\hspace{-6mm}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\begin{figure}[htbp]
+  \includegraphics[width=1.2\textwidth]{./Figures/realz_sobol}
+\end{figure}
+\end{center}
+\end{column}
+\end{columns}
+
+%\vspace{1mm}
+\begin{itemize}
+\myitem Model realizations at Gauss-Legendre quadrature nodes are used to
+construct the PC surrogate.
+\end{itemize}
+
+\end{frame}
+
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{err}
+%
+\begin{frame}{PC Expansion}
+%
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{empheq}[box=\tcbhighmath]{align}
+  \epsilon (= |\kappa_m - \kappa_{\mbox{\tiny{MD}}}|) = \sum_j c_j\Psi_j(\xi_1,\xi_2) \nonumber
+\end{empheq}
+
+\small {$\kappa_m$: \tiny{Measured}\small, $\kappa_{\mbox{\tiny{MD}}}$: 
+\tiny{MD Prediction}\small, $j$: \tiny{Multi-index}}
+\end{center}
+
+\end{column}
+
+\hspace{-5mm}
+\begin{column}{0.5\textwidth}
+
+\begin{figure}[htbp]
+	\includegraphics[width=1.2\textwidth]{./Figures/PCspectrum_300}
+\end{figure}
+
+
+\end{column}
+\end{columns}
+
+\vspace{1mm}
+\begin{center}
+\normalsize
+$L$:~$\mathcal{U}[50L_c,100L_c]~(\angstrom)~~\rightarrow~~\xi_1: \mathcal{U}[-1,1]$ \\ \vspace{2mm}
+$\frac{dT}{dx}$:~$\mathcal{U}[1.5/L_c,2.5/L_c]~(\frac{K}{\angstrom})~~\rightarrow~~\xi_2: \mathcal{U}[-1,1]$
+\end{center}
+
+\end{frame}
+
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{err}
+%
+\begin{frame}{Response Surface: $\epsilon(L,\frac{dT}{dx})$}
+%
+\begin{columns}
+\begin{column}{0.5\textwidth}
+%\vspace{-8mm}
+\textsc{Accuracy}:
+\vspace{-2mm}
+
+\begin{center}
+\begin{figure}[htbp]
+%\hspace{-5mm}
+  \includegraphics[width=0.65\textwidth]{./Figures/err2D_s}
+\end{figure}
+
+\vspace{-2mm}
+%\tiny{
+%\begin{empheq}[box=1.2\tcbhighmath]{align}
+%  \alpha = \frac{\left[ \sum_j \left(\mathcal{G}\left(L(\xi_{1_j}),\frac{dT}{dx}(\xi_{2_j})\right) - \sum_k c_k\Psi_k(\xi_{1_j},\xi_{2_j})\right)^2\right]^{\frac{1}{2}}}{\left[\sum_j\left(\mathcal{G}\left(L(\xi_{1_j}),\frac{dT}{dx}(\xi_{2_j})\right)\right)^2\right]^{\frac{1}{2}}} \nonumber
+%\end{empheq}
+%}
+\tiny{
+\begin{empheq}[box=\tcbhighmath]{align}
+  \epsilon = \frac{\left[ \sum_j \left(\mathcal{G}_M - \mathcal{G}_{PCE})\right)^2\right]^{\frac{1}{2}}}{\left[\left(\mathcal{G}_{M}\right)^2\right]^{\frac{1}{2}}} \approx 1.8\times10^{-3} \nonumber
+\end{empheq}
+}
+
+\vspace{-3mm}
+\tiny{
+$\mathcal{G}_M$: Model Output\hspace{5mm}$\mathcal{G}_{PCE}$: PCE Estimate}
+\end{center}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\vspace{-10mm}
+\begin{center}
+\begin{figure}[htbp]
+
+	\includegraphics[width=0.8\textwidth]{./Figures/err2D_300}
+	\\ \tiny (a) 300~K \\
+	\includegraphics[width=0.8\textwidth]{./Figures/err2D_500}
+	\\ \tiny (b) 500~K
+
+\end{figure}
+\end{center}
+
+
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{err}
+%
+\begin{frame}{Bulk Thermal Conductivity}
+
+\begin{columns}
+
+\begin{column}{0.5\textwidth}
+\begin{center}
+\begin{figure}[htbp]
+  \includegraphics[width=0.95\textwidth]{./Figures/kinv_300}
+  \\ \vspace{2mm} \tiny {$T$ = 300 K}
+\end{figure}
+\end{center}
+\end{column}
+%\hspace{-6mm}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\begin{figure}[htbp]
+  \includegraphics[width=0.9\textwidth]{./Figures/kinv_1000}
+  \\ \vspace{2mm} \tiny {$T$ = 1000 K}
+\end{figure}
+\end{center}
+\end{column}
+\end{columns}
+
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\section{\scshape Sensitivity}
+\subsection{sense}
+%
+\begin{frame}{Uncertainty in Inter-Atomic Potential}
+
+\textsc{Objectives}
+
+\begin{itemize}
+\myitem Relative importance of potential field parameters using sensitivity analysis.
+\vspace{1mm}
+\myitem Assess variability in thermal conductivity estimates due to
+perturbations in the potential field (Forward Problem). 
+
+\be
+\Phi(A,B,p,q,a,\lambda,\gamma) \mapsto k \nonumber
+\ee
+
+\vspace{1mm}
+\myitem Robust calibration of the potential field parameters in a Bayesian setting.
+
+\end{itemize}
+
+\textsc{Challenges}
+
+\begin{itemize}
+\myitem Global sensitivity analysis and the forward problem are computationally intractable.
+\vspace{1mm}
+\myitem Explore the applicability of a derivative-based sensitivity measure to reduce the
+dimensionality of the problem. 
+\end{itemize}
+
+\end{frame}
+
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{sense}
+%
+\begin{frame}{Derivative-based Global Sensitivity Measures}
+
+\textsc{Motivation}
+
+\begin{itemize}
+\myitem Sensitivity analysis based on Sobol indices is commonly used to determine
+relative importance of the parameters. 
+\vspace{2mm}
+\myitem Sobol sensitivity indices are compute intensive:
+\begin{equation}
+ \mathcal{T}(\theta_i) = \frac{\mathbb{E}_{\bm{\theta}\sim i}[\mathbb{V}_{\theta_i}(\mathcal{G}|\bm{\theta}_{\sim i})]}{\mathbb{V}(\mathcal{G})} \nonumber
+\end{equation}
+\vspace{2mm}
+\myitem Bounds on Sobol indices can be computed easily using DGSM and are shown to converge at a 
+much faster rate. 
+
+\end{itemize}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{sense}
+%
+\begin{frame}{Derivative-based Global Sensitivity Measures}
+
+\textsc{Background}
+
+\begin{itemize}
+
+\myitem DGSM for Randomly distributed parameters 
+\footnotesize{[Sobol and Kucherenko, 2009]}:\vspace{2mm}
+
+\normalsize
+\be
+\mu_i = \mathbb{E}\left[\left(\frac{\partial G(\bm{x})}{\partial x_i}\right)^{2}\right]
+\nonumber
+\ee
+
+where,
+
+\be
+\frac{\partial G(\bm{x}^{\ast})}{\partial x_i} = \lim_{\delta\to 0}
+\frac{[G(x_1^{*},\ldots,x_{i-1}^{*},x_i^{*}+\delta,x_{i+1}^{*},\ldots,x_d^{*}) - G(\bm{x}^{*})]}{\delta} \nonumber
+\ee
+
+\myitem Total number of model realizations required to compute $\mu_i$ using $N$ samples
+is $N(d+1)$.
+
+
+\end{itemize}
+
+\end{frame}
+
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{sense}
+%
+\begin{frame}{Derivative-based Global Sensitivity Measures}
+
+\textsc{Background}
+
+\begin{itemize}
+
+\myitem Upper bound on Sobol Total Effect index 
+($ST_i$)~\footnotesize{[Sobol and Kucherenko, 2009]}:
+
+\normalsize
+\be
+ST_i \leq \frac{\mathcal{C}_i\mu_i}{V}~(\propto \hat{\mathcal{C}_i\mu_i}) \nonumber
+\ee
+
+\be
+\hat{\mathcal{C}_i\mu_i} = \frac{\mathcal{C}_i\mu_i}{\sum_i \mathcal{C}_i\mu_i} \nonumber
+\ee
+\begin{center}
+\tiny {$\mathcal{C}$: Poincar\'e Constant\hspace{3mm}  $V$: Variance}
+\end{center}
+
+\normalsize
+\vspace{2mm}
+\myitem The Poincar\'e Constant is specific to a given probability distribution:
+
+\vspace{1mm}
+\begin{center}
+{\renewcommand{\arraystretch}{1.5}
+\begin{tabular}{|p{1.5cm}|p{1.5cm}|}
+ \hline
+\footnotesize $\mathcal{U}[a,b]$ & \footnotesize $(b-a)^{2}/\pi^2$ \\ \hline
+\footnotesize $\mathcal{N}(\mu,\sigma^2)$ & \footnotesize $\sigma^2$ \\ \hline
+\end{tabular}
+}
+\end{center}
+
+\end{itemize}
+
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{sense}
+\begin{frame}{Algorithm: Parameter Screening}
+%\textsc{Algorithm}
+%\vspace{10mm}
+\begin{algorithm}[H]
+\SetAlgoLined
+%\nonl \scriptsize{\textsc{Part I: Parameter Screening}}
+\scriptsize
+%\nonl \textbf{\texttt{Part I: Parameter Screening}}\;
+\texttt{Generate $n_1$ points in $\mathbb{R}^{d}$}\;
+\texttt{Compute $UB_i$ for parameters $\theta_i$ 
+using $n_1$ points}\;
+\nonl\scriptsize\texttt{\color{blue}$\%~NF$ = $n_1(d+1)$,~$NF$:~Number of
+model realizations}\;
+%\normalsize
+\texttt{Rank Parameters $(\theta_i)$ based on $UB_i$ estimates 
+($\mathcal{R}^{\tiny {old}}$)}\;
+\texttt{set $k$ = 1}
+\scriptsize\texttt{\color{blue}$\%$~$k$:~Iteration counter}\;
+%\normalsize
+\Repeat{\texttt{$\mathcal{R}^{\tiny{new}}$ $\neq$ $\mathcal{R}^{\tiny{old}}$}}{
+\texttt{Generate $\beta n_1$ new points in $\mathbb{R}^{d}$ ($\beta n_1\in\mathbb{Z}$)}\;
+\texttt{Compute $UB_i^{\tiny{new}}$ using (1+$\beta k)n_1$ points}\;
+\nonl\scriptsize\texttt{\color{blue}$\%~NF$ = $(1+\beta k)n_1(d+1)$}\;
+%\normalsize
+\texttt{Rank Parameters based on $UB_i^{\tiny{new}}$ estimates
+($\mathcal{R}^{\tiny{new}}$)}\;
+\If {(\texttt{$\mathcal{R}^{\tiny{new}}$ = $\mathcal{R}^{\tiny{old}}$})}{
+\texttt{Compute: $r_i$ = $\frac{UB_i^{\tiny{new}}}{max(UB_i^{\tiny{new}})}$}\;
+\texttt{Construct a set $s$ = $\{\theta_i~\ni~r_i<\alpha\}$}\;
+\texttt{Exit the loop}\;
+}
+\texttt{set $k$ = $k$ + 1}\;
+}
+\texttt{Construct a validation set: ($\bm{\theta}_j$,$\mathcal{M}(\bm{\theta}_j)$),
+$j$=1,2,$\ldots$,$NF$}\;
+\end{algorithm}
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{sense}
+\begin{frame}{MD Simulation}
+
+\begin{center}
+
+{\color{blue}NPT} \hspace{5mm} $\rightarrow$ \hspace{5mm} {\color{green}NVT} \hspace{5mm} $\rightarrow$ \hspace{5mm} {\color{cyan}NVE} \hspace{5mm} $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
+\\ \vspace{1mm}
+\tiny [Relax System Length] \hspace{2mm}[Equilibrate system to 300 K] \hspace{1mm} [Equilibrate thermostats] \hspace{4mm}
+ [Generate Data]
+\\ \vspace{1mm}
+
+\tiny{N: Number of Atoms~~~P: Pressure~~~V: Volume~~~T: Temperature~~~E: Energy}
+\end{center}
+
+
+\begin{figure}[htbp]
+   \includegraphics[width=0.65\textwidth]{./Figures/lx_npt}
+\end{figure}
+
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{sense}
+\begin{frame}{Structural Instability}
+
+\begin{center}
+        \animategraphics[autopause,poster=first,loop,height=0.45\textwidth]{5}
+        {./anim_unstable/snap}{0}{49}
+\end{center}
+
+\end{frame}
+
+%
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{sense}
+\begin{frame}{Parameter Screening}
+
+\begin{center}
+\begin{tikzpicture}
+\hspace{-5mm}
+\tiny
+%\node (case_5) [outer]{$\hat{\mathcal{C}_i\mu_i}$: 5 Samples};
+%\node (gamma5) [gamma,below of=case_5,yshift=0.2cm] {$\gamma$: 0.3018};
+%\node (A5) [A, below of=gamma5,yshift=0.2cm] {$A$: 0.2089};
+%\node (alpha5) [alpha, below of=A5,yshift=0.2cm] {$\alpha$: 0.1765};
+%\node (p5) [p, below of=alpha5,yshift=0.2cm] {$p$: 0.1175};
+%\node (q5) [q, below of=p5,yshift=0.2cm] {$q$: 0.1137};
+%\node (lambda5) [lambda, below of=q5,yshift=0.2cm] {$\lambda$: 0.0443};
+%\node (B5) [B, below of=lambda5,yshift=0.2cm] {$B$: 0.0373};
+%%\node (pool5) [pool, below of=q5,yshift=-0.6cm]{};
+%\hspace{-10mm}
+
+%\node (case_10) [outer,right of=case_5,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
+%10 Samples};
+\node (case_10) [outer]{$\hat{\mathcal{C}_i\mu_i}$: 10 Samples};
+\node (gamma10) [gamma, below of=case_10,yshift=0.2cm] {$\gamma$: 0.2531};
+\node (alpha10) [alpha, below of=gamma10,yshift=0.2cm] {$\alpha$: 0.2170};
+\node (A10) [A, below of=alpha10,yshift=0.2cm] {$A$: 0.2014};
+\node (B10) [B, below of=A10,yshift=0.2cm] {$B$: 0.0964};
+\node (p10) [p, below of=B10,yshift=0.2cm] {$p$: 0.0916};
+\node (q10) [q, below of=p10,yshift=0.2cm] {$q$: 0.0741};
+\node (lambda10) [lambda, below of=q10,yshift=0.2cm] {$\lambda$: 0.0664};
+%\node (pool) [pool, below of=B10,yshift=-0.6cm]{};
+
+\hspace{-10mm}
+
+\node (case_15) [outer,right of=case_10,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
+15 Samples};
+\node (gamma15) [gamma, right of=gamma10,xshift=2.5cm] {$\gamma$: 0.2001};
+\node (alpha15) [alpha, right of=alpha10,xshift=2.5cm] {$\alpha$: 0.1723};
+\node (A15) [A, right of=A10,xshift=2.5cm] {$A$: 0.1508};
+\node (B15) [B, right of=B10,xshift=2.5cm] {$B$: 0.1381};
+\node (p15) [p, right of=p10,xshift=2.5cm] {$p$: 0.1253};
+\node (q15) [q, right of=q10,xshift=2.5cm] {$q$: 0.1232};
+\node (lambda15) [lambda, right of=lambda10,xshift=2.5cm] {$\lambda$: 0.0900};
+%\node (pool) [pool, below of=gamma15,yshift=-1.4cm]{};
+
+\hspace{-10mm}
+
+\node (case_20) [outer,right of=case_15,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
+20 Samples};
+\node (gamma20) [gamma, right of=gamma15,xshift=2.5cm] {$\gamma$: 0.1933};
+\node (alpha20) [alpha, right of=alpha15,xshift=2.5cm] {$\alpha$: 0.1593};
+\node (q20) [q, right of=A15,xshift=2.5cm] {$q$: 0.1468};
+\node (lambda20) [lambda, right of=B15,xshift=2.5cm] {$\lambda$: 0.1325};
+\node (A20) [A, right of=p15,xshift=2.5cm] {$A$: 0.1261};
+\node (B20) [B, right of=q15,xshift=2.5cm] {$B$: 0.1242};
+\node (p20) [p, right of=lambda15,xshift=2.5cm] {$p$: 0.1177};
+\node (pool) [pool, below of=A20,yshift=-0.24cm]{};
+
+\hspace{-10mm}
+
+\node (case_25) [outer,right of=case_20,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
+25 Samples};
+\node (gamma25) [gamma, right of=gamma20,xshift=2.5cm] {$\gamma$: 0.2075};
+\node (alpha25) [alpha, right of=alpha20,xshift=2.5cm] {$\alpha$: 0.1495};
+\node (q25) [q, right of=q20,xshift=2.5cm] {$q$: 0.1493};
+\node (lambda25) [lambda, right of=lambda20,xshift=2.5cm] {$\lambda$: 0.1392};
+\node (A25) [A, right of=A20,xshift=2.5cm] {$A$: 0.1217};
+\node (B25) [B, right of=B20,xshift=2.5cm] {$B$: 0.1175};
+\node (p25) [p, right of=p20,xshift=2.5cm] {$p$: 0.1153};
+\node (pool) [pool, below of=A25,yshift=-0.24cm]{};
+
+\hspace{-10mm}
+
+\node (case_30) [outer,right of=case_25,xshift=2.5cm]{$\hat{\mathcal{C}_i\mu_i}$:
+30 Samples};
+\node (gamma30) [gamma, right of=gamma25,xshift=2.5cm] {$\gamma$: 0.2024};
+\node (alpha30) [alpha, right of=alpha25,xshift=2.5cm] {$\alpha$: 0.1487};
+\node (lambda30) [lambda, right of=q25,xshift=2.5cm] {$\lambda$: 0.1424};
+\node (q30) [q, right of=lambda25,xshift=2.5cm] {$q$: 0.1404};
+\node (A30) [A, right of=A25,xshift=2.5cm] {$A$: 0.1395};
+\node (B30) [B, right of=B25,xshift=2.5cm] {$B$: 0.1142};
+\node (p30) [p, right of=p25,xshift=2.5cm] {$p$: 0.1125};
+\node (pool) [pool, below of=A30,yshift=-0.24cm]{};
+
+\end{tikzpicture}
+\end{center}
+
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{sense}
+\begin{frame}{Parameter Screening}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=0.65\textwidth]{./Figures/ub}
+\end{figure}
+
+\end{center}
+\end{frame}
+
+
+%%___________________________NEW SLIDE______________________________________
+%
+\section{\scshape PCE}
+\subsection{pce}
+\begin{frame}{PCE}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+%\begin{center}
+\be
+\kappa = \sum_{\bm{s}\in\mathcal{A}} c_{\bm{s}}\Psi_{\bm{s}}(\bm{\xi}) \nonumber
+\ee
+
+%\noindent where,
+\scriptsize
+\begin{center}
+$\mathcal{A}$: Sparse basis 
+
+\vspace{-3mm}
+\be
+ \bm{\xi}:~\{\xi_1(A),\xi_2(q),\xi_3(\alpha),
+\xi_4(\lambda),\xi_5(\gamma)\} \nonumber
+\ee
+
+\vspace{-3mm}
+\be
+\Psi_{\bm{s}}(\bm{\xi}) = \psi_{s_1}(\xi_1)\psi_{s_2}(\xi_2)
+\psi_{s_3}(\xi_3)\psi_{s_4}(\xi_4)\psi_{s_5}(\xi_5) \nonumber
+\ee
+
+\vspace{-3mm}
+\be
+\xi_i \sim \mathcal{U}[-1,1] \nonumber
+\ee
+
+\end{center}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/PCE5D_eloo}
+\end{figure}
+\end{center}
+
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{pce}
+\begin{frame}{Verification}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\textsc{L-2}
+
+\tiny
+\begin{align*}
+\mbox{\normalsize{$\epsilon_{val}$}} &= \frac{\left[\sum_{i=1}^{N}\left(\mathcal{M}(\bm{x}^{(i)}) -
+\mathcal{M}^{PCE}(\bm{x}^{(i)})\right)^{2}\right]^{\frac{1}{2}}}{\left[\sum_{i=1}^{N}
+\left(\mathcal{M}(\bm{x}^{(i)})\right)^2\right]^{\frac{1}{2}}} \\ \vspace{2mm}
+&= 6.88\times10^{-2}
+\nonumber
+\end{align*}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/PCE5D_kde}
+\end{figure}
+\end{center}
+\end{column}
+\end{columns}
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{pce}
+\begin{frame}{Sensitivity Analysis}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\tiny
+\begin{center}
+\begin{tikzpicture}
+\node (case_30) [outer]{$\hat{\mathcal{C}_i\mu_i}$:
+30 Samples};
+\node (gamma30) [gamma, below of=case_30,yshift=0.2cm] {$\gamma$: 0.2024};
+\node (alpha30) [alpha, below of=gamma30,yshift=0.2cm] {$\alpha$: 0.1487};
+\node (lambda30) [lambda, below of=alpha30,yshift=0.2cm] {$\lambda$: 0.1424};
+\node (q30) [q, below of=lambda30,yshift=0.2cm] {$q$: 0.1404};
+\node (A30) [A, below of=q30,yshift=0.2cm] {$A$: 0.1395};
+\node (B30) [B, below of=A30,yshift=0.2cm] {$B$: 0.1142};
+\node (p30) [p, below of=B30,yshift=0.2cm] {$p$: 0.1125};
+\node (pool) [pool, below of=A30,yshift=-0.24cm]{};
+
+\end{tikzpicture}
+\end{center}
+
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{center}
+
+\textsc{Sobol Sensitivity Indices}
+\vspace{5mm}
+
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/PCE5D_gsa}
+\end{figure}
+\end{center}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\section{\scshape Likelihood}
+\subsection{like}
+\begin{frame}{Likelihood}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\scriptsize{Bayes' rule:}
+
+\be
+\mathcal{P}(\alpha,\gamma\vert \kappa) \propto \mathcal{P}(\kappa\vert
+ \alpha,\gamma)\mathcal{P}(\alpha)\mathcal{P}(\gamma) \nonumber
+\ee
+
+\be
+\mathcal{P}(\alpha) \sim \mathcal{U}[1.62,1.98] \nonumber
+\ee
+
+\be
+\mathcal{P}(\gamma) \sim \mathcal{U}[1.08,1.32] \nonumber
+\ee
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\begin{center}
+
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/gl}
+\end{figure}
+\end{center}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\section{\scshape Subspace}
+\subsection{subspace}
+\begin{frame}{Active Subspace}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\scriptsize{Positive Semi-definite Matrix}:
+\be
+\mathcal{C} = \int \nabla f(\bm{x})\nabla f(\bm{x})^{T}\rho(\bm{x})d\bm{x} = \bm{W}\Lambda\bm{W}^T
+\nonumber
+\ee
+
+%\vspace{1mm}
+\scriptsize{Partition of Eigenpairs}:
+\begin{gather}
+\Lambda = 
+\begin{bmatrix}
+\Lambda_1 & \\ & \Lambda_2 \nonumber
+\end{bmatrix},~~\bm{W} = \left[\bm{W}_1~\bm{W}_2\right]
+\end{gather}
+%\vspace{1mm}
+
+\scriptsize{MC Integration}:
+\be
+\mathcal{C} \approx \hat{\mathcal{C}} = \frac{1}{N}\sum_{i=1}^{N} \nabla_{\bm{x}}f_i\nabla_{\bm{x}}f_i^T = 
+\hat{\bm{W}}\hat{\Lambda}\hat{\bm{W}}^{T} \nonumber
+\ee
+
+\vspace{-1mm}
+\be
+f(\bm{x}) \approx g(\bm{W}_1^T\bm{x}) \nonumber
+\ee
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/eig}
+\end{figure}
+\end{center}
+
+
+\end{column}
+\end{columns}
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{subspace}
+\begin{frame}{1D Active Subspace}
+
+\vspace{-2mm}
+$f(\bm{x})~=~g(\eta_1^T\xi)~~(\bm{x}\rightarrow \xi\in[-1,1])$
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/ssp1D}
+\end{figure}
+\end{center}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/pdf_comp_SSP1D}
+\end{figure}
+\end{center}
+
+
+\end{column}
+\end{columns}
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{subspace}
+\begin{frame}{2D Active Subspace}
+
+\vspace{-2mm}
+$f(\bm{x})~=~g(\eta_1^T\xi,\eta_2^T\xi)$
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/ssp2D}
+\end{figure}
+\end{center}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/ssp2D_2}
+\end{figure}
+\end{center}
+
+
+\end{column}
+\end{columns}
+\end{frame}
+
+%%___________________________NEW SLIDE______________________________________
+%
+\subsection{subspace}
+\begin{frame}{3D Active Subspace}
+
+\vspace{-2mm}
+$f(\bm{x})~=~g(\eta_1^T\xi,\eta_2^T\xi,\eta_3^T\xi)$
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/pdf_comp_SSP3D}
+\end{figure}
+\end{center}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=1.0\textwidth]{./Figures/rn}
+\end{figure}
+\end{center}
+
+
+\end{column}
+\end{columns}
+\end{frame}
+
+\end{document}
