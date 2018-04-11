@@ -23,6 +23,8 @@
 \usepackage{smartdiagram}
 \usepackage[customcolors]{hf-tikz}
 \usepackage{dashrule} % for dotted vertical line
+\definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
+\definecolor{pigment}{rgb}{0.2, 0.2, 0.6}
 %\usepackage{flexisym}
 
 \usepackage[absolute,overlay]{textpos}
@@ -265,7 +267,7 @@ NEMD Simulations of Phonon Transport}}
 
 %\subtitle{SUBTITLE}
 \author[M. Vohra and S. Mahadevan]{Manav Vohra$^{\dag}$, Sankaran Mahadevan$^{\dag}$ \\ \vspace{2mm}
-\scriptsize{Collaborators: Seungha Shin$^{\S}$, Ali Yousefzadi Nobakht$^{\S}$}}
+\scriptsize{Collaborators: Seungha Shin$^{\S}$, Ali Y. Nobakht$^{\S}$}}
 \vspace{-1mm}
 \institute{$^{\dag}$Vanderbilt University\\ \vspace{1mm}
 $^{\S}$University of Tennessee, Knoxville}
@@ -295,6 +297,262 @@ $^{\S}$University of Tennessee, Knoxville}
 }
 
 %___________________________NEW SLIDE______________________________________
+
+\section{\scshape Background}
+\subsection{bg}
+
+\begin{frame}{Non-Equilibrium MD}
+
+\begin{itemize}
+
+\myitem Widely used to study thermal (phonon) transport in 
+{\color{pigment}non-metallic} systems (C,Si,Ge).
+\vspace{2mm}
+\myitem System subjected to a temperature gradient using thermostats.
+\vspace{2mm}
+\myitem {\color{pigment}Steady-state} thermal energy exchange between
+the thermostats is used in Fourier's law to estimate bulk thermal
+conductivity~($\kappa$). \vspace{2mm}
+\myitem Estimates are {\color{pigment}uncertain} and severely
+{\color{pigment}under-predicted}.
+\begin{itemize}
+  \item Simulation length-scales $\ll$ phonon mean free path. \vspace{1mm}
+  \item Thermostats reduce correlation b/w vibration modes.
+\end{itemize}
+
+\end{itemize}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{bg}
+
+\begin{frame}{Sources of Uncertainty}
+
+\begin{columns}
+\begin{column}{0.52\textwidth}
+
+\begin{itemize}
+\myitem Bulk thermal conductivity is size-dependent.
+\vspace{2mm}
+\myitem Variability in applied thermal gradient~(Kapitza~effect).
+\vspace{2mm}
+\myitem Choice of the inter-atomic potential.
+\vspace{2mm}
+\myitem Nominal estimates of the potential parameters.
+
+\end{itemize}
+\end{column}
+
+\begin{column}{0.48\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+\vspace{-3mm}
+  \includegraphics[width=0.9\textwidth]{./Figures/cond_size}
+  \\ \vspace{2mm}
+  \includegraphics[width=0.9\textwidth]{./Figures/temp_plot}
+\end{figure}
+\end{center}
+
+\end{column}
+\end{columns}
+
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{bg}
+
+\begin{frame}{Specific Research Goals}
+
+\begin{itemize}
+
+\myitem Quantify discrepancy in $\kappa$ between predictions and data.
+\begin{itemize}
+\item Construct a response surface for $\kappa(s,\frac{d\theta}{dx})$.
+\end{itemize}
+\vspace{2mm}
+\myitem Perform sensitivity analysis of the potential parameters.
+\begin{itemize}
+\item Estimate derivative-based sensitivity measures~(DGSM).
+\end{itemize}
+\vspace{2mm}
+\myitem Construct a reduced order surrogate for $\kappa$ using sparse
+NEMD predictions.
+\begin{itemize}
+\item Use the surrogate for forward propagation of uncertainty, and global
+sensitivity analysis. 
+\end{itemize}
+\vspace{2mm}
+\myitem Calibrate the \textit{important} parameters in a Bayesian setting.
+
+\end{itemize}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\section{\scshape Set-up}
+\subsection{setup}
+
+\begin{frame}{Problem Set-up}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{tikzpicture}
+\node[fill=white,inner sep=0pt] 
+{\rowcolors{1}{DeepSkyBlue!20}{DeepSkyBlue!5}
+	\resizebox{\columnwidth}{!}{
+  \begin{tabular}{l|c}
+%\hline
+	Lattice Constant, $a$ ($\angstrom$) & 5.43 \\ 
+	Width, Height ($\angstrom$) & 22$a$ \\ 
+	$\Delta t$  (ps) & 0.0005 \\
+	Boundary Condition & Periodic \\ 
+	Lattice Structure & Diamond \\ 
+	Inter-atomic Potential & Stillinger-Weber 
+
+%\hline
+  \end{tabular}%
+	}
+};
+\end{tikzpicture}
+\end{center}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+%\vspace{-5mm}
+\begin{center}
+\begin{figure}[htbp]
+        \includegraphics[width=0.9\textwidth]{./Figures/schematic}
+\end{figure}
+\vspace{3mm}
+%        \animategraphics[autopause,poster=first,loop,height=0.60\textwidth]{5}
+%        {./animation/snap}{0}{64}
+\end{center}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{setup}
+\begin{frame}{Problem Set-up}
+
+%\vspace{-4mm}
+
+\begin{itemize}
+\myitem \textsc{Stages}:\\
+
+\begin{center}
+{\color{green}NVT} \hspace{5mm} $\rightarrow$ \hspace{5mm} {\color{cyan}NVE} \hspace{5mm}
+$\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
+\\ \vspace{1mm}
+\tiny \hspace{-5mm}[Eqilibrate system to 300 K] \hspace{1mm} [Equilibrate thermostats] \hspace{4mm}
+ [Generate Data]
+\\ \vspace{1mm}
+
+\tiny{N: Number of Atoms~~~V: Volume~~~T: Temperature~~~E: Energy}
+\end{center}
+
+\normalsize
+
+\myitem \textsc{Observable}: Avg. energy exchange b/w thermostats~($q$)
+\vspace{2mm}
+
+\myitem \textsc{QoI}: Bulk thermal conductivity ($\kappa$)
+
+\begin{empheq}[box=\tcbhighmath]{align}
+  \kappa = \frac{q}{\left|\frac{dT}{dx}\right|} \nonumber
+\end{empheq}
+
+\vspace{2mm}
+
+\myitem Appropriate selection of {\color{pigment}width}, 
+{\color{pigment}height}, and {\color{pigment}simulation-time} was ensured.  
+\end{itemize}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\section{\scshape Discrepancy}
+\subsection{response}
+\begin{frame}{Response Surface: Discrepancy}
+
+\begin{columns}
+\begin{column}{0.52\textwidth}
+
+\begin{itemize}
+\myitem PC representation of the discrepancy, 
+$\epsilon_{\mbox{\tiny{d}}}$:
+
+\begin{empheq}[box=\tcbhighmath]{align}
+\epsilon_{\mbox{\tiny{d}}} \approx \mathcal{\epsilon}_{\mbox{\tiny{d}}}^{\mbox{\tiny{PCE}}} = 
+\sum_{\bm{k}\in\mathcal{I}} c_{\bm{k}}(T)\Psi_{\bm{k}}(\bm{\xi(\theta)})
+\nonumber
+\end{empheq}
+
+\end{itemize}
+\end{column}
+
+\begin{column}{0.48\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+\vspace{-3mm}
+  \includegraphics[width=0.95\textwidth]{./Figures/realz_quad300K}
+  \\ \vspace{1mm}
+  \includegraphics[width=0.9\textwidth]{./Figures/PCspectrum_300}
+\end{figure}
+\end{center}
+
+\end{column}
+\end{columns}
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 \end{document}
