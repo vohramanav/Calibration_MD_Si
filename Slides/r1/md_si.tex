@@ -12,6 +12,8 @@
 %% General document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{graphicx}
 \usepackage{tikz}
+\usetikzlibrary{mindmap}
+\usetikzlibrary{arrows.meta}
 \usetikzlibrary{decorations.fractals}
 %\usepackage{lmodern}
 \usepackage{animate}
@@ -25,6 +27,7 @@
 \usepackage{dashrule} % for dotted vertical line
 \definecolor{airforceblue}{rgb}{0.36, 0.54, 0.66}
 \definecolor{pigment}{rgb}{0.2, 0.2, 0.6}
+\DeclareMathOperator*{\argmin}{arg\,min}
 %\usepackage{flexisym}
 
 \usepackage[absolute,overlay]{textpos}
@@ -35,17 +38,13 @@ color(2cm)=(gray!7);
 color(3cm)=(LightSlateGrey!15)
 }
 
-% Custom block environment
-% Custom block environment
-\newenvironment<>{varblock}[2][.9\textwidth]{%
-  \setlength{\textwidth}{#1}
-  \begin{actionenv}#3%
-    \def\insertblocktitle{#2}%
-    \par%
-    \usebeamertemplate{block begin}}
-  {\par%
-    \usebeamertemplate{block end}%
-  \end{actionenv}}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\addtobeamertemplate{block begin}{\pgfsetfillopacity{0.8}}{\pgfsetfillopacity{1}}
+\setbeamercolor{structure}{fg=mygreen}
+\setbeamercolor*{block title example}{fg=blue!50,
+bg= blue!10}
+\setbeamercolor*{block body example}{fg= blue,
+bg= blue!5}
 
 % boxed equaton
 \usepackage[many]{tcolorbox}
@@ -330,6 +329,42 @@ conductivity~($\kappa$). \vspace{2mm}
 
 \begin{frame}{Sources of Uncertainty}
 
+\vspace{7mm}
+\begin{center}
+\begin{tikzpicture}[mindmap, grow cyclic, every node/.style=concept, concept color=orange!40, 
+    level 1/.append style={level distance=5cm,sibling angle=90},
+    level 2/.append style={level distance=3cm,sibling angle=45},transform canvas={scale=0.5}]
+    
+    \node{Non-Equlibrium Molecular Dynamics}
+   child [concept color=blue!30]{ node {Noise}
+        child { node {Experiment Data}}
+        child { node {MD Simulation}}
+    }
+    child [concept color=yellow!30]{ node {Model Inadequacy}
+    child { node {Upscaling}}
+        child { node {Missing Physics}}
+    }
+    child [concept color=green!30]{ node {Inter-atomic Potential}
+        child { node {Potential Selection}}
+        child { node {Parameter Values}}
+         }
+    child [concept color=red!30]{ node {Simulation Set-up}
+        child { node {System Size}}
+        child { node {Heat flux/Thermal gradient}}
+        child { node {Duration}}
+    };
+  
+  \end{tikzpicture}
+  \end{center}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{bg}
+
+\begin{frame}{Sources of Uncertainty}
+
 \begin{columns}
 \begin{column}{0.52\textwidth}
 
@@ -434,8 +469,8 @@ sensitivity analysis.
         \includegraphics[width=0.9\textwidth]{./Figures/schematic}
 \end{figure}
 \vspace{3mm}
-%        \animategraphics[autopause,poster=first,loop,height=0.60\textwidth]{5}
-%        {./animation/snap}{0}{64}
+        \animategraphics[autoplay,poster=first,loop,height=0.60\textwidth]{5}
+        {./animation/snap}{0}{64}
 \end{center}
 \end{column}
 \end{columns}
@@ -470,9 +505,18 @@ $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
 
 \myitem \textsc{QoI}: Bulk thermal conductivity ($\kappa$)
 
-\begin{empheq}[box=\tcbhighmath]{align}
-  \kappa = \frac{q}{\left|\frac{dT}{dx}\right|} \nonumber
-\end{empheq}
+\begin{center}
+\begin{tcolorbox}[width=0.3\textwidth,height=0.2\textwidth,colback=DeepSkyBlue!20,notitle,colframe=DeepSkyBlue!20,colupper=DeepSkyBlue4]
+\vspace{-2mm}
+\be
+\kappa = \frac{q}{\left|\frac{dT}{dz}\right|} \nonumber
+\ee
+\end{tcolorbox}
+\end{center}
+
+%\begin{empheq}[box=\tcbhighmath]{align}
+%  \kappa = \frac{q}{\left|\frac{dT}{dz}\right|} \nonumber
+%\end{empheq}
 
 \vspace{2mm}
 
@@ -484,7 +528,7 @@ $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
 
 %___________________________NEW SLIDE______________________________________
 
-\section{\scshape Discrepancy}
+\section{\scshape Response Surface}
 \subsection{response}
 \begin{frame}{Response Surface: Discrepancy}
 
@@ -494,12 +538,30 @@ $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
 \begin{itemize}
 \myitem PC representation of the discrepancy, 
 $\epsilon_{\mbox{\tiny{d}}}$:
+\vspace{-2mm}
 
-\begin{empheq}[box=\tcbhighmath]{align}
+\begin{center}
+\begin{tcolorbox}[width=0.9\textwidth,colback=DeepSkyBlue!20,notitle,colframe=DeepSkyBlue!20,colupper=DeepSkyBlue4]
+\vspace{-2mm}
+\scriptsize
+\be
 \epsilon_{\mbox{\tiny{d}}} \approx \mathcal{\epsilon}_{\mbox{\tiny{d}}}^{\mbox{\tiny{PCE}}} = 
 \sum_{\bm{k}\in\mathcal{I}} c_{\bm{k}}(T)\Psi_{\bm{k}}(\bm{\xi(\theta)})
-\nonumber
-\end{empheq}
+ \nonumber
+\ee
+\end{tcolorbox}
+\end{center}
+
+\vspace{2mm}
+\normalsize
+
+\myitem Uncertain parameters, $\bm{\theta}$:~$\{L,\frac{dT}{dz}\}$
+\scriptsize
+\begin{center}
+$L~\sim~\mathcal{U}[50a, 100a](\angstrom)$ \\ \vspace{2mm}
+$\frac{dT}{dz}~\sim~\mathcal{U}[\frac{1.5}{a}, \frac{2.5}{a}](\frac{K}{\angstrom})$
+
+\end{center}
 
 \end{itemize}
 \end{column}
@@ -520,39 +582,553 @@ $\epsilon_{\mbox{\tiny{d}}}$:
 
 \end{frame}
 
+%___________________________NEW SLIDE______________________________________
+
+\subsection{response}
+\begin{frame}{Verification}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\vspace{-1mm}
+\begin{center}
+\begin{figure}[htbp]
+  \includegraphics[width=0.8\textwidth]{./Figures/err2D_s}
+  \end{figure}
+\end{center}
+%\vspace{-2mm}
+\scriptsize
+
+\begin{center}
+\begin{tcolorbox}[width=1.1\textwidth,colback=DeepSkyBlue!20,notitle,colframe=DeepSkyBlue!20,colupper=DeepSkyBlue4]
+\vspace{-3mm}
+\scriptsize
+\be
+ \varepsilon_{\tiny{\mbox{L-2}}} = \frac{\left[\sum_{j}(\epsilon_{\tiny{\mbox{d},j}}^{\mbox{\tiny{MD}}} - 
+ \epsilon_{\tiny{\mbox{d},j}}^{\mbox{\tiny{PCE}}})^2\right]^{\frac{1}{2}}}{\left[\sum_j(\epsilon_{\tiny{\mbox{d},j}}
+ ^{\mbox{\tiny{MD}}})^2\right]^{\frac{1}{2}}} \sim \mathcal{O}(10^{-3}) \nonumber
+ \ee
+\end{tcolorbox}
+\end{center}
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
+\vspace{-3mm}
+  \includegraphics[width=0.8\textwidth]{./Figures/err2D_300}
+  \\ \tiny{300~K} \vspace{1mm} \\
+  \includegraphics[width=0.8\textwidth]{./Figures/err2D_500}
+  \\ \tiny{500~K}
+\end{figure}
+\end{center}
+
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{response}
+\begin{frame}{Direct Method}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\begin{figure}[htbp]
+  \includegraphics[width=0.85\textwidth]{./Figures/kinv_300}
+  \\ \vspace{1mm} \tiny{300~K}
+  \end{figure}
+\end{center}
+\end{column}
+\hspace{-6mm}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\begin{figure}[htbp]
+  \includegraphics[width=0.85\textwidth]{./Figures/kinv_500}
+   \\ \vspace{1mm}\tiny{500~K}
+  \end{figure}
+\end{center}
+\end{column}
+
+\end{columns}
+
+\vspace{2mm}
+\begin{itemize}
+\myitem y-intercept of the straight line fit  to the above plot provides an estimate of the bulk thermal conductivity. 
+\end{itemize}
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\section{\scshape Potential}
+\subsection{sw}
+
+\begin{frame}{The Stillinger-Weber Potential}
+
+\scriptsize
+\vspace{10mm}
+\tikz[overlay, remember picture] \node at (2.9,1) {
+\begin{tcolorbox}[width=0.34\textwidth,colback=DeepSkyBlue4,notitle,colframe=DeepSkyBlue4,colupper=white]
+\textsc{Functional Form}
+\end{tcolorbox}
+};
+\tikz[overlay, remember picture] \node at (5.3,-0.16) {
+\begin{tcolorbox}[width=0.8\textwidth,colback=DeepSkyBlue!20,notitle,colframe=DeepSkyBlue!20,colupper=DeepSkyBlue4]
+\vspace{-2mm}
+\be
+\Phi(1,\ldots,N) = \sum\limits_{i,j(i<j)}v_{ij}^{(2)}(A,B,p,q,\alpha)\hspace{1mm}+\sum\limits_{i,j,k(i<j<k)}v_{ij}^{(3)}(\lambda,\gamma)\nonumber
+\ee
+\end{tcolorbox}
+};
+\normalsize
+
+\vspace{15mm}
+\textsc{Shortcomings}
+
+\begin{itemize}
+\myitem {\color{pigment}Inadequate} functional representation. 
+\vspace{1mm}
+\myitem Estimates based on a {\color{pigment}limited} search. 
+\vspace{1mm}
+\myitem Do not account for {\color{pigment}measurement error} and {\color{pigment}MD noise}. 
+\vspace{1mm}
+\myitem {\color{pigment}Parametric uncertainties} were not considered. 
+\end{itemize}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{sw}
+
+\begin{frame}{The Stillinger-Weber Potential}
+
+\scriptsize
+\vspace{10mm}
+\tikz[overlay, remember picture] \node at (2.9,1) {
+\begin{tcolorbox}[width=0.34\textwidth,colback=DeepSkyBlue4,notitle,colframe=DeepSkyBlue4,colupper=white]
+\textsc{Functional Form}
+\end{tcolorbox}
+};
+\tikz[overlay, remember picture] \node at (5.3,-0.16) {
+\begin{tcolorbox}[width=0.8\textwidth,colback=DeepSkyBlue!20,notitle,colframe=DeepSkyBlue!20,colupper=DeepSkyBlue4]
+\vspace{-2mm}
+\be
+\Phi(1,\ldots,N) = \sum\limits_{i,j(i<j)}v_{ij}^{(2)}(A,B,p,q,\alpha)\hspace{1mm}+\sum\limits_{i,j,k(i<j<k)}v_{ij}^{(3)}(\lambda,\gamma)\nonumber
+\ee
+\end{tcolorbox}
+};
+\normalsize
+
+\vspace{15mm}
+\textsc{Mitigation Strategies}
+
+\begin{itemize}
+\myitem {\color{pigment}Sensitivity Analysis} of the parameters. 
+\vspace{1mm}
+\myitem {\color{pigment}Forward propagation} of the uncertainty. 
+\vspace{1mm}
+\myitem {\color{pigment}Bayesian calibration} of the key parameters.
+\end{itemize}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\section{Sensitivity}
+\subsection{sense}
+
+\begin{frame}{Sensitivity Analysis}
+
+\begin{columns}
+\begin{column}{0.55\textwidth}
+\textsc{Challenges}
+
+\vspace{2mm}
+\begin{itemize}
+
+\Myitem Global sensitivity analysis is {\color{pigment}computationally intractable}.
+\vspace{2mm}
+\Myitem Perturbing potential parameters $\rightarrow$ loss of {\color{pigment}structural integrity}. 
+\end{itemize}
+\end{column}
+
+\begin{column}{0.45\textwidth}
+\begin{center}
+%\begin{figure}[htbp]
+ % \includegraphics[width=0.85\textwidth]{./Figures/unstable}
+ % \end{figure}
+  \animategraphics[autopause,poster=first,loop,height=0.90\textwidth]{5}
+       {./anim_unstable/snap}{0}{49}
+
+  \end{center}
+  
+ \end{column}
+\end{columns}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{sense}
+
+\begin{frame}{Sensitivity Analysis}
+\begin{itemize}
+\myitem Derivative-based sensitivity measures (DGSM) are estimated to identify \textit{unimportant} parameters.
+
+\hspace{-5mm}
+\tikz[overlay, remember picture] \node at (2,-1) {
+\scriptsize
+\begin{tcolorbox}[width=0.27\textwidth,colback=red!20,notitle,colframe=red!20,colupper=DeepSkyBlue4]
+\vspace{-3mm}
+\be
+\hspace{-4.2mm}
+\mu_i = \mathbb{E}\left[\left(\frac{\partial G(\bm{\theta})}{\partial \theta_i}\right)^{2}\right] \hspace{4mm} \rightarrow \nonumber
+\ee
+\end{tcolorbox}
+};
+
+\hspace{-5mm}
+\tikz[overlay, remember picture] \node at (5.56,-0.5) {
+\scriptsize
+\begin{tcolorbox}[width=0.20\textwidth,colback=DeepSkyBlue!20,notitle,colframe=DeepSkyBlue!20,colupper=DeepSkyBlue4]
+\vspace{-3mm}
+\be
+\hspace{-4.5mm}
+\hat{\mathcal{C}_i\mu_i} = \frac{\mathcal{C}_i\mu_i}{\sum_i \mathcal{C}_i\mu_i}  \hspace{2mm}\rightarrow \nonumber
+\ee
+\end{tcolorbox}
+};
+
+\hspace{-5mm}
+\tikz[overlay, remember picture] \node at (8.6,0) {
+\scriptsize
+\begin{tcolorbox}[width=0.25\textwidth,colback=green!20,notitle,colframe=green!20,colupper=DeepSkyBlue4]
+\vspace{-3mm}
+\be
+\hspace{-3mm}
+\mathcal{T}_i \leq \frac{\mathcal{C}_i\mu_i}{V}~(\propto \hat{\mathcal{C}_i\mu_i})   \nonumber
+\ee
+\end{tcolorbox}
+};
+
+\vspace{12mm}
+
+\myitem DGSM estimates are used to compute upper bound on Sobol total effect index~($\mathcal{T}_i$). 
+
+\end{itemize}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{sense}
+
+\begin{frame}{Sensitivity Analysis}
+\vspace{2mm}
+
+\begin{itemize}
+
+\myitem Add an NPT ensemble prior to NVT and run it for a sufficiently long time. 
+\vspace{2mm}
+
+\begin{center}
+{\color{gray}NPT} \hspace{5mm} $\rightarrow$ \hspace{5mm} {\color{green}NVT} \hspace{5mm} $\rightarrow$ \hspace{5mm} 
+{\color{cyan}NVE} \hspace{5mm}
+$\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
+\\ \vspace{1mm}
+\tiny [Relax system length] \hspace{1mm}[Eqilibrate system to 300 K] \hspace{1mm} [Equilibrate thermostats] \hspace{4mm}
+ [Generate Data]
+\\ \vspace{1mm}
+
+\tiny{N: Number of Atoms~~~P: Pressure~~~V: Volume~~~T: Temperature~~~E: Energy}
+\end{center}
+
+\end{itemize}
+
+\begin{center}
+\vspace{-2mm}
+\begin{figure}[htbp]
+  \includegraphics[width=0.6\textwidth]{./Figures/lx_npt}
+  \end{figure}
+\end{center}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{sense}
+
+\begin{frame}{Parameter Screening}
+
+\begin{algorithm}[H]
+\SetAlgoLined
+\scriptsize
+\texttt{Generate $n_1$ points in $\mathbb{R}^{d}$.}\;
+\nonl\scriptsize\texttt{\color{blue}$\%~d$: Number of parameters}\;
+\texttt{Perturb each point along the $d$ directions to obtain a set of $n_1(d+1)$ points.}\;
+\texttt{Compute $\mu_i$ using model evaluations at the $n_1(d+1)$}\;
+\texttt{Determine initial ranks, $\mathcal{R}^{old}$ based on $\hat{\mathcal{C}_i\mu_i}$ values for $\theta_i$}\;
+\texttt{Set $k$ = 1}\;
+%\nonl\scriptsize\texttt{\color{blue}$\%~k$: Iteration counter}\;
+\Repeat{($\mathcal{R}^{\tiny{new}}$ $\neq$ $\mathcal{R}^{\tiny{old}}$ {\bf or}  
+               $max\_pdev$~$>~\tau$)}{
+\texttt{Generate $n_k$ new points in $\mathbb{R}^{d}$.}\;
+\texttt{Perturb each point along the $d$ directions to obtain a set of $n_k(d+1)$ points.}\;
+\texttt{Compute and store model evaluations at the $n_k(d+1)$ points.}\;
+\texttt{Compute $\mu_i$ using prior model evaluations at $(d+1)(n_1 + \sum_j^k n_j)$ points.}\;
+\texttt{Determine new ranks, $\mathcal{R}^{new}$ based on updated $\hat{\mathcal{C}_i\mu_i}$ values.}\;
+\texttt{Compute $max\_pdev$ = max$\left(\frac{|\mu_{i,k} - \mu_{i,k-1}|}{ \mu_{i,k-1}}\right)$.}\;
+\nonl\scriptsize\texttt{\color{blue}$\%~max\_pdev$: Maximum percentage deviation in $\mu_i$ between successive iterations.}\;
+\texttt{Set $k$ = $k$ + 1}\;
+}
+\end{algorithm}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{sense}
+
+\begin{frame}{Parameter Screening}
+
+\begin{center}
+\begin{figure}[htbp]
+  \includegraphics[width=0.7\textwidth]{./Figures/ub}
+  \end{figure}
+\end{center}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\section{\scshape Surrogate}
+\subsection{sur}
+
+\begin{frame}{Reduced Order Surrogate}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\begin{itemize}
+
+\myitem PCE for $\kappa$:
+
+\scriptsize
+\begin{center}
+\begin{tcolorbox}[width=0.7\textwidth,colback=DeepSkyBlue!20,notitle,colframe=DeepSkyBlue!20,colupper=DeepSkyBlue4]
+\vspace{-2mm}
+\be
+\kappa  = \sum\limits_{\bm{s}\in\mathcal{A}} c_{\bm{s}}(T)\Psi_{\bm{s}}(\bm{\xi})\nonumber
+\ee
+\end{tcolorbox}
+\vspace{1mm} 
+\tiny {$\bm{\xi}:~\{\xi_1(A),\xi_2(q),\xi_3(\alpha),\xi_4(\lambda),\xi_5(\gamma)\}$}
+\end{center}
+
+\normalsize
+\vspace{2mm}
+\myitem Regularized least-squares minimization problem:
+
+\scriptsize
+\begin{center}
+\begin{tcolorbox}[width=1.2\textwidth,colback=DeepSkyBlue!20,notitle,colframe=DeepSkyBlue!20,colupper=DeepSkyBlue4]
+\vspace{-2mm}
+\be
+\hspace{-3mm}
+\hat{\bm{c}} = \argmin\limits_{\bm{c}\in \mathbb{R}^{|\mathcal{A}|}}\mathbb{E}\left[\left(\bm{c}^{\tiny{\mbox{T}}}\Psi(\bm{\xi(\theta)}) - 
+\kappa_{\bm{\theta}}^{\tiny{\mbox{MD}}}\right)^2\right]~+~\lambda\|\bm{c}\|_1 \nonumber
+\ee
+\end{tcolorbox}
+\end{center}
 
 
+\end{itemize}
 
 
+\end{column}
+
+\begin{column}{0.5\textwidth}
+\vspace{-11mm}
+\begin{center}
+\begin{figure}[htbp]
+  \includegraphics[width=1.0\textwidth]{./Figures/PCE5D_eloo}
+  \end{figure}
+\end{center}
+
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{sur}
+
+\begin{frame}{Verification}
+
+\begin{columns}
+\begin{column}{0.6\textwidth}
+\textsc{L-2 Norm}
+\vspace{5mm}
+\begin{center}
+\scriptsize
+\begin{tcolorbox}[width=1.1\textwidth,colback=DeepSkyBlue!20,notitle,colframe=DeepSkyBlue!20,colupper=DeepSkyBlue4]
+\vspace{-2mm}
+\be
+\hspace{-5mm}
+\epsilon_{\mbox{\tiny{L-2}}} = 
+\frac{\left[\sum\limits_{i=1}^{N=25}\left(\mathcal{M}(\bm{\theta}_{\mbox{\tiny{7D}}}^{(i)}) - 
+\mathcal{M}^{PCE}(\bm{\theta}_{\mbox{\tiny{5D}}}^{(i)})\right)^{2}\right]^{\frac{1}{2}}}{\left[\sum_{i=1}^{N}
+\left(\mathcal{M}(\bm{\theta}_{\mbox{\tiny{7D}}}^{(i)})\right)^2\right]^{\frac{1}{2}}} \rightarrow \mathcal{O}(10^{-2})
+\nonumber
+\ee
+\end{tcolorbox}
+\end{center}
+
+\end{column}
+
+\hspace{3mm}
+\begin{column}{0.4\textwidth}
+\hspace{5mm}\textsc{Probabilistic}
+
+\begin{center}
+\begin{figure}[htbp]
+\hspace{12mm}
+  \includegraphics[width=0.95\textwidth]{./Figures/PCE5D_kde}
+  \end{figure}
+\end{center}
+
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\subsection{sur}
+
+\begin{frame}{Global Sensitivity Analysis}
+
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\begin{figure}[htbp]
+  \includegraphics[width=0.9\textwidth]{./Figures/PCE5D_gsa}
+  \\ \scriptsize{10$^{6}$ samples}
+  \end{figure}
+\end{center}
+\end{column}
+\hspace{-9mm}
+\begin{column}{0.5\textwidth}
+\begin{center}
+\begin{figure}[htbp]
+  \includegraphics[width=0.9\textwidth]{./Figures/ub}
+    \\ \scriptsize{25 samples}
+  \end{figure}
+\end{center}
+\end{column}
+
+\end{columns}
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+\section{\scshape Bayes}
+\subsection{bayes}
+
+\begin{frame}{Bayesian Calibration}
+
+\begin{columns}
+\begin{column}{0.55\textwidth}
+\begin{itemize}
+\myitem Bayes' rule:
+
+\begin{center}
+\scriptsize
+\begin{tcolorbox}[width=0.7\textwidth,colback=DeepSkyBlue!20,notitle,colframe=DeepSkyBlue!20,colupper=DeepSkyBlue4]
+\vspace{-2mm}
+\be
+\mathcal{P}(\bm{X}\vert \bm{Y}) \propto \mathcal{P}(\bm{Y}\vert\bm{X})\mathcal{P}(\bm{X})
+\nonumber
+\ee
+\end{tcolorbox}
+\vspace{1mm}
+\tiny{$\bm{X}:\{\alpha,\gamma\}$}
+\end{center}
+
+\vspace{2mm}
+
+\myitem Likelihood, $\mathcal{P}(\bm{Y}\vert\bm{X})$:
+\begin{center}
+\scriptsize
+\begin{tcolorbox}[width=1.1\textwidth,colback=DeepSkyBlue!20,notitle,colframe=DeepSkyBlue!20,colupper=DeepSkyBlue4]
+\vspace{-3mm}
+\be
+\mathcal{P}(\bm{Y}\vert\bm{X}) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left[-\frac{(\kappa_{\tiny{\mbox{E}}} - 
+\kappa_{\tiny{\mbox{MD}}})^2}{2\sigma^2}\right]
+\nonumber
+\ee
+\end{tcolorbox}
+\end{center}
+
+\end{itemize}
+\end{column}
+
+\hspace{3mm}
+\begin{column}{0.45\textwidth}
+
+\begin{center}
+\vspace{-20mm}
+\begin{figure}[htbp]
+\hspace{3mm}
+  \includegraphics[width=1.0\textwidth]{./Figures/gl}
+  \end{figure}
+\end{center}
+
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%___________________________NEW SLIDE______________________________________
+
+%\subsection{conc}
+
+\begin{frame}{Concluding Remarks}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+\end{frame}
 
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
