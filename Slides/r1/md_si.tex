@@ -306,12 +306,16 @@ $^{\S}$University of Tennessee, Knoxville}
 
 \myitem Widely used to study thermal (phonon) transport in 
 {\color{pigment}non-metallic} systems (C,Si,Ge).
+\pause
 \vspace{2mm}
 \myitem System subjected to a temperature gradient using thermostats.
+\pause
 \vspace{2mm}
 \myitem {\color{pigment}Steady-state} thermal energy exchange between
 the thermostats is used in Fourier's law to estimate bulk thermal
-conductivity~($\kappa$). \vspace{2mm}
+conductivity~($\kappa$). 
+\pause
+\vspace{2mm}
 \myitem Estimates are {\color{pigment}uncertain} and severely
 {\color{pigment}under-predicted}.
 \begin{itemize}
@@ -335,7 +339,7 @@ conductivity~($\kappa$). \vspace{2mm}
     level 1/.append style={level distance=5cm,sibling angle=90},
     level 2/.append style={level distance=3cm,sibling angle=45},transform canvas={scale=0.5}]
     
-    \node{Non-Equlibrium Molecular Dynamics}
+    \node{Non-Equilibrium Molecular Dynamics}
    child [concept color=blue!30]{ node {Noise}
         child { node {Experiment Data}}
         child { node {MD Simulation}}
@@ -366,27 +370,20 @@ conductivity~($\kappa$). \vspace{2mm}
 \begin{frame}{Sources of Uncertainty}
 
 \begin{columns}
-\begin{column}{0.52\textwidth}
-
-\begin{itemize}
-\myitem Bulk thermal conductivity is size-dependent.
-\vspace{2mm}
-\myitem Variability in applied thermal gradient~(Kapitza~effect).
-\vspace{2mm}
-\myitem Choice of the inter-atomic potential.
-\vspace{2mm}
-\myitem Nominal estimates of the potential parameters.
-
-\end{itemize}
-\end{column}
-
-\begin{column}{0.48\textwidth}
+\begin{column}{0.5\textwidth}
 
 \begin{center}
 \begin{figure}[htbp]
-\vspace{-3mm}
   \includegraphics[width=0.9\textwidth]{./Figures/cond_size}
-  \\ \vspace{2mm}
+\end{figure}
+\end{center}
+
+\end{column}
+\hspace{-15mm}
+\begin{column}{0.5\textwidth}
+
+\begin{center}
+\begin{figure}[htbp]
   \includegraphics[width=0.9\textwidth]{./Figures/temp_plot}
 \end{figure}
 \end{center}
@@ -407,13 +404,15 @@ conductivity~($\kappa$). \vspace{2mm}
 
 \myitem Quantify discrepancy in $\kappa$ between predictions and data.
 \begin{itemize}
-\item Construct a response surface for $\kappa(s,\frac{d\theta}{dx})$.
+\item Construct a response surface for $\kappa(s,\frac{d\theta}{dz})$.
 \end{itemize}
+\pause
 \vspace{2mm}
 \myitem Perform sensitivity analysis of the potential parameters.
 \begin{itemize}
-\item Estimate derivative-based sensitivity measures~(DGSM).
+\item Estimate derivative-based global sensitivity measures~(DGSM).
 \end{itemize}
+\pause
 \vspace{2mm}
 \myitem Construct a reduced order surrogate for $\kappa$ using sparse
 NEMD predictions.
@@ -421,6 +420,7 @@ NEMD predictions.
 \item Use the surrogate for forward propagation of uncertainty, and global
 sensitivity analysis. 
 \end{itemize}
+\pause
 \vspace{2mm}
 \myitem Calibrate the \textit{important} parameters in a Bayesian setting.
 
@@ -470,7 +470,7 @@ sensitivity analysis.
 \end{figure}
 \vspace{3mm}
         \animategraphics[autoplay,poster=first,loop,height=0.60\textwidth]{5}
-        {./animation/snap}{0}{64}
+       {./animation/snap}{0}{64}
 \end{center}
 \end{column}
 \end{columns}
@@ -491,7 +491,7 @@ sensitivity analysis.
 {\color{green}NVT} \hspace{5mm} $\rightarrow$ \hspace{5mm} {\color{cyan}NVE} \hspace{5mm}
 $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
 \\ \vspace{1mm}
-\tiny \hspace{-5mm}[Eqilibrate system to 300 K] \hspace{1mm} [Equilibrate thermostats] \hspace{4mm}
+\tiny \hspace{-5mm}[Equilibrate system to 300 K] \hspace{1mm} [Equilibrate thermostats] \hspace{4mm}
  [Generate Data]
 \\ \vspace{1mm}
 
@@ -683,6 +683,7 @@ $\frac{dT}{dz}~\sim~\mathcal{U}[\frac{1.5}{a}, \frac{2.5}{a}](\frac{K}{\angstrom
 \ee
 \end{tcolorbox}
 };
+\pause
 \normalsize
 
 \vspace{15mm}
@@ -762,7 +763,7 @@ $\frac{dT}{dz}~\sim~\mathcal{U}[\frac{1.5}{a}, \frac{2.5}{a}](\frac{K}{\angstrom
  % \includegraphics[width=0.85\textwidth]{./Figures/unstable}
  % \end{figure}
   \animategraphics[autopause,poster=first,loop,height=0.90\textwidth]{5}
-       {./anim_unstable/snap}{0}{49}
+      {./anim_unstable/snap}{0}{49}
 
   \end{center}
   
@@ -840,7 +841,7 @@ $\frac{dT}{dz}~\sim~\mathcal{U}[\frac{1.5}{a}, \frac{2.5}{a}](\frac{K}{\angstrom
 {\color{cyan}NVE} \hspace{5mm}
 $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
 \\ \vspace{1mm}
-\tiny [Relax system length] \hspace{1mm}[Eqilibrate system to 300 K] \hspace{1mm} [Equilibrate thermostats] \hspace{4mm}
+\tiny [Relax system length] \hspace{1mm}[Equilibrate system to 300 K] \hspace{1mm} [Equilibrate thermostats] \hspace{4mm}
  [Generate Data]
 \\ \vspace{1mm}
 
@@ -1050,7 +1051,7 @@ $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
 \begin{center}
 \scriptsize
 \begin{tcolorbox}[width=0.7\textwidth,colback=DeepSkyBlue!20,notitle,colframe=DeepSkyBlue!20,colupper=DeepSkyBlue4]
-\vspace{-2mm}
+\vspace{-3mm}
 \be
 \mathcal{P}(\bm{X}\vert \bm{Y}) \propto \mathcal{P}(\bm{Y}\vert\bm{X})\mathcal{P}(\bm{X})
 \nonumber
@@ -1066,7 +1067,7 @@ $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
 \begin{center}
 \scriptsize
 \begin{tcolorbox}[width=1.1\textwidth,colback=DeepSkyBlue!20,notitle,colframe=DeepSkyBlue!20,colupper=DeepSkyBlue4]
-\vspace{-3mm}
+\vspace{-4mm}
 \be
 \mathcal{P}(\bm{Y}\vert\bm{X}) = \frac{1}{\sqrt{2\pi\sigma^2}}\exp\left[-\frac{(\kappa_{\tiny{\mbox{E}}} - 
 \kappa_{\tiny{\mbox{MD}}})^2}{2\sigma^2}\right]
@@ -1100,6 +1101,26 @@ $\rightarrow$ \hspace{5mm} {\color{magenta}NVE}
 
 \begin{frame}{Concluding Remarks}
 
+\begin{itemize}
+
+\myitem Discrepancy between NEMD predictions and experiments is captured using a response surface. 
+\pause
+\vspace{2mm}
+\myitem The impact of variability in applied thermal gradient seems negligible at least in the considered interval. 
+\pause
+\vspace{2mm}
+\myitem Sensitivity analysis using DGSM could help mitigate computational costs.  
+\pause
+\vspace{2mm}
+\myitem NEMD predictions are largely sensitivity towards $\alpha$ and $\gamma$.
+\pause
+\vspace{2mm}
+\myitem Calibration should be performed in a Bayesian setting to account for all possible errors and uncertainties.  
+\pause
+\vspace{2mm}
+\myitem Strategies presented can be easily extended to other systems and potentials.  
+
+\end{itemize}
 
 \end{frame}
 
