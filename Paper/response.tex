@@ -2,10 +2,10 @@
 \label{sec:response}
 
 As discussed earlier in Section~\ref{sec:intro}, bulk thermal conductivity estimates using NEMD simulations
-are severely under-predicted primarily due to reduction in mean free path associated with phonon transport. 
-Additionally, the introduction of thermostats causes a significant amount of variability in the applied thermal gradient,
-especially in their vicinity owing to the Kapitza effect~\cite{Stevens:2007}. 
-We illustrate this phenomenon by plotting temperature 
+are lower than measured values primarily due to reduction in mean free path associated with phonon transport. 
+Additionally, the introduction of thermostats causes significant fluctuations in the applied thermal gradient,
+especially in their vicinity. 
+We illustrate this phenomenon by plotting the temperature 
 distribution along the length of the bar in Figure~\ref{fig:kapitza}. 
 
 \begin{figure}[htbp]
@@ -18,7 +18,7 @@ different scenarios of applied thermal gradient.}
 \end{figure}
 
 In this section, we focus on the impact of
-system size, specifically the length of the Si bar as well as the variability in applied thermal gradient on discrepancy
+system size, specifically the length of the Si bar as well as the applied thermal gradient on the discrepancy
 in bulk thermal conductivity between NEMD predictions and experimental data. For this purpose, we consider
 a range of values for the bar length and the thermal gradient. In order to determine the discrepancy trends, one
 might consider evaluating the thermal conductivity using NEMD simulations for a large set of values of length and
@@ -27,13 +27,12 @@ becomes computationally prohibitive. Instead, we construct a response surface us
 Polynomial Chaos (PC) representation of the discrepancy which requires NEMD predictions for a small number of
 combinations of length and thermal gradient values as discussed in the following section. 
 
-\subsection{Polynomial Chaos}
+\subsection{Polynomial Chaos Response Surface}
 
-Polynomial chaos (PC) exhibits a functional relationship between independent and uncertain 
-parameters~$(\bm{\theta})$ 
-in a model and a random observable, say $\mathcal{Y}$. Essentially, it is a truncated expansion with polynomial 
-basis functions that converges in a least-squares sense. For an accurate PC representation, the observable should
-vary smoothly with respect to the uncertain parameters~\cite{Vohra:2014}  and must
+The polynomial chaos (PC) response surface approximates the functional relationship between independent and uncertain 
+inputs~$(\bm{\theta})$ to a model with the output $\mathcal{Y}$. Essentially, it is a truncated expansion with polynomial 
+basis functions that converges in a least-squares sense. For an accurate PC representation, the output should
+vary smoothly with respect to the uncertain inputs~\cite{Vohra:2014}  and must
 be L-2 integrable:
 
 \be
@@ -43,19 +42,19 @@ d\bm{\theta} < \infty
 
 \noindent where $\mathcal{D}_{\bm{\theta}}$ is the domain of the input parameter space and 
 $\mathbb{P}(\bm{\theta})$ is the joint probability distribution of individual components of $\bm{\theta}$.
-In the present setting, $\bm{\theta}$:~$\{L,\frac{dT}{dz}\}$ and the observable, $\mathcal{Y}$ is the
+In the present setting, $\bm{\theta}$:~$\{L,\frac{dT}{dz}\}$ and the output, $\mathcal{Y}$ is the
 discrepancy~($\epsilon_{\mbox{\tiny{d}}}$ = 
 $\lvert\kappa_{\mbox{\tiny{MD}}}$ - $\kappa_{\mbox{\tiny{E}}}\rvert$)
 in bulk thermal conductivity predictions from 
 NEMD~($\kappa_{\mbox{\tiny{MD}}}$) and experimental data~($\kappa_{\mbox{\tiny{E}}}$), at a 
-given temperature, $T$. PC representation of $\epsilon_{\mbox{\tiny{d}}}$ is given as:
+given temperature, $T$. The PC representation of $\epsilon_{\mbox{\tiny{d}}}$ is given as:
 
 \be
 \epsilon_{\mbox{\tiny{d}}} \approx \mathcal{\epsilon}_{\mbox{\tiny{d}}}^{\mbox{\tiny{PCE}}} = 
 \sum_{\bm{k}\in\mathcal{I}} c_{\bm{k}}(T)\Psi_{\bm{k}}(\bm{\xi(\theta)}) 
 \ee
 
-\noindent The set of parameters in $\bm{\theta}$ are parameterized in terms of canonical random 
+\noindent Individual components of the uncertain input vector, $\bm{\theta}$ are parameterized in terms of canonical random 
 variables, $\bm{\xi}$ distributed uniformly in the interval $[-1,1]$. 
  $\Psi_{\bm{k}}$'s are multivariate polynomial basis functions, orthonormal with respect to the joint probability 
  distribution of $\bm{\xi}$. The degree of truncation in the above expansion is denoted by $\bm{k}$, a subset of
@@ -111,7 +110,8 @@ depicted using circles. The size of the circle in each case is proportional to t
   \\ (c)
 \caption{Response surface of the discrepancy in bulk thermal conductivity at (a) $T$ = 300~K and
  (b) $T$ = 500~K. Gauss-Legendre quadrature nodes are highlighted in both cases. (c) Sobol samples
- in the 2D domain used for verifying the accuracy of the response surfaces.}
+ in the 2D domain used for verifying the accuracy of the response surfaces. Here, $|a|$ denotes the magnitude
+ of the lattice constant.}
 \label{fig:rs2}
 \end{center}
 \end{figure}
@@ -119,7 +119,7 @@ depicted using circles. The size of the circle in each case is proportional to t
 As expected, the discrepancy is observed to decrease
  with the bar length ($L$) due to increase in the mean free path. It is however interesting to note that the 
  variation in discrepancy due to changes in the applied thermal gradient in the considered range is found to be
- negligible. The accuracy of the response surfaces is verified by computing a relative L-2 norm of the error
+ negligible. The accuracy of the response surface is verified by computing a relative L-2 norm of the error
  ($\varepsilon_{\tiny{\mbox{L-2}}}$) on an independent set of Sobol samples~\cite{Saltelli:2010}
 (see Figure~\ref{fig:rs2}(c)) in the 2D 
  parameter domain as follows:
@@ -132,7 +132,7 @@ As expected, the discrepancy is observed to decrease
  \ee
  
  A response surface was also constructed at $T$ = 1000~K (plot not included for brevity) and the impact of
- varying thermal gradient on the discrepancy was still observed to be negligible. In all cases,
+ varying the thermal gradient on the discrepancy was still observed to be negligible. In all cases,
  $\varepsilon_{\tiny{\mbox{L-2}}}$ in Eq.~\ref{eq:err_l2} was estimated to be of $\mathcal{O}(10^{-3})$ thereby
  indicating that the response surfaces could be used to predict the discrepancy for a given
  point ($L$,$\frac{dT}{dz}$) in the considered domain with reasonable accuracy. As an additional verification
@@ -160,11 +160,11 @@ As expected, the discrepancy is observed to decrease
 It is observed that the response surface estimates exhibit an expected linear trend, consistent with NEMD
   predictions. Constructing response surfaces using a relatively small number of NEMD predictions thus offers
   potential for huge computational savings for studies aimed at predicting thermal conductivity trends and 
-  quantifying the discrepancy with measurements for a wide range of systems sizes, applied thermal gradients as 
+  quantifying the discrepancy with measurements for a wide range of system sizes, applied thermal gradients as 
   well as bulk temperatures.
 
-In the following sections, we shift our focus towards understanding the impact of underlying variability
-in the SW potential parameters on the uncertainty associated with NEMD predictions for bulk
+In the following sections, we shift our focus towards understanding the impact of the uncertainty
+in SW potential parameter values on the uncertainty in NEMD predictions for bulk
 thermal conductivity in Si.  
  
 

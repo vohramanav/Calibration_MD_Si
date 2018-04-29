@@ -1,7 +1,8 @@
 \section{NEMD Set-up}
 \label{sec:setup}
 
-Non-equilibrium molecular dynamics (NEMD) simulations are performed using LAMMPS~\cite{Plimpton:2007}.
+In this work, non-equilibrium molecular dynamics (NEMD) simulations are performed using the 
+LAMMPS~\cite{Plimpton:2007} software package.
 Essentially, a thermal gradient is applied by means of thermostats located at $L$/4 and $3L$/4 in a silicon bar of length, $L$ 
 as shown using a schematic in Figure~\ref{fig:setup}. 
 
@@ -44,8 +45,8 @@ Inter-atomic Potential & Stillinger-Weber \\
 \caption{Set of inputs for the NEMD simulation to estimate thermal conductivity in a Si bar using LAMMPS.}
 \end{table}
 
-There NEMD simulation has three stages associated with it as illustrated below in the flow diagram. In the
-first stage, the NVT ensemble equilibrates the system to a specified bulk temperature i.e. the temperature
+The NEMD simulation has three stages associated with it as illustrated below in the flow diagram. In the
+first stage, the NVT ensemble equilibrates the system to a specified bulk temperature, i.e., the temperature
 at which thermal conductivity is to be estimated. In the second stage, the NVE ensemble equilibrates the
 thermostats at their respective temperatures. It is followed by another NVE ensemble that captures the
 trajectory of individual atoms and results in a steady state estimate for the thermal energy exchange between

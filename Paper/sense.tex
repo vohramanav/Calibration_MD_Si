@@ -7,7 +7,7 @@ the individual potential parameters. In the case of silicon, the Stillinger-Webe
 has been used for a wide variety of 
 systems~(see~\cite{Laradji:1995,Zhang:2014,Jiang:2015,Watanabe:1999,Zhou:2013} and references therein).
 However, according to Stillinger and Weber, the set of nominal
-values as provided below in Table~2 is based on a constrained search in the 7D parameter space
+values as provided below in Table~2 were based on a constrained search in the 7D parameter space
 to ensure structural stability and agreement with the available experimental data~\cite{Stillinger:1985}.
 
 \begin{table}[htbp]
@@ -24,26 +24,42 @@ $A$ & $B$ & $p$ & $q$ & $\alpha$ & $\lambda$ & $\gamma$ \\
 potential~\cite{Stillinger:1985}.}
 \end{table}
 
-It is noteworthy that the underlying analysis which lead to these estimates of the nominal values did not
+It is noteworthy that the underlying analysis which led to these estimates of the nominal values did not
 account for the presence of uncertainty due to
 measurement error, noise inherent in MD predictions, inadequacies pertaining to the potential function,
 and parametric uncertainties. It is therefore likely that the proposed nominal estimates could be 
-improved depending upon the application. Hence, it is critical to understand the effects of variability in
+improved depending upon the application. Hence, it is critical to understand the effects of uncertainty in
 SW potential parameters on bulk thermal conductivity predictions using NEMD. For this purpose, a possible
 approach could involve a global sensitivity analysis of NEMD predictions on the SW potential parameters 
-by estimating the so-called Sobol indices~\cite{Sobol:2001}. However, obtaining converged estimates of
-Sobol indices typically requires tens of thousands of model evaluations. Since NEMD is compute-intensive,
-estimating the Sobol indices directly would be impractical. Instead, we adopt a novel strategy that
-aims to determine relative importance of the SW potential parameters based on derivative-based global 
-sensitivity measures (DGSM)~\cite{Sobol:2010}. It is observed that for a given application, it might be possible to 
+by estimating the so-called Sobol\textquotesingle~indices~\cite{Sobol:2001}. However, obtaining converged estimates of
+Sobol\textquotesingle~indices typically requires tens of thousands of model evaluations to be able to numerically approximate
+multi-dimensional integrals associated with the expectation and variance operators, especially in case $\bm{\theta}$,
+the vector of uncertain model inputs is high-dimensional:
+
+\be
+ \mathcal{T}_i = \frac{\mathbb{E}_{\bm{\theta}\sim i}[\mathbb{V}_{\theta_i}(\mathcal{G}|\bm{\theta}_{\sim i})]}{\mathbb{V}(\mathcal{G})} 
+ \ee
+ 
+ \noindent where $\mathcal{T}_i$ is the Sobol\textquotesingle~total-effect index, $\mathcal{G}$ denotes the model output,
+ $\mathbb{E}_{\bm{\theta}\sim i}[]$ is an expectation over all but the $i^{\mbox{th}}$ component of 
+ $\bm{\theta}$, and $\mathbb{V}_{\theta_i}()$ is the variance taken over $\theta_i$. Li and Mahadevan
+ recently proposed a computationally efficient method for estimating the first-order Sobol\textquotesingle~index~\cite{Li:2016}.
+However, since NEMD is compute-intensive,
+estimating the Sobol\textquotesingle~indices directly would be impractical in the present scenario. Hence, instead of 
+estimating Sobol\textquotesingle~sensitivity
+indices, we focus our attention on the upper bound of the Sobol\textquotesingle~total-effect index to determine the relative
+importance of SW potential parameters. 
+It is observed that for a given application, it might be possible to 
 converge to the upper bound on
-Sobol index with only a few iterations~($\mathcal{O}(10^{1})$). 
+Sobol\textquotesingle~index with only a few iterations~($\mathcal{O}(10^{1})$)~\cite{Kucherenko:2016}. 
 In that case, estimates of the upper bound could be used in lieu of the
-Sobol indices to determine relative importance of the parameters and hence reduce the associated computational
-effort by several order of magnitude. The upper bound on 
-Sobol total effect index\footnote{Sobol total effect index is a measure of the contribution of a 
-parameter to the variance of the observable while contribution from other parameters may or may not be 0.}
-($\mathcal{T}_i$) can be expressed in terms of DGSM~($\mu_i$), the Poincar\' e 
+Sobol\textquotesingle~indices to determine relative importance of the parameters and hence 
+reduce the associated computational
+effort by several order of magnitude. The upper bound of the
+Sobol\textquotesingle~total effect index\footnote{Sobol\textquotesingle~total effect index is a measure
+ of the contribution of an 
+input to the variance of the model output, also accounting for the contribution coupled with other inputs.}
+($\mathcal{T}_i$) can be expressed in terms of a derivative-based sensitivity measure~(DGSM), $\mu_i$, the Poincar\' e 
 constant~($\mathcal{C}_i$), and the total variance of the observed
 quantity~($V$)~\cite{Lamboni:2013,Roustant:2014} as follows:   
 
@@ -53,7 +69,7 @@ quantity~($V$)~\cite{Lamboni:2013,Roustant:2014} as follows:
 
 \noindent The derivative-based sensitivity measure, $\mu_i$ for a given parameter, $\theta_i$ is
 defined as an expectation
-of the derivative of the observable ($G(\bm{\theta})$) with respect to that parameter:
+of the derivative of the output ($G(\bm{\theta})$) with respect to that parameter:
 
 \be
 \mu_i = \mathbb{E}\left[\left(\frac{\partial G(\bm{\theta})}{\partial \theta_i}\right)^{2}\right]
@@ -80,7 +96,7 @@ and our key findings are discussed in the following section.
 \label{sub:dgsm} 
 
 We aim to compute the derivative-based sensitivity measure (DGSM) and hence the corresponding upper bound on the
-Sobol total effect index~($\mathcal{T}_i$) for each parameter in the SW potential. For this purpose, we 
+Sobol\textquotesingle~total effect index~($\mathcal{T}_i$) for each parameter in the SW potential. For this purpose, we 
 introduce small perturbations~($\mathcal{O}(10^{-5})n_i$; $n_i$ being the nominal value) to the nominal values
 associated with each parameter and estimate the partial derivatives in Eq.~\ref{eq:mu} using finite difference. 
 Hence, in order to compute $\mu_i$ using $N$ points in the d-dimensional parameter space, we require $N(d+1)$
@@ -196,7 +212,7 @@ at each iteration. Using a tolerance, $\tau$ = 0.05, the above algorithm took 4 
 provide approximate estimates for $\mu_i$. Since finite difference was used to estimate the derivatives in
 Eq.~\ref{eq:mu}, it required 25(7+1) i.e. 200 MD runs. It must be noted that although the computational effort
 pertaining to the estimation of DGSM can be substantial, it is nevertheless several orders of magnitude smaller
-than directly estimating the Sobol indices as mentioned earlier. 
+than directly estimating the Sobol\textquotesingle~indices as mentioned earlier. 
 In Figure~\ref{fig:ub}, we plot $\hat{\mathcal{C}_i\mu_i}$ as obtained for the SW parameters at the 
 end of 4 iterations. It appears that $\gamma$ is significantly more important than other parameters, whereas NEMD
 predictions are relatively less sensitive to $B$ and $p$. Large sensitivity towards 
@@ -205,8 +221,8 @@ constant and hence the mean free path associated with the bulk thermal conductiv
 
 \begin{figure}[htbp]
  \begin{center}
-  \includegraphics[width=0.70\textwidth]{./Figures/ub}
-\caption{The quantity $\hat{\mathcal{C}_i\mu_i}$ as computed after 4 iterations and data at 25(7+1)
+  \includegraphics[width=0.65\textwidth]{./Figures/ub}
+\caption{The quantity $\hat{\mathcal{C}_i\mu_i}$ as computed after 4 iterations and data at 200
 points is plotted for each SW potential parameter.}
 \label{fig:ub}
 \end{center}
@@ -214,7 +230,7 @@ points is plotted for each SW potential parameter.}
 
 In the following section, we exploit these observations based on DGSM to construct a reduced order surrogate.
 The surrogate enables forward propagation of uncertainty in the SW potential to the bulk thermal conductivity 
-estimates, and the estimation of Sobol sensitivity indices with minimal computational effort. 
+estimates, and the estimation of Sobol\textquotesingle~sensitivity indices with minimal computational effort. 
 
 
 
