@@ -68,14 +68,31 @@ obtain accurate estimates of the PC coefficients.
 
 In order to construct the response surface of the discrepancy, we consider respective intervals for the Si bar length,
 $L$ and the applied thermal gradient, $\frac{dT}{dz}$ as $[50a,100a]$~($\angstrom$) and
- $[\frac{1.5}{a},\frac{2.5}{a}]$~($\frac{\mbox{\tiny{K}}}{\tiny{\angstrom}}$); $a$ being the lattice constant. The 
- discrepancy between $\kappa_{\mbox{\tiny{MD}}}$ and $\kappa_{\mbox{\tiny{E}}}$ is computed at the
- Gauss-Legendre quadrature nodes as illustrated in Figure~\ref{fig:rs1}(a) to estimate the PC coefficients. The spectrum of 
+ $[\frac{1.5}{a},\frac{2.5}{a}]$~($\frac{\mbox{\tiny{K}}}{\tiny{\angstrom}}$); $a$ being the lattice constant. \rev{For the considered length interval, the number of atoms in the
+simulation were observed to range from 201344 to 379456. It must be noted that our 
+focus is on illustrating a methodology for constructing a response surface that
+sufficiently captures the relationship between the inputs: $L$, $\frac{dT}{dz}$ and
+the discrepancy, $\epsilon_d$. Hence, we believe
+that the considered range for $L$ is large enough to be able to capture the input-output
+trends as presented further below, while ensuring reasonable computational effort.
+Additionally, the underlying noise associated with NEMD simulations was found to be
+negligible in the considered range for $\frac{dT}{dz}$.
+ 
+NEMD predictions of $\kappa_{\text{MD}}$
+are obtained at 25 Gauss-Legendre quadrature nodes (or points) in the 2D parameter 
+space as highlighted in Figure~\ref{fig:rs2}(a)~and~\ref{fig:rs2}(b). 
+Note that 5 points are considered along $L$ and
+$\frac{dT}{dz}$ assuming that a fourth order polynomial basis would be sufficient in
+both cases and the associated computational effort is not too large. 
+Later, we assess the validity of our assumption by verifying the accuracy of the resulting
+response surface.}
+ 
+ The discrepancy between $\kappa_{\mbox{\tiny{MD}}}$ and $\kappa_{\mbox{\tiny{E}}}$ is computed at the quadrature nodes as illustrated in Figure~\ref{fig:rs1}(a) to estimate the PC coefficients. The spectrum of 
  resulting PC coefficients is illustrated in Figure~\ref{fig:rs1}(b). 
 Note that the value of $\kappa_{\mbox{\tiny{E}}}$ is considered to be 149~W/m/K as provided 
  in~\cite{Shanks:1963}. Response surfaces constructed at the bulk temperature, $T$ = 300~K and 500~K are 
  illustrated
- in Figure~\ref{fig:rs2}(a) and~\ref{fig:rs2}(b) respectively. 
+ in Figure~\ref{fig:rs2}(a) and~\ref{fig:rs2}(b) respectively.
 
 \begin{figure}[htbp]
 \begin{center}

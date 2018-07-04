@@ -3,12 +3,19 @@
 
 As discussed earlier in Section~\ref{sec:intro}, bulk thermal conductivity estimates in NEMD
 are dependent on the choice of the inter-atomic potential as well as values associated with
-the individual potential parameters. In the case of silicon, the Stillinger-Weber inter-atomic potential
-has been used for a wide variety of 
-systems~(see~\cite{Laradji:1995,Zhang:2014,Jiang:2015,Watanabe:1999,Zhou:2013} and references therein).
-However, according to Stillinger and Weber, the set of nominal
-values as provided below in Table~2 were based on a constrained search in the 7D parameter space
-to ensure structural stability and agreement with the available experimental data~\cite{Stillinger:1985}.
+the individual potential parameters. In the case of silicon, the Stillinger-Weber (SW)
+is a commonly used inter-atomic potential~(see~\cite{Laradji:1995,Zhang:2014,Jiang:2015,Watanabe:1999,Zhou:2013} and references therein). \rev{Functional form of the SW potential is given as follows:
+%
+\be
+\Phi = \sum\limits_{i,j(i<j)}\phi_2(A,B,p,q,\alpha)\hspace{1mm}+\sum\limits_{i,j,k(i<j<k)}\phi_3(\lambda,\gamma)
+\ee
+%
+where $\phi_2$ and $\phi_3$ represent two-body and three-body atomic interactions 
+respectively~\cite{Stillinger:1985}.}
+
+Although the SW potential is used for a wide variety of Si systems, 
+according to Stillinger and Weber, the set of nominal
+values as provided below in Table~2 were based on a constrained search in the 7D parameter space to ensure structural stability and agreement with the available experimental data~\cite{Stillinger:1985}.
 
 \begin{table}[htbp]
 \begin{center}

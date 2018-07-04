@@ -3,7 +3,8 @@
 
 In this work, non-equilibrium molecular dynamics (NEMD) simulations are performed using the 
 LAMMPS~\cite{Plimpton:2007} software package.
-Essentially, a thermal gradient is applied by means of thermostats located at $L$/4 and $3L$/4 in a silicon bar of length, $L$ 
+Essentially, a thermal gradient is applied by means of \rev{Langevin} thermostats located
+at $L$/4 and $3L$/4 in a silicon bar of length, $L$ 
 as shown using a schematic in Figure~\ref{fig:setup}. 
 
 \begin{figure}[htbp]
@@ -35,6 +36,7 @@ choice of height and width of the bar as well as the duration of the simulation.
 Lattice Constant, $a$ ($\angstrom$) & 5.43 \\ \hline
 Width, Height ($\angstrom$) & 22$a$ \\ \hline
 $\Delta t$  (ps) & 0.0005 \\ \hline
+\rev{Simulation Run Length (ps)} & \rev{320} \\ \hline
 Boundary Condition & Periodic \\ \hline
 Lattice Structure & Diamond \\ \hline
 Inter-atomic Potential & Stillinger-Weber \\ 
