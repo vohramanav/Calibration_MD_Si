@@ -10,7 +10,7 @@ thermal transport by phononic interactions (refer notes from book suggested by A
 thermal conductivity. A brief discussion on the direct method and associated pros and cons
 (notes from Dellan's paper and book suggested by Amuthan) 
 Predictions impacted by the choice of potential, values of
-individual parameters, size, and potentially due to duration and applied thermal gradients
+individual parameters, size, and potentially due to duration and applied temperature gradients
 (cite Amuthan book, Francesco's paper, McGaughey's paper). 
 Errors are introduced by thermostatting (Amuthan book). Nominal value of SW potential parameters
 based on fitting against experiments and to ensure structural stability etc. (SW paper)
@@ -53,9 +53,11 @@ The mean free path of such phonon modes is limited to the system size that reduc
 contribution to thermal transport. Moreover, the
 introduction of thermostats typically reduces the correlation between vibrations of 
 different atoms potentially reducing the thermal conductivity
-further~\cite{Evans:2008}. Estimation of thermal conductivity using the
+further~\cite{Evans:2008}. \rev{The average temperature gradient experienced by the 
+system could thus be different from the simulation input and is a potential source of 
+uncertainty.} Estimation of thermal conductivity using the
 direct method is therefore impacted by the choice of system size and potentially due to
-fluctuations in the thermal gradient experienced by the system due to thermostatting.  
+fluctuations in the temperature gradient experienced by the system due to thermostatting.  
 
 Predictions of non-equilibrium molecular dynamics (NEMD) simulations are also dependent on the
 choice of the inter-atomic potential as well as values associated with individual parameters
@@ -66,8 +68,10 @@ on a limited search in a 7D parameter space while ensuring structural stability 
 reasonable agreement with experiments. It is therefore likely that these nominal estimates
 for individual parameter values in the SW potential may not yield accurate results for a
 wide variety of Si-based systems and warrant further investigation to study the impact of
-underlying uncertainties on MD predictions. Along these lines, 
-a recent study by Rizzi et al. focused on the effect of
+underlying uncertainties on MD predictions. \rev{Along these lines, 
+a recent study by Wang et al. performed uncertainty quantification of thermal conductivities
+from equilibrium molecular dynamics simulations~\cite{Wang:2017}}.
+Rizzi et al. focused on the effect of
 uncertainties associated with the force-field parameters on bulk water properties using MD
 simulations~\cite{Rizzi:2012}. Marepalli et al. in~\cite{Marepalli:2014} considered a stochastic model
 for thermal conductivity to account for inherent noise in MD simulations, and study its impact on
@@ -83,11 +87,11 @@ In the present work, we focus our efforts on uncertainty analysis in the predict
 for phonon transport using a silicon bar. An overview of the set-up for the simulations is
 provided in Section~\ref{sec:setup}. As discussed earlier, predictions from NEMD
 exhibit large discrepancies with experimental observations depending upon system size and potentially
-due to fluctuations in the applied thermal gradient. Additionally, the thermal conductivity estimates are
+due to fluctuations in the applied temperature gradient. Additionally, the thermal conductivity estimates are
 tightly coupled with parameter values associated with the inter-atomic potential. Hence, we set out to
 accomplish multiple objectives through this research effort: First, we construct response surfaces
 in order to characterize the dependence of discrepancy in thermal conductivity estimates (between
-MD simulations and experiments) on system size, and applied thermal gradient~(Section~\ref{sec:response}).
+MD simulations and experiments) on system size, and applied temperature gradient~(Section~\ref{sec:response}).
 Second, we perform sensitivity analysis to study the impact of SW potential parameter values on 
 uncertainty in the predictions~(Section~\ref{sec:sense}).
 Third, we exploit our findings from sensitivity analysis to 

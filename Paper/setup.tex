@@ -3,7 +3,7 @@
 
 In this work, non-equilibrium molecular dynamics (NEMD) simulations are performed using the 
 LAMMPS~\cite{Plimpton:2007} software package.
-Essentially, a thermal gradient is applied by means of \rev{Langevin} thermostats located
+Essentially, a temperature gradient is applied by means of \rev{Langevin} thermostats located
 at $L$/4 and $3L$/4 in a silicon bar of length, $L$ 
 as shown using a schematic in Figure~\ref{fig:setup}. 
 
@@ -17,14 +17,14 @@ as shown using a schematic in Figure~\ref{fig:setup}.
   \\ (a) & (b)
   \end{tabular}
 \caption{(a) Schematic illustration of the set-up for evaluating thermal conductivity of Si using NEMD. (b) 
-Arrangement of Si atoms prior to the application of thermal gradient.}
+Arrangement of Si atoms prior to the application of temperature gradient.}
 \label{fig:setup}
 \end{center}
 \end{figure}
 
 The set of
 inputs to LAMMPS is provided below in Table~\ref{tab:input}. Note that specific values for the length of the bar
-and the applied thermal gradient are not provided since we investigate thermal conductivity trends for a range of 
+and the applied temperature gradient are not provided since we investigate thermal conductivity trends for a range of 
 values of the two parameters as discussed later in Section~\ref{sec:response}. A careful analysis focused on
 minimizing temperature fluctuations during different stages of the simulation was performed to optimize for the
 choice of height and width of the bar as well as the duration of the simulation. 
@@ -70,11 +70,12 @@ The steady state exchange energy ($q$) is used in Fourier's law to estimate bulk
 for the Si  bar:
 
 \be
- \kappa = \frac{q}{\left|\frac{dT}{dz}\right|} 
+ \kappa = \frac{\rev{q''}}{\left|\frac{dT}{dz}\right|} 
 \ee
 
-\noindent where $\left|\frac{dT}{dz}\right|$ denotes the magnitude of the applied temperature gradient along the 
-direction of heat flow (see~Figure~\ref{fig:setup}(a)).
+\noindent where \rev{$q''$ denotes the steady state heat flux (W/m$^2$)} and
+$\left|\frac{dT}{dz}\right|$ denotes the magnitude of the applied 
+temperature gradient along the direction of heat flow (see~Figure~\ref{fig:setup}(a)).
 
 
 
