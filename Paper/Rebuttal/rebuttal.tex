@@ -37,11 +37,111 @@ the paper is found suitable for publication in the {\it International Journal of
 
 \section*{Referee 1}
 \begin{enumerate}[leftmargin=*,itemsep=24pt]
-\item \textbf{Comment 1}
+\item \textbf{It is worth having some detailed on NEMD for example, what thermostats were used, 
+numbers of atoms, and length of simulations etc.}
 
+This suggestion has been incorporated in the revised manuscript. 
+
+\item \textbf{The readers would appreciate if the authors add original potential equation for SW (rather than
+showing Table 2 without having equation)$?$}
+
+This suggestion has been incorporated in the revised manuscript. 
+
+\item \textbf{It is recommended to justify (or discuss) why the authors chose the specific numbers of sample.
+Also, the system size is very critical to calculate the thermal conductivity using NEMD, and it is
+worth justifying the choice of system size for NEMD.}
+
+As suggested by the referee, we have justified the choice of the number of samples in the revised manuscript.
+Regarding the choice of system size, we have emphasized in the revised manuscript that the focus of this
+work is on demonstrating an efficient methodology for quantifying the uncertainties in NEMD predictions
+within a limited computational budget. The considered range for system size is found to be sufficient for
+this purpose. 
 
 \end{enumerate}
 
+\section*{Referee 2}
+\begin{enumerate}[leftmargin=*,itemsep=24pt]
+\item \textbf{The range of parameters considered in the study is quite limited (L: five values in the range of 50a ~ 100a; dT/dz: five values in the range of 1.5/a ~ 2.5/a). Since both L and dT/dz vary by at most a factor of two, the subsequent analyses and the conclusions drawn based on the analyses could be biased. For a more thorough uncertainty quantification study, a larger sample size is likely needed, and the parameters would need be varied by larger extents. For L, one possible reference is the effective phonon mean path. For dT/dz, a lower bound could be some value larger than the noise level of MD simulations.}
+
+We would like to emphasize that the focus of this work is on demonstrating a methodology for quantifying the
+uncertainty in NEMD predictions. Specifically, in the initial part, we develop efficient response surfaces
+to capture the relationship between simulation inputs: length, temperature gradient and the discrepancy in
+bulk thermal conductivity predictions. Note that we do not aim to enhance the accuracy of NEMD predictions.
+Moreover, the proposed methodology accounts for limitated availability of computational resources. The
+consider range of system size is found to be suitable for this purpose. In order to avoid MD noise, we
+have used average temperature at the bin point during the data production NVE ensemble. Hence, the
+impact of noise on NEMD predictions in the considered range for $\frac{dT}{dz}$ is found to be negligible.
+
+The above points have been emphasized in the revised manuscript. A justification for the choice of 5 points
+along $L$ and $\frac{dT}{dz}$ has also been included.  
+
+\item \textbf{The authors mentioned in a few places the fluctuations in the applied thermal gradient (e.g., Line 9 from the bottom on Page 4). This is not very clear to the reviewer. Do the authors mean different applied thermal gradients? By the way, the term “thermal gradient” is typically referred to as “temperature gradient”. If the temperature gradient is evaluated in regions far away from the thermostats (e.g., around z = 0.5L in Fig. 2), would the thermostats affect the temperature gradients?}
+
+Significant temperature fluctuations are observed especially in the vicinity of the thermostats in our setup
+as shown in Figure 2. As a result, it is possible that the temperature gradient experienced by the
+system is different from that specified in the input. Hence, the applied temperature gradient is also considered
+to be a potential source of uncertainty in our analysis. We have attempted to clarify this in the revised
+manuscript. 
+
+As suggested by the referee, ``thermal gradient" has been replaced with ``temperature gradient" in the 
+revised manuscript. 
+
+The impact of thermostating on the temperature gradient is expect to decay with distance from the thermostats
+as observed in Figure 2.  
+
+\item \textbf{For the NEMD simulations, what is the total simulation time? Another comment is about the system size in the width and height directions. Based on the reviewer’s experience, the NEMD calculated thermal conductivities are not very sensitive to the domain sizes in the width and height directions. Usually using a size around 5a for the width and height would be sufficient. This could be taken into account to reduce the simulation time.}
+
+Simulation time has been included in the revised manuscript (Table 1) as suggested by the referee. As pointed
+out by the referee, the impact of width and height was not found to be significantly large. 
+As discussed in the manuscript, the choice of width and height in this study was an outcome of a careful
+analysis aimed at minimizing temperature fluctuations during different stages in the NEMD simulation. As
+suggested by the referee, a smaller width and height could have been used to further reduce computational
+effort. 
+
+\item \textbf{For Si, previous results show that the phonon mean free path could span a wide range (e.g., from 10-2 to 103 um, see for example Fig. 11 of J. Comput. Theor. Nanosci. 5, 1–12, (2008)). When comparing the NEMD simulation domain size with the phonon mean free path, the authors should take this into account.}
+
+We acknowledge the referee's input and are aware that thermal conductivity in NEMD is dependent on the 
+dimension of simulation domain since phonons with longer mean free path can be ballistically transported.
+Hence, the bulk thermal conductivity is estimated by extrapolating the relationship between the
+inverse of conductivity and the inverse of system size as illustrated in Figure 5. 
+
+\item \textbf{When conducting the sensitivity analysis, the authors considered very small fluctuations ~O(10-5)*ni. Could the authors comment on the possible effects of larger fluctuations (e.g., 1$\%$ or 10$\%$)$?$}
+
+We would like to clarify that small perturbations in the nominal estimates of the Stillinger-Weber (SW)
+potential parameters are introduced to estimate the partial derivatives in Eq.8 with reasonable accuracy using
+finite difference. In fact, the prior intervals for the SW parameters are considered to be $\pm 10\%$ for the
+purpose of sensitivity analysis and constructing a reduced order surrogate as mentioned in section 5. 
+
+\item \textbf{Many of the results (e.g., Figs. 5 and 9) in the manuscript essentially show internal consistency. It would be helpful if the authors could check whether the results could be extended to cases outside the considered parameter ranges (i.e., to check the predictive power of the model analysis). The purpose of uncertainty quantification should be understanding what affects the uncertainty in the final results, so that people can actively control or accurately report the uncertainties. A predictive model would be more valuable to the fellow researchers.}
+
+The referee makes an important point. However, we would like to point out that the overall objective of the
+proposed methodology is calibration of the inter-atomic potential using a Bayesian framework. To
+reduce computational effort, we construct efficient surrogates in Figures 5 and 9. Note that the accuracy
+of the surrogates is tightly coupled with the choice of training points that essentially lie within the
+considered intervals for length and the temperature gradient in one case and the SW potential parameters
+in the other case. Hence, the surrogates can be reliably used only for the purpose of sensitivity analysis
+and calibration in the considered input domain. A predictive model while certainty useful is beyond the
+scope of this work. Additionally, verifying the accuracy of the surrogates outside the considered domain 
+would involve large computational effort and is not expected to enhance the proposed methodology in this work. 
+
+\item \textbf{The reviewer would like to point out one relevant paper (IJHMT 112, 267-278 (2017)), which studies the uncertainty quantification of EMD predicted thermal conductivities.}
+
+Suggested reference has been cited appropriately in the revised manuscript. 
+
+\item \textbf{In Eq. (1), the numerator should be q’’, meaning heat flux (W/m2).}
+
+Referee's suggestion has been incorporated in the revised manuscript. 
+
+\item \textbf{The abbreviations (e.g., PC, DGSM) need only be explained in the first occurrence.}
+
+This suggestion has been incorporated in the revised manusctript. 
+
+\item \textbf{In Fig. 5, it is worth checking whether the extrapolating L-1 to 0 will give the expected k for bulk Si.}
+
+Figure 5 has been updated and the extrapolated bulk thermal conductivity estimates have been reported in the
+revised manuscript. 
+
+\end{enumerate}
 
 %\bibliographystyle{unsrt}
 %\bibliography{REFER}
